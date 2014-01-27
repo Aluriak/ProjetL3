@@ -10,18 +10,18 @@ Repository officiel pour le code, la doc et autres fichiers.
 * [Pour Mac] , c'est tout nouveau, apparemment c'est intuitif et ça fonctionne bien, je vous laisse découvrir !
 * Pour (Maître) Linux voir ci-dessous 
 
-
+Debian:  
 ```Bash
-sudo apt-get install git-core
+sudo apt-get install git
 ```
-ou encore
-
+Fedora:  
 ```Bash
 sudo yum install git
 ```
 
 [Pour Windows]: http://windows.github.com
 [Pour Mac]: http://mac.github.com
+NB: pour Windows et Mac, le tuto s'arrête ici. Pour Linux également, ils existe des logiciels (tig, gitk,...) pour gérer git sans passser (ou presque) par les commandes expliquées dans la suite du tuto.
 
 ##Configuration (pour Linux)
 
