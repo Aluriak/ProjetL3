@@ -22,11 +22,11 @@
 
 
 
-\section{Séance du 24 Janvier 2014}
+\chapter*{Séance du 24 Janvier 2014}
     	\paragraph*{}
 	Les rôles principaux ont été attribués :
 	\begin{description}
-		\item[Chef de projet : ] Lucas BOURNEUF;
+		\item[Chef de projet : ] Lucas Bourneuf;
 		\item[Documentaliste : ] Charlie Maréchal;
 	\end{description}
     	\paragraph*{}
@@ -59,18 +59,58 @@
 
 
 
-\section{Séance du 31 Janvier 2014}
+\chapter*{Séance du 31 Janvier 2014}
     	\paragraph*{}
 	La première heure consiste en la rédaction et mise en place des questions aux client, afin de lever les ambiguités pour le cahier des charges.
 	Les premières versions des interfaces graphiques sont dessinées.
+    	\paragraph*{}
+	La discussion avec les clients donne lieu aux spécifications suivantes pour la persistance des données :
+	\begin{itemize}
+		\item[fichiers de sauvegarde lisibles seulement par le programme (utilisation de Marshall fixée);]
+		\item[statistiques pour chaque grille, avec indication des meilleurs scores;]
+		\item[des grilles de bases doivent être incluses, avec possibilité d'en rajouter;]
+		\item[les joueurs doivent se différencier;]
+		\item[création de matrice aléatoirement et par remplissage de l'utilisateur;]
+		\item[gérer la création de grille depuis une image donnée par l'utilisateur, si le temps le permet.]
+	\end{itemize}
+    	\paragraph*{}
+	Pour l'interface graphique :
+	\begin{itemize}
+		\item[l'interface ne devra être réalisée que plus tard, puisque dépendante des fonctionnalités;]
+		\item[elle doit être fonctionnelle avant tout.]
+	\end{itemize}
+    	\paragraph*{}
+	Pour les mécanismes d'aide :
+	\begin{itemize}
+		\item[le principal rôle de l'aide est de permettre à l'utilisateur bloqué de continuer;]
+		\item[l'aide se découpe en deux temps : indication et résolution;]
+		\item[l'aide est textuelle.]
+	\end{itemize}
+    	\paragraph*{}
+	Le principe de mode de jeu à été introduit :
+	\begin{itemize}
+		\item[mode "découverte" ou "débutant", où l'aide est infinie;]
+		\item[mode plus restrictif concernant l'aide (nombre d'appel maximum,...);]
+		\item[le mode est indiqué dans les scores.]
+	\end{itemize}
+
+    	\paragraph*{}
+	Concernant les choix fait après la réunion :
+	Les structures de données commencent à être définies, à l'aide de diagramme de classe, de réflexions sur les fonctionnalités, 
+	et sur les mécanismes et algorithmes liés à l'aide.
 
 
+\section*{Signatures}
 
-
-\section{Signatures}
+    	\paragraph*{}
+	Certaines personnes sont parties avant d'avoir signé. (identifiée par une croix en lieu et place de leur signature)
+    	\paragraph*{}
     	\begin{tabular*}{0.75\textwidth}{c | c | c | c | c | c}
     	    Bourneuf Lucas & Charlie Maréchal & Ewen Cousin & Nicolas Bourdin & Julien Le Gall & Jaweed Parwany\\
      	     & & & & &
     	\end{tabular*}
 \end{document}
 % END
+
+
+
