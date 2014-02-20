@@ -12,7 +12,7 @@
 % BEGIN                 %
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
-	\maketitle
+\maketitle
 
 
 
@@ -134,7 +134,7 @@ Details des fonctionnalités.
 
 \item[F13 :] indication du temps de résolution et du nombre d'appels à l'aide pour le meilleur score de la grille courante.
 
-\item[F14 :] afficher une indication visuelle sur une colonne ou une ligne facilement résolvable. % c'est dans le dico !
+\item[F14 :] afficher une indication visuelle sur une colonne ou une ligne facilement résolvable. 
 
 \item[F15 :] afficher une indication visuelle sur une colonne ou une ligne, où le programme remplira une case viable.
 
@@ -153,12 +153,12 @@ Lorque l'application est démarrée, une grille 5*5 est générée depuis les gr
 \paragraph*{}
 Pour éditer une nouvelle grille, l'utilisateur cliquera sur le bouton \textit{éditer} qui ouvrira la fenêtre d'édition de grille.
 Cette fenêtre permettra à l'utilisateur d'annuler l'édition, de valider sa grille, d'importer une image, de donner un nom à la grille et de modifier la grille et sa taille.\\
-Si une image a été selectionnée, l'image sera chargée dans la planche, sinon elle sera blanche.
-Lorsque l'utilisateur valide sa grille, elle est sauvegardée dans la liste des grilles du programme, et lui est immédiatement proposée comme grille à résoudre, après que la fenêtre d'édition de grille ait été fermée.\\
+Importer une image modifie l'ensemble de la grille.
+Lorsque l'utilisateur valide sa grille, elle est sauvegardée dans la liste des grilles du programme, et lui est immédiatement proposée comme grille à résoudre après que la fenêtre d'édition de grille ait été fermée.\\
 \paragraph*{}
-Pour charger une grille en cours de résolution, 
-\paragraph*{} %% TODO
+Pour charger une grille en cours de résolution, une fenêtre s'ouvre, montrant alors l'ensemble des parties enregistrées. L'utilisateur choisira alors celle qu'il désirera continuer.
 \paragraph*{}
+Lorsque l'utilisateur sauvegarde le jeu en cours, un nom lui est demandé. Ce nom permettra d'identifier la sauvegarde lors du chargement futur de la partie.
 
 
 \section{Diagramme de classe}
@@ -186,7 +186,7 @@ Afin de mettre au clair l'architecture de l'application, un diagramme de classe 
 
 \section{Contraintes techniques}
 \paragraph*{}
-1.Le système est principalement conçu pour fonctionner sous architecture UNIX.% mais aussi compatible avec le système Windows. % euh, attention, les fichier nécessiteront peut-être un traitement particulier sous windaube
+1.Le système est principalement conçu pour fonctionner sous architecture UNIX.% mais aussi compatible avec le système Windows. % euh, attention, les fichiers nécessiteront peut-être un traitement particulier sous windows
 
 
 
@@ -217,12 +217,20 @@ La période de développement de l’application s’étend du 24 janvier au 16 
 \paragraph*{}
 Le jeu devra être rendu au mois de mai 2014, ainsi que tous les livrables qui accompagnent le projet.
 Le planning prévisionnel est traduit en diagramme de Gantt :
-%%TODO: Gantt
+\includegraphics[scale=1]{data/ganttDiagram.png}
 
 
 \section {Equipe}
 \paragraph*{}
-Les membres de l'équipe sont Lucas Bourneuf (chef d'équipe), Charlie Maréchal (Documentaliste), Jaweed Parwany (développeur), Ewen Cousin (développeur), Nicolas Bourdin(développeur) , Julien LeGall (développeur).
+Les membres de l'équipe sont 
+\begin{itemize}
+\item Lucas Bourneuf (chef d'équipe);
+\item Charlie Maréchal (documentaliste);
+\item Jaweed Parwany (développeur);
+\item Ewen Cousin (développeur);
+\item Nicolas Bourdin(développeur);
+\item Julien LeGall (développeur).
+\end{itemize}
 
 
 
@@ -234,6 +242,7 @@ Les membres de l'équipe sont Lucas Bourneuf (chef d'équipe), Charlie Maréchal
 %\item le jeu doit supporter plusieurs langues(pas obligatoire pour l'instant); % Absolument pas demandé; le zonage dépend de la GUI.
 \item YAML pour la gestion des sauvegardes; % yaml est plus rapide. L'intérêt de marshall est de rendre les data lisibles, ce qui n'est pas attendu.
 \item rmagick pour la génération de grille depuis les images de l'utilisateur;
+\item glib pour la gestion du temps;
 \item rdoc pour la génération de documentation de code.
 \end{enumerate}
 
