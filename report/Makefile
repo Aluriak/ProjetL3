@@ -4,7 +4,7 @@ DATE=JJMMAA
 # Cahier des Charges
 cdc: cdc_ posttreat
 cdc_:
-	- pdflatex cahierDesCharges.tex
+	- pdflatex cahierDesCharges.tex &&  pdflatex cahierDesCharges.tex
 
 
 # Compte-Rendus
