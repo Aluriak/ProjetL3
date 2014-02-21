@@ -2,7 +2,8 @@
 Repository officiel pour le code, la doc et autres fichiers.
 
 
-# Tuto: Utiliser GIT (merci Antoine pour le tuto)
+# Tuto: Utiliser GIT 
+(merci Antoine pour le tuto)
 
 ##Installation
 
