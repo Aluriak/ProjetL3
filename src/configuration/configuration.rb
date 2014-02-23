@@ -3,6 +3,11 @@
 # définition de la classe Configuration
 # BOURNEUF
  
+#################################
+# IMPORTS			#
+#################################
+load 'src/commun/commun.rb'
+ 
 
 #################################
 # CONFIGURATION CLASS		#
@@ -16,10 +21,24 @@ class Configuration
   @derniereTailleGrille
 
   # prochain id de grille racine à affecter
-  attr :prochainIdGrille
+  attr_accessor :prochainIdGrille
   # taille de la dernière grille jouée
-  attr :derniereTailleGrille
+  attr_reader :derniereTailleGrille
 
+
+  # Retourne le prochain id de grille valable
+  def idGrilleSuivant 
+    @prochainIdGrille += 1
+    return @prochainIdGrille - 1
+  end
+  
+  # Affecte la nouvelle taille de grille
+  # Lève une exception si la taille reçue est invalide
+  def derniereTailleGrille=(taille)
+    raise "Taille non définie" if not Grille.tailles.include? taille
+    @derniereTailleGrille = taille
+    return self
+  end
 
   # Marshal API : méthode de dump
   def marshal_dump
