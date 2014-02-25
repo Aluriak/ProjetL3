@@ -40,13 +40,12 @@ class GrilleRacine < Grille
   # Attend la grille et l'id de la nouvelle grille racine en argument
   def GrilleRacine.creerDepuis(grille, id)
     # création de la grille
-    grille = GrilleRacine.deTaille(grille.taille, id)
+    ret = GrilleRacine.deTaille(grille.taille, id)
     # recopie des matrices de lignes et de colonnes
-    @matriceDesLignes 	=   Array.new(grille.matriceDesLignes)
-    @matriceDesColonnes = Array.new(grille.matriceDesColonnes)
+    ret.matriceDesLignes   =   Marshal.load(Marshal.dump(grille.matriceDesLignes))
+    ret.matriceDesColonnes = Marshal.load(Marshal.dump(grille.matriceDesColonnes))
     # retour de la grille
-    return grille 
-    end
+    return ret
   end
   
 
