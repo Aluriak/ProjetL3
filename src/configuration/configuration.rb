@@ -26,6 +26,11 @@ class Configuration
   attr_reader :derniereTailleGrille
 
 
+  # Constructeur
+  def initialize(id, taille)
+    @prochainIdGrille, @derniereTailleGrille = id, taille
+  end
+
   # Retourne le prochain id de grille valable
   def idGrilleSuivant 
     @prochainIdGrille += 1
