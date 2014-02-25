@@ -24,9 +24,9 @@ class Grille
   @matriceDesColonnes
 
   # les entiers définissant les lignes
-  attr :matriceDesLignes
+  attr_accessor :matriceDesLignes
   # les entiers définissant les colonnes
-  attr :matriceDesColonnes
+  attr_accessor :matriceDesColonnes
 
 
   def initialize(taille)
@@ -55,7 +55,6 @@ class Grille
   def taille
     return @matriceDesLignes.size
   end
-
 
 
   # Obligation de passer par le constructeur deTaille(1) pour créer une Grille
