@@ -11,7 +11,6 @@ load 'src/grille/grille.rb'
 
 
 
-
 #################################
 # JOUABLE			#
 #################################
@@ -27,8 +26,8 @@ class GrilleJouable < Grille
 
   def initialize(taille)
     super(taille)
-    @matriceDeJeu = Array.new(taille) do |index|
-      @matriceDeJeu[index] = Array.new(taille) {Etat.blanc}
+    @matriceDeJeu = Array.new(taille) do |ligne|
+      ligne = Array.new(taille) {Etat.Blanc}
     end
   end
 
