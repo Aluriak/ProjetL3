@@ -1,10 +1,11 @@
 DATE=JJMMAA
+CR_DIR=CR
 
 
 # Compte-Rendus
 CR: CR_ posttreat
 CR_:
-	- pdflatex CR_seance_$(DATE).tex
+	- pdflatex $(CR_DIR)/CR_seance_$(DATE).tex
 
 
 # Cahier des Charges
