@@ -57,6 +57,7 @@
         \paragraph*{}
         L'application doit répondre aux critères suivants :
         \begin{itemize}
+          \item validation des objectifs demandés par le client;
                 \item validation du produit via un dossier de tests réalisés par notre groupe;
                 \item respect des choix technologiques du client (cf. \textit{contraintes techniques});
                 \item jeu picross;
@@ -112,37 +113,39 @@
                 & Programme \\ 
                 F01 & Quitter le programme \\
                 F02 & Consulter les informations complémentaires du programme \\
+                F03 & Afficher des informations relatives à la grille et à l'aide \\
                 & Jeu \\ 
                 F11 & Modifier la grille de jeu par un clic de souris \\
                 F12 & Consulter le timer du jeu \\
                 F13 & Consulter le meilleur score sur la grille courante \\
-                F14 & Utiliser l'aide indicative \\
-                F15 & Utiliser l'aide résolutive \\
+                F14 & Utiliser l'aide \\
+                F15 & Utiliser l'aide avancée \\
                 & Données \\ 
                 F21 & Sauvegarder une grille \\
                 F22 & Charger une grille \\
-                F23 & Créer une nouvelle grille \\ % NB : au lancement du jeu : une au hasard parmi celle existantes.
+                F23 & Créer une nouvelle grille \\ % NB : au lancement du jeu : une au hasard parmi celles existantes.
         \end{tabular*}
 
         \paragraph*{}
         Details des fonctionnalités.
         \begin{description}
-                \item[F01 :] appuyer sur un bouton permet de quitter le jeu et demande à l'utilisateur si il veut sauvegarder avant de quitter.
-                \item[F02 :] un bouton permet l'affichage d'une pop-up contenant des informations concernant le programme (modules et bibliothèques, licences,...).
-                \item[F11 :] modification de l'état d'une case de la grille à l'aide d'un clic de souris.
-                \item[F12 :] indication du temps passé sur la grille courante.
-                \item[F13 :] indication du temps de résolution et du nombre d'appels à l'aide pour le meilleur score de la grille courante.
-                \item[F14 :] afficher une indication visuelle sur une colonne ou une ligne facilement résolvable avec explication textuelle de la technique utilisée.
-                \item[F15 :] afficher une indication visuelle sur une colonne ou une ligne, où le programme remplira justement une case.
-                \item[F21 :] sauvegarder la grille en cours de résolution.
-                \item[F22 :] charger une grille précédemment sauvegardée.
-                \item[F23 :] créer une nouvelle grille  à partir d'une grille que l'utilisateur aura lui-même dessinée à l'aide  de l'interface graphique du programme, ou depuis une image.
+                \item[F01 :] appuyer sur un bouton permet de quitter le jeu et demande à l'utilisateur s'il veut sauvegarder avant de quitter
+                \item[F02 :] un bouton permet l'affichage d'une pop-up contenant des informations concernant le programme (modules et bibliothèques, licences,...)
+                \item[F03 :] une zone de texte dans l'interface principale communiquant des informations à l'utilisateur (notamment en relation avec l'aide)
+                \item[F11 :] modification de l'état d'une case de la grille à l'aide d'un clic de souris, et modification par bande: lorsque le curseur est enfoncé, tant qu'il n'est pas relaché, toutes les cases par lesquelles on est passé deviennent noires, ou croisées(c'est selon)\\
+                \item[F12 :] indication du temps passé sur la grille courante
+                \item[F13 :] indication du temps de résolution et du nombre d'appels à l'aide pour le meilleur score de la grille courante
+                \item[F14 :] afficher une indication visuelle sur une colonne ou une ligne facilement résolvable avec explication textuelle de la technique utilisée
+                \item[F15 :] afficher une indication visuelle sur une colonne ou une ligne, où le programme indiquera explicitement quelles cases modifier
+                \item[F21 :] sauvegarder la grille en cours de résolution avec en nom par défaut, la taille de la grille ainsi que sa date de sauvegarde
+                \item[F22 :] charger une grille précédemment sauvegardée
+                \item[F23 :] créer une nouvelle grille  à partir d'une grille que l'utilisateur aura lui-même dessinée à l'aide  de l'interface graphique du programme, ou depuis une image; cette grille aura par défaut la même taille que la précédente grille jouée
         \end{description}
 
 
 \section{Scénario d'utilisation}
         \paragraph*{}
-        Lorsque l'application est démarrée, une grille 5*5 est générée depuis les grilles connues du programme, et le timer est mis en marche. L'utilisateur peut donc, jouer cette grille, générer une autre grille, ou charger une partie précédemment sauvegardée.
+        Lorsque l'application est démarrée, une grille de la taille de la grille précédente est générée depuis les grilles connues du programme, et le timer est mis en marche. L'utilisateur peut donc, jouer cette grille, générer une autre grille, ou charger une partie précédemment sauvegardée.
         \paragraph*{}
         Pour éditer une nouvelle grille, l'utilisateur cliquera sur le bouton \textit{éditer} qui ouvrira la fenêtre d'édition de grille.
         Cette fenêtre permettra à l'utilisateur d'annuler l'édition, de valider sa grille, d'importer une image, de donner un nom à la grille et de modifier la grille et sa taille.\\
@@ -151,7 +154,7 @@
         \paragraph*{}
         Pour charger une grille en cours de résolution, une fenêtre s'ouvre, montrant alors l'ensemble des parties enregistrées. L'utilisateur choisira alors celle qu'il désirera continuer.
         \paragraph*{}
-        Lorsque l'utilisateur sauvegarde le jeu en cours, un nom lui est demandé. Ce nom permettra d'identifier la sauvegarde lors du chargement futur de la partie.
+        Lorsque l'utilisateur sauvegarde le jeu en cours avec comme nom par défaut :la taille de la grille ainsi que sa date. Ce nom permettra d'identifier la sauvegarde lors du chargement futur de la partie.
 
 
         %\section{Diagramme de classe} # NON ATTENDU DANS LE CAHIER DES CHARGES, PLUTÔT DANS LE CAHIER DE CONCEPTION
@@ -202,7 +205,7 @@
                 \item les cahiers d'analyse et de conception;
                 \item le code source;
                 \item le logiciel qui respecte le cahier des charges;
-                \item un manuel utilisateur.
+                \item un manuel utilisateur, explicitant le principe du jeu, détaillant les techniques, et expliquant l'interface du programme.
         \end{itemize}
 
 
@@ -212,7 +215,7 @@
         \paragraph*{}
         La période de développement de l’application s’étend du 24 janvier au 16 Mai 2014 suivi d’une présentation finale de l’application. % dates à vérifier
         \paragraph*{}
-        Le jeu devra être rendu le 16 mai 2014, ainsi que tous les livrables qui comp le projet.
+        Le jeu devra être rendu le \textbf{16 mai 2014}, ainsi que tous les livrables qui composent le projet.
         Le planning prévisionnel est traduit en diagramme de Gantt :\\
 
         \begin{center}

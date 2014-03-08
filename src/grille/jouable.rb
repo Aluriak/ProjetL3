@@ -11,7 +11,6 @@ load 'src/grille/grille.rb'
 
 
 
-
 #################################
 # JOUABLE			#
 #################################
@@ -27,8 +26,8 @@ class GrilleJouable < Grille
 
   def initialize(taille)
     super(taille)
-    @matriceDeJeu = Array.new(taille) do |index|
-      @matriceDeJeu[index] = Array.new(taille) {Etat.blanc}
+    @matriceDeJeu = Array.new(taille) do |ligne|
+      ligne = Array.new(taille) {Etat.Blanc}
     end
   end
 
@@ -48,6 +47,18 @@ class GrilleJouable < Grille
     end
   end
 
+ 
+  # Retourne une GrilleJouable créée depuis la Grille envoyée en argument
+  # Attend la grille en argument
+  def GrilleJouable.creerDepuis(grille)
+    # création de la grille
+    ret = GrilleJouable.deTaille(grille.taille)
+    # recopie profonde des matrices de lignes et de colonnes
+    ret.matriceDesLignes   =   Marshal.load(Marshal.dump(grille.matriceDesLignes))
+    ret.matriceDesColonnes = Marshal.load(Marshal.dump(grille.matriceDesColonnes))
+    # retour de la grille
+    return ret
+  end
 end
 
 

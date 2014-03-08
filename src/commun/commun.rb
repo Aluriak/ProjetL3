@@ -74,6 +74,14 @@ class Etat
     elsif etat == @@drapeau 	then return @@blanc
     end
   end
+
+  # Accesseur vers l'état blanc
+  def Etat.Blanc() return @@blanc end
+  # Accesseur vers l'état noir
+  def Etat.Noir() return @@noir end
+  # Accesseur vers l'état drapeau
+  def Etat.Drapeau() return @@drapeau end
+
 end
 
 

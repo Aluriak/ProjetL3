@@ -8,7 +8,8 @@
 #################################
 load 'src/commun/commun.rb'
 load 'src/configuration/configuration.rb'
-
+load 'src/grille/jouable.rb'
+load 'src/grille/racine.rb'
 
 
 #################################
@@ -27,8 +28,14 @@ class Picross
 
   def initialize
     # Chargement de la Configuration
-    File.open(Constant.FICHIER_DATA_CONFIG, "r") do |f|
-      @config = Marshal.load(f)
+    begin
+      File.open(Constant.FICHIER_DATA_CONFIG, "r") do |f|
+      	@config = Marshal.load(f)
+      end
+    rescue Errno::ENOENT
+      # En cas d'absence de fichier de configuration,
+      #   création d'une configuration par défaut
+      @config = Configuration.new(1,5)
     end
     # Chargement d'une grille
     #TODO
