@@ -13,9 +13,9 @@ load 'src/commun/commun.rb'
 # CONFIGURATION CLASS		#
 #################################
 # mainteneur : BOURNEUF
-
-# Groupement de valeurs nécessaires à l'autoconfiguration du programme de Picross.
-# Classe instanciée une seule fois, chargée au démarrage et sauvegardée lors des modifications des attributs.
+# Groupement de valeurs nécessaires à l'autoconfiguration du prgm de Picross.
+# Classe instanciée une seule fois, chargée au démarrage et sauvegardée 
+#  lors des modifications des attributs.
 class Configuration
   @prochainIdGrille
   @derniereTailleGrille
