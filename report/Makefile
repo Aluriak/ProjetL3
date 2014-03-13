@@ -8,6 +8,12 @@ CR_:
 	- pdflatex $(CR_DIR)/CR_seance_$(DATE).tex
 
 
+# Dossier de Conception
+ddc: ddc_ posttreat
+ddc_:
+	- pdflatex dossierDeConception.tex &&  pdflatex dossierDeConception.tex
+
+
 # Cahier des Charges
 cdc: cdc_ posttreat
 cdc_:
