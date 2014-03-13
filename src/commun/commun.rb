@@ -12,21 +12,12 @@
 #################################
 # CONSTANT			#
 #################################
-class Constant
-  # Fichier hébergeant la configuration du programme
-  def Constant.FICHIER_DATA_CONFIG 
-    return 'data/config'
-  end
-  # Répertoire contenant les grilles
-  def Constant.REPERTOIRE_DATA_GRILLE 
-    return 'data/grilles/'
-  end
-  # Répertoire contenant les sauvegardes
-  def Constant.REPERTOIRE_DATA_SAVE 
-    return 'data/saves/'
-  end
-end
-
+# Fichier hébergeant la configuration du programme
+CONSTANT_FICHIER_DATA_CONFIG 	= 'data/config' 	unless defined? CONSTANT_FICHIER_DATA_CONFIG
+# Répertoire contenant les grilles
+CONSTANT_REPERTOIRE_DATA_GRILLE = 'data/grilles/'	unless defined?	CONSTANT_REPERTOIRE_DATA_GRILLE
+# Répertoire contenant les sauvegardes
+CONSTANT_REPERTOIRE_DATA_SAVE 	   = 'data/saves/'	unless defined?	CONSTANT_REPERTOIRE_DATA_SAVE
 
 
 
