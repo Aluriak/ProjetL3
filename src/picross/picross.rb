@@ -29,7 +29,7 @@ class Picross
   def initialize
     # Chargement de la Configuration
     begin
-      File.open(Constant.FICHIER_DATA_CONFIG, "r") do |f|
+      File.open(CONSTANT_FICHIER_DATA_CONFIG, "r") do |f|
       	@config = Marshal.load(f)
       end
     rescue Errno::ENOENT
@@ -54,7 +54,7 @@ class Picross
   # Sauve la configuration actuelle dans le fichier de configuration,
   # écrasant de fait les anciennes valeurs
   def sauverConfiguration
-    File.open(Constant.FICHIER_DATA_CONFIG, "w") do |f|
+    File.open(CONSTANT_FICHIER_DATA_CONFIG, "w") do |f|
       f.puts Marshal.dump(@config)
     end
     return self
