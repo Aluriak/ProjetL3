@@ -36,7 +36,7 @@ class Score
 	
 	private_class_method:new
 	
-	def ScoreConteneur.creer(taille, tps, aide)
+	def Score.creer(taille, tps, aide)
 	
 		new(taille,tps,aide)
 	end
