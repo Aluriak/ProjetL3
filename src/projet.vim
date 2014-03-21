@@ -7,3 +7,5 @@ vsp	grille/racine.rb
 tabnew	grille/grille.rb
 
 tabnew	commun/commun.rb
+
+tabnew	GestionnaireDeSauvegarde/GestionnaireDeSauvegarde.rb
