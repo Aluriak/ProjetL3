@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 # COMMUN.RB
 # définition de types et fonctions communes au programme
-# BOURNEUF
+# BOURNEUF/COUSIN
  
 #################################
 # IMPORTS			#
@@ -18,8 +18,10 @@ CONSTANT_FICHIER_DATA_CONFIG 	= 'data/config' 	unless defined? CONSTANT_FICHIER_
 CONSTANT_REPERTOIRE_DATA_GRILLE = 'data/grilles/'	unless defined?	CONSTANT_REPERTOIRE_DATA_GRILLE
 # Répertoire contenant les sauvegardes
 CONSTANT_REPERTOIRE_DATA_SAVE 	   = 'data/saves/'	unless defined?	CONSTANT_REPERTOIRE_DATA_SAVE
-
-
+#mode d'utilisation des grille;utile pour la gui
+CONSTANT_MODE_JOUABLE	= -5 unless defined?	CONSTANT_MODE_JOUABLE
+#idem
+CONSTANT_MODE_EDTION	= -6 unless defined?	CONSTANT_MODE_EDTION
 
 #################################
 # TAILLE			#
