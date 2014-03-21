@@ -15,9 +15,9 @@
 # Fichier hébergeant la configuration du programme
 CONSTANT_FICHIER_DATA_CONFIG 	= 'data/config' 	unless defined? CONSTANT_FICHIER_DATA_CONFIG
 # Répertoire contenant les grilles
-CONSTANT_REPERTOIRE_DATA_GRILLE = 'data/grilles/'	unless defined?	CONSTANT_REPERTOIRE_DATA_GRILLE
+CONSTANT_FICHIER_DATA_RACINE 	= 'data/racines'	unless defined?	CONSTANT_FICHIER_DATA_RACINE
 # Répertoire contenant les sauvegardes
-CONSTANT_REPERTOIRE_DATA_SAVE 	   = 'data/saves/'	unless defined?	CONSTANT_REPERTOIRE_DATA_SAVE
+CONSTANT_FICHIER_DATA_SAVE 	= 'data/saves'		unless defined?	CONSTANT_FICHIER_DATA_SAVE
 
 
 
