@@ -49,6 +49,20 @@ class GrilleRacine < Grille
   end
   
 
+  # Marshal API : méthode de dump
+  def marshal_dump
+    # concaténation de la structure de la classe mère et de self
+    # l'item de self est placé en dernière place de tableau
+    super + [id]
+  end
+  # Marshal API : méthode de chargement
+  def marshal_load(ary)
+    # le dernier item est pour self
+    @id = ary.pop
+    # les autres sont pour la classe-mère
+    super ary
+  end
+
 
   # Obligation de passer par le constructeur deTaille(2) pour créer une Grille
   private_class_method :new

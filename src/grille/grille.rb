@@ -56,6 +56,14 @@ class Grille
     return @matriceDesLignes.size
   end
 
+  # Marshal API : méthode de dump
+  def marshal_dump
+    [matriceDesLignes, matriceDesColonnes]
+  end
+  # Marshal API : méthode de chargement
+  def marshal_load(ary)
+    @matriceDesLignes, @matriceDesColonnes = ary
+  end
 
   # Obligation de passer par le constructeur deTaille(1) pour créer une Grille
   private_class_method :new

@@ -59,6 +59,22 @@ class GrilleJouable < Grille
     # retour de la grille
     return ret
   end
+  
+
+
+  # Marshal API : méthode de dump
+  def marshal_dump
+    # concaténation de la structure de la classe mère et de self
+    # l'item de self est placé en dernière place de tableau
+    super + [matriceDeJeu]
+  end
+  # Marshal API : méthode de chargement
+  def marshal_load(ary)
+    # le dernier item est pour self
+    @matriceDeJeu = ary.pop
+    # les autres sont pour la classe-mère
+    super ary
+  end
 end
 
 
