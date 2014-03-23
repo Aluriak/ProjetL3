@@ -1,21 +1,10 @@
-# -*- encoding: utf-8 -*-
-# MAIN.RB
-# Using of Picross class
-# BOURNEUF
- 
-#################################
-# IMPORTS			#
-#################################
-load 'src/picross/picross.rb'
+#########MAIN.RB##############
+#module à lancer pour jouer au jeu du Picross
+#mainteneur : Ewen COUSIN
 
+##########INCLUDES############
+load "gui/gui.rb"
 
-
-
-
-i = Picross.new
-
-
-
-
-
+############JEU###############
+Gui.lancer("PICROSS")
 
