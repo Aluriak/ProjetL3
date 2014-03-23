@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-load "jouable.rb"
+load "grille/jouable.rb"
 
 
 class Planche
@@ -8,11 +8,8 @@ class Planche
 	@event_box
 	@image
 	@table
-	@mode 
-	@taille
 	
-	#pour mode-jouable/editeur
-	attr_reader :mode
+	@taille
 	
 	#la table est un conteneur d'images/event box
 	attr_reader :table
@@ -29,14 +26,12 @@ class Planche
 	#taille de la jouable
 	attr_reader :taille
 	
-	#par défaut, le mode est jouable
-	def Planche.creer(jouable, mode = Constant.MODE_JOUABLE)
-		new(jouable, mode)
+	def Planche.creer(jouable)
+		new(jouable)
 	end
 	
-	def initialize(jouable, mode)
-		dossier =  "ressources"+"/" #dossier contenant les images
-		@mode = mode
+	def initialize(jouable)
+		dossier =  "gui/ressources/" #dossier contenant les images
 		@tabImg = ["blanc.jpg", "noir.jpg", "croix.jpg"]
 		@tabImg.map!{|img| dossier + img}
 		@table = Table.new(jouable.taille,jouable.taille)
@@ -54,13 +49,7 @@ class Planche
 	
 	#si la case est cochée, elle devient noire, etc..
 	def suivante(image)
-		if @mode == Constant.MODE_JOUABLE
-			image.file = @tabImg[Etat.suivant(@tabImg.index(image.file))]
-			if image.file = @tabImg["blanc"]
-			end
-		elsif @mode == Constant.MODE_EDITION
-			
-		end
+		 image.file = @tabImg[Etat.suivant(@tabImg.index(image.file))]
 	end
 	
 	def setup(jouable)#prend la matrice jouable de jeu en parametre
