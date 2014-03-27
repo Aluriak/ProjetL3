@@ -5,6 +5,7 @@ class Chronometre
 	@secondes
 	attr_reader :text
 	
+	# initialisation du chronométre
 	def Chronometre.initialiser(notes)
 		new(notes)
 	end
@@ -14,5 +15,5 @@ class Chronometre
 		@text = Label.new.set_text(notes + " " + @minutes.to_s + ":" + @secondes.to_s)
 	end
 	
-	#...
+	
 end
