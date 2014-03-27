@@ -26,7 +26,7 @@ class Configuration
   attr_reader :derniereTailleGrille
 
 
-  # Constructeur
+  # ==Constructeur
   def initialize(id, taille)
     @prochainIdGrille, @derniereTailleGrille = id, taille
   end
