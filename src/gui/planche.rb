@@ -26,6 +26,7 @@ class Planche
 	#taille de la jouable
 	attr_reader :taille
 	
+	#creation de planche
 	def Planche.creer(jouable)
 		new(jouable)
 	end
@@ -53,7 +54,8 @@ class Planche
 		 image.file = @tabImg[Etat.suivant(@tabImg.index(image.file))]
 	end
 	
-	def setup(jouable)#prend la matrice jouable de jeu en parametre
+	#fonction qui prend la matrice jouable de jeu en parametre
+	def setup(jouable)
 			
 		@image = Array.new(jouable.taille) { Array.new(jouable.taille) }
 		@event_box = Array.new(jouable.taille) { Array.new(jouable.taille) }
