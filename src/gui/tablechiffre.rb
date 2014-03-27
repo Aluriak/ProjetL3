@@ -11,6 +11,7 @@ class TableChiffre
 	#les dimensions en élements de la table
 	attr_reader :xMax, :yMax
 	
+	#creation de la tableChiffre
 	def TableChiffre.creer(xMax,yMax)
 		new(xMax,yMax)
 	end
@@ -21,7 +22,7 @@ class TableChiffre
 		self.setup(xMax,yMax)
 	end
 	
-	#pour tests
+	# affichage
 	def afficher
 		print "x,y:",@xMax,",","@yMax","\n"
 	end
