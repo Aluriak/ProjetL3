@@ -8,4 +8,4 @@ tabnew	grille/grille.rb
 
 tabnew	commun/commun.rb
 
-tabnew	GestionnaireDeSauvegarde/GestionnaireDeSauvegarde.rb
+tabnew	gestionnaireDeSauvegarde/gestionnaireDeSauvegarde.rb
