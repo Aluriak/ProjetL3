@@ -52,6 +52,10 @@ class GestionnaireDeSauvegarde
   # Retourne une liste contenant les grilles racines de taille reçue.
   # Retourne nil si aucune grille valide trouvée.
   def grillesRacinesDeTaille(taille)
+    if @grillesRacines == nil then
+      raise "GestionnaireDeSauvegarde.ajouterGrilleRacine(1) "+
+    	    "nécessite que les grilles racines soient chargées. \n"
+    end
     print("DEBUG: GestionnaireDeSauvegarde.grillesRacinesDeTaille(1) "+
     	  "n'effectue aucun traitement dans cette version\n")
     return nil
@@ -60,9 +64,7 @@ class GestionnaireDeSauvegarde
   # Charge les grilles racines en mémoire.
   # Cette opération est nécessaire pour traiter les grilles racines
   def chargerGrillesRacines()
-    File.open(CONSTANT_FICHIER_DATA_RACINE, 'r') do |f|
-      @grillesRacines = Marshal.load(f.gets)
-    end
+    @grillesRacines = Marshal.load(File.read(CONSTANT_FICHIER_DATA_RACINE))
   end
 
   # Sauvegarde les grilles racines si une modification à été réalisée.
@@ -90,17 +92,16 @@ end
 #################################
 # FUNCTIONS			#
 #################################
+
 #File.open(CONSTANT_FICHIER_DATA_RACINE, 'w') do |f|
   #f.puts Marshal.dump([])
 #end
 
+
 # DEBUG
-s = GestionnaireDeSauvegarde.new
-s.chargerGrillesRacines
-print "s = " + s.to_s
-s.ajouterGrilleRacine 43
-s.sauvegarderGrillesRacines
+#s = GestionnaireDeSauvegarde.new
+#s.chargerGrillesRacines
+#print "s = " + s.to_s
+#s.ajouterGrilleRacine 43
+#s.sauvegarderGrillesRacines
 #/DEBUG
-
-
-
