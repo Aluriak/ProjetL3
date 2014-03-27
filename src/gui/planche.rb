@@ -38,6 +38,7 @@ class Planche
 		self.setup(jouable)
 	end
 	
+	#reinitialisation de grille jouable
 	def reinitialiser(jouable)
 		@table = @table.resize(jouable.taille,jouable.taille)
 		self.setup(jouable)
