@@ -76,7 +76,7 @@ class GestionnaireDeSauvegarde
     end
   end
 
-
+  # Affichage de grillesRacines et grillesJouables
   def to_s
     str  = @grillesRacines.to_s
     str += @grillesJouables.to_s
