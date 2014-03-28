@@ -6,7 +6,7 @@
 require "RMagick"
 include Magick
 
-load "../commun/commun.rb"
+load "src/commun/commun.rb"
 
 #Classe PicrossImage
 #
