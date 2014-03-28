@@ -85,6 +85,49 @@ class GestionnaireDeSauvegarde
     str += "\n"
     return str
   end
+
+  # Ajoute une grille jouable à la liste.
+  def ajouterGrilleJouable(grille)
+    if @grillesJouables == nil then
+      raise "GestionnaireDeSauvegarde.ajouterGrilleJouables(1) "+
+     "nécessite que les grilles jouables soient chargées. \n"
+    end
+    @grillesJouablesModifiees = true
+    @grillesJouables += [grille]
+    return nil
+  end 
+  
+  # Retourne une liste contenant les grilles jouables de taille reçue.
+  # Retourne nil si aucune grille valide trouvée.
+  def grillesJouablesDeTaille(taille)
+    if @grillesJouables == nil then
+      raise "GestionnaireDeSauvegarde.ajouterGrilleJouable(1) "+
+     "nécessite que les grilles jouables soient chargées. \n"
+    end
+    print("DEBUG: GestionnaireDeSauvegarde.grillesJouablesDeTaille(1) "+
+     "n'effectue aucun traitement dans cette version\n")
+    return nil
+  end
+  
+  # Charge les grilles jouables en mémoire.
+  # Cette opération est nécessaire pour traiter les grilles jouables
+  def chargerGrillesJouables()
+    @grillesJouables = Marshal.load(File.read(CONSTANT_FICHIER_DATA_JOUABLE))
+  end
+
+  # Sauvegarde les grilles jouables si une modification à été réalisée.
+  # Cela écrase la sauvegarde précédente.
+  def sauvegarderGrillesJouables()
+    if @grillesJouablesModifiees == true then
+      @grillesJouablesModifiees = false
+      File.open(CONSTANT_FICHIER_DATA_JOUABLE, 'w') do |f|
+       f.puts Marshal.dump(@grillesJouables)
+      end
+    end
+  end 
+
+
+
 end
 
 
