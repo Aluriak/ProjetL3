@@ -18,5 +18,4 @@ class Menu
 			@listBtns << btn
 		}
 	end
-	
 end
