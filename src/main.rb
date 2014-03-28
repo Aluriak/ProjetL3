@@ -3,7 +3,7 @@
 #mainteneur : Ewen COUSIN
 
 ##########INCLUDES############
-load "gui/gui.rb"
+load "src/gui/gui.rb"
 
 ############JEU###############
 Gui.lancer("PICROSS")
