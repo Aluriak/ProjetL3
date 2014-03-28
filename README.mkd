@@ -1,5 +1,10 @@
-# Projet L3 de Picross : name
+# Projet L3 de Picross
 Repository officiel pour le code, la doc et autres fichiers.
+
+# Directives
+Le Makefile contient 2 directives :
+- run, pour lancer le programme de picross;
+- doc, pour compiler la documentation du code;
 
 
 # Tuto: Utiliser GIT 
