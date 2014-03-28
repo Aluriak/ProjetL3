@@ -42,29 +42,44 @@ class GestionnaireDeSauvegarde
   def ajouterGrilleRacine(grille)
     if @grillesRacines == nil then
       raise "GestionnaireDeSauvegarde.ajouterGrilleRacine(1) "+
-    	    "nécessite que les grilles racines soient chargées. \n"
+     "nécessite que les grilles racines soient chargées. \n"
     end
     @grillesRacinesModifiees = true
-    @grillesRacines += [grille] 
+    @grillesRacines += [grille]
     return nil
   end
 
   # Retourne une liste contenant les grilles racines de taille reçue.
   # Retourne nil si aucune grille valide trouvée.
   def grillesRacinesDeTaille(taille)
+		grilleRacineTemp = nil
     if @grillesRacines == nil then
       raise "GestionnaireDeSauvegarde.ajouterGrilleRacine(1) "+
-    	    "nécessite que les grilles racines soient chargées. \n"
+     "nécessite que les grilles racines soient chargées. \n"
     end
+
+		else
+			while(@grillesRacines[i] != nil) 
+				if @grillesRacines[i].taille == taille then
+					grilleRacineTemp += [@grillesRacines[i]]
+				end
+			end
+			return grilleRacinesTemp
+		end
     print("DEBUG: GestionnaireDeSauvegarde.grillesRacinesDeTaille(1) "+
-    	  "n'effectue aucun traitement dans cette version\n")
+     "n'effectue aucun traitement dans cette version\n")
     return nil
   end
   
   # Charge les grilles racines en mémoire.
   # Cette opération est nécessaire pour traiter les grilles racines
   def chargerGrillesRacines()
-    @grillesRacines = Marshal.load(File.read(CONSTANT_FICHIER_DATA_RACINE))
+		if (@grillesRacines == nil) then
+    	@grillesRacines = Marshal.load(File.read(CONSTANT_FICHIER_DATA_RACINE))
+		end
+		elsif( @grillesRacines == Marshal.load(File.read(CONSTANT_FICHIER_DATA_RACINE)) )
+			raise ("Grille deja chargee\n")
+		end
   end
 
   # Sauvegarde les grilles racines si une modification à été réalisée.
@@ -73,20 +88,20 @@ class GestionnaireDeSauvegarde
     if @grillesRacinesModifiees == true then
       @grillesRacinesModifiees = false
       File.open(CONSTANT_FICHIER_DATA_RACINE, 'w') do |f|
-      	f.puts Marshal.dump(@grillesRacines)
+       f.puts Marshal.dump(@grillesRacines)
       end
     end
   end
 
   # Affichage de grillesRacines et grillesJouables
   def to_s
-    str  = @grillesRacines.to_s
+    str = @grillesRacines.to_s
     str += @grillesJouables.to_s
     str += "\n"
     return str
   end
 
-  # Ajoute une grille jouable à la liste.
+ # Ajoute une grille jouable à la liste.
   def ajouterGrilleJouable(grille)
     if @grillesJouables == nil then
       raise "GestionnaireDeSauvegarde.ajouterGrilleJouables(1) "+
@@ -95,15 +110,26 @@ class GestionnaireDeSauvegarde
     @grillesJouablesModifiees = true
     @grillesJouables += [grille]
     return nil
-  end 
+  end
   
   # Retourne une liste contenant les grilles jouables de taille reçue.
   # Retourne nil si aucune grille valide trouvée.
   def grillesJouablesDeTaille(taille)
-    if @grillesJouables == nil then
+    grilleRacineTemp = nil
+		if @grillesJouables == nil then
       raise "GestionnaireDeSauvegarde.ajouterGrilleJouable(1) "+
      "nécessite que les grilles jouables soient chargées. \n"
     end
+		
+		else
+			while(@grillesJouables[i] != nil) 
+				if @grillesJouables[i].taille == taille then
+					grilleRacineTemp += [@grillesJouables[i]]
+				end
+			end
+			return grilleRacineTemp
+		end
+
     print("DEBUG: GestionnaireDeSauvegarde.grillesJouablesDeTaille(1) "+
      "n'effectue aucun traitement dans cette version\n")
     return nil
@@ -112,7 +138,12 @@ class GestionnaireDeSauvegarde
   # Charge les grilles jouables en mémoire.
   # Cette opération est nécessaire pour traiter les grilles jouables
   def chargerGrillesJouables()
-    @grillesJouables = Marshal.load(File.read(CONSTANT_FICHIER_DATA_JOUABLE))
+		if (@grillesJouables == nil) then
+    	@grillesJouables = Marshal.load(File.read(CONSTANT_FICHIER_DATA_JOUABLE))
+		end
+		elsif( @grillesJouables == Marshal.load(File.read(CONSTANT_FICHIER_DATA_JOUABLE)) )
+			raise ("Grille deja chargee\n")
+		end
   end
 
   # Sauvegarde les grilles jouables si une modification à été réalisée.
@@ -124,7 +155,7 @@ class GestionnaireDeSauvegarde
        f.puts Marshal.dump(@grillesJouables)
       end
     end
-  end 
+  end
 
 
 
