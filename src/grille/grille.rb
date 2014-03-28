@@ -34,12 +34,12 @@ class Grille
     
     # matriceDesLignes[3][4] accède au 5ème chiffre de la 4ème ligne
     @matriceDesLignes = Array.new(taille) do |index| 
-      Array.new(taille/2 + 1) { nil }
+      Array.new(taille/2 + 1) { 0 }
     end
 
     # matriceDesColonnes[0][10] accède au 11ème chiffre de la 1ère ligne
     @matriceDesColonnes = Array.new(taille) do |index| 
-      Array.new(taille/2 + 1) { nil }
+      Array.new(taille/2 + 1) { 0 }
     end
   end
 
