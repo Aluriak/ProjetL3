@@ -14,8 +14,10 @@
 #################################
 # Fichier hébergeant la configuration du programme
 CONSTANT_FICHIER_DATA_CONFIG 	= 'data/config' 	unless defined? CONSTANT_FICHIER_DATA_CONFIG
-# Répertoire contenant les grilles
+# Répertoire contenant les grilles racines
 CONSTANT_FICHIER_DATA_RACINE 	= 'data/racines'	unless defined?	CONSTANT_FICHIER_DATA_RACINE
+# Répertoire contenant les grilles jouables
+CONSTANT_FICHIER_DATA_JOUABLE 	= 'data/jouables'	unless defined?	CONSTANT_FICHIER_DATA_JOUABLE
 # Répertoire contenant les sauvegardes
 CONSTANT_FICHIER_DATA_SAVE 	= 'data/saves'		unless defined?	CONSTANT_FICHIER_DATA_SAVE
 #modes d'utilisation des grille;utile pour la gui
