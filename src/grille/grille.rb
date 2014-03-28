@@ -6,7 +6,7 @@
 #################################
 # IMPORTS			#
 #################################
-load "commun/commun.rb"
+load "src/commun/commun.rb"
 
 
 

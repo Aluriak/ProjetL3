@@ -6,10 +6,10 @@
 #################################
 # IMPORTS			#
 #################################
-load "commun/commun.rb"
-load "configuration/configuration.rb"
-load "grille/jouable.rb"
-load "grille/racine.rb"
+load "src/commun/commun.rb"
+load "src/configuration/configuration.rb"
+load "src/grille/jouable.rb"
+load "src/grille/racine.rb"
 
 
 #################################

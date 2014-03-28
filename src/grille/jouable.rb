@@ -6,8 +6,8 @@
 #################################
 # IMPORTS			#
 #################################
-load "commun/commun.rb"
-load "grille/grille.rb"
+load "src/commun/commun.rb"
+load "src/grille/grille.rb"
 
 
 
