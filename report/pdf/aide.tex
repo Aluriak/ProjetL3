@@ -1,0 +1,42 @@
+%%%%%%%%%%%%%%%%%
+%BEGIN          %
+%%%%%%%%%%%%%%%%%
+\input{packages.tex}
+\newcommand{\tite}{{\Huge Manuel d'aide}\\Groupe B}
+\newcommand{\titrehead}{Manuel d'aide}
+\input{preambule.tex}
+
+\begin{document}
+
+\chapter{Liste des aides disponibles}
+
+
+\section{Les cases faciles à noircir}
+	\paragraph{}
+	\begin{itemize}
+		\item Si une grille est de taille 10x10 et que sur une ligne(ou une colonne) est indiqué 10, c'est à dire que toutes les cases de la ligne ou de la colonne doivent être noirci.\\
+
+	\begin{center}
+		\includegraphics{10par10.png}\\
+	\end{center}
+
+		\item Si la première case d'une ligne (ou d'une colonne) est noircie et que le premier nombre de cette ligne est 3, vous pouvez noircir les deux cases suivantes(resp. précédentes). En effet le 3 correspond obligatoirement aux trois premières cases de la ligne.\\
+	\begin{center}
+		\includegraphics{3premier.png}\\
+	\end{center}
+\newpage
+		\item Si une ligne(ou une colonne) comporte 10 cases et que seules 7 cases sont à noircir, vous pouvez noircir les quatres cases centrales : ces cases seront noircies quelque soit la solution de cette ligne (ou de cette colonne). Cette astuce fonctionne dès qu'une ligne ou un colonne ne possède qu'un nombre et que ce nombre est strictement plus grand que la moitié des cases de cette ligne ou de cette colonnes.\\
+
+	\begin{center}
+		\includegraphics{7casesSur10.png}
+	\end{center}
+		
+		\item Si la somme des nombres et des intervalles (au minimum 1 intervalle entre deux nombres) d'une ligne(ou d'une colonne) est égale à la longueur de la ligne(ou de la colonne), vous pouvez noircir les cases dans l'ordre des chiffres. Par exemple sur une grille 10x10, si une ligne à comme chiffre 5 et 4, la somme est bien égale à 10(5+1+4) donc vous pouvez noircir les 5 premières et les 4 dernières en laissant une case qui sera cochée entre.\\    
+	\end{itemize}
+
+\section{Les cases à éliminer}
+	\paragraph{}
+	\begin{itemize}
+		\item Vous pouvez aussi éliminer les cases qui ne sont évidemment pas à noircir en les marquant d'une croix(click droit), cela permet de voir plus clair dans la résolution du picross. Par exemple si une ligne contient trois cases à noircir et que vous avez déjà noircies ces trois cases, vous pouvez éliminer toues les autres cases de cette ligne.
+	\end{itemize}
+\end{document} 
