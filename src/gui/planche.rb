@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-load "grille/jouable.rb"
+load "src/grille/jouable.rb"
 
 
 class Planche

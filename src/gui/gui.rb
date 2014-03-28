@@ -6,13 +6,13 @@ require "gtk2"
 require "glib2"
 include Gtk
 
-load "gui/planche.rb"
-load "gui/menu.rb"
-load "gui/tablechiffre.rb"
-load "gui/chronometre.rb"
-load "grille/jouable.rb"
-load "configuration/configuration.rb"
-load "picross/picross.rb"
+load "src/gui/planche.rb"
+load "src/gui/menu.rb"
+load "src/gui/tablechiffre.rb"
+load "src/gui/chronometre.rb"
+load "src/grille/jouable.rb"
+load "src/configuration/configuration.rb"
+load "src/picross/picross.rb"
 
 class Gui
 
