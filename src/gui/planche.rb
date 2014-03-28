@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+load "src/commun/commun.rb"
 load "src/grille/jouable.rb"
 
 
@@ -32,7 +33,7 @@ class Planche
 	end
 	
 	def initialize(jouable)
-		dossier =  "gui/ressources/" #dossier contenant les images
+		dossier = CONSTANT_FICHIER_GUI_IMAGE #dossier contenant les images
 		@tabImg = ["blanc.jpg", "noir.jpg", "croix.jpg"]
 		@tabImg.map!{|img| dossier + img}
 		@table = Table.new(jouable.taille,jouable.taille)
