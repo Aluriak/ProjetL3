@@ -8,6 +8,7 @@
 #################################
 load "src/commun/commun.rb"
 load "src/configuration/configuration.rb"
+load "src/gestionnaireDeSauvegarde/gestionnaireDeSauvegarde.rb"
 load "src/grille/jouable.rb"
 load "src/grille/racine.rb"
 
@@ -19,11 +20,14 @@ load "src/grille/racine.rb"
 class Picross
   @config
   @grille
+  @gestionnaireDeSauvegarde
 
   # Référence vers une instance de classe Configuration
   attr_reader :config
   # Référence vers une instance de classe GrilleJouable
   attr_reader :grille
+  # Référence vers une instance de classe GestionnaireDeSauvegarde
+  attr_reader :gestionnaireDeSauvegarde
 
 
   def initialize
@@ -38,7 +42,7 @@ class Picross
       @config = Configuration.new(1,5)
     end
     # Chargement d'une grille
-    self.gestionnaireDeSauvegarde = GestionnaireDeSauvegarde.new
+    @gestionnaireDeSauvegarde = GestionnaireDeSauvegarde.new
   end
 
 
