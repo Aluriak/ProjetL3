@@ -37,7 +37,7 @@ class Gui
 	
 		#Partie haute de l"application
 		vbox.pack_start(hBoxHaut = HBox.new(false, 2))
-		menuHaut = Menu.creer(hBoxHaut,"Nouveau", "Editer", "Charger", "Sauvegarder", "Score" ,"Manuel", "A propos")
+		menuHaut = Menu.creer(hBoxHaut,"Nouveau", "Editer", "Charger")#, "Sauvegarder", "Score" ,"Manuel", "A propos")
 
 		#Partie basse de l"application
 		vbox.pack_start(hBoxBas = HBox.new(false, 2))
@@ -209,7 +209,7 @@ class Gui
 
 		}
 
-
+=begin
 
 		#Ecouteur signal pour le bouton "Sauvegarder"
 		menuHaut.listBtns[3].signal_connect("clicked"){
@@ -261,6 +261,8 @@ class Gui
 				about.run
 				about.destroy
 		}
+		
+=end
 			
 		window.add(vbox)
 		window.show_all

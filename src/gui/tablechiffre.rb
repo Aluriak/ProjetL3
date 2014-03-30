@@ -5,8 +5,11 @@ class TableChiffre
 	@yMax
 	@labels
 	
-	#la table contient toutes cases à 3 états
+	#la table contient toutes cases à 3 états(graphique)
 	attr_reader :table
+	
+	#la matrice est un lien vers une matriceDeLigne ou matriceDeColonne(réél)
+	attr_reader :matrice
 	
 	#les dimensions en élements de la table
 	attr_reader :xMax, :yMax
