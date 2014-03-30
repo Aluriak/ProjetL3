@@ -23,16 +23,13 @@ class Gui < Window
 	end
 	
 	def initialize(titre)
-		Gtk.init
-
+		super
 		p = Picross.new
 		@tailleGrille = p.config.derniereTailleGrille
 
-		window = Window.new(titre)
-		#window.signal_connect("destroy") { Gtk.main_quit }
-		window.signal_connect("destroy") { Gtk.main_quit }
-		#window.set_resizable(false)
-		window.set_resizable(false)
+		signal_connect("destroy") { Gtk.main_quit }
+		set_resizable(false)
+		
 		vbox = VBox.new(false, 2)
 		jouable = GrilleJouable.deTaille(@tailleGrille)
 	
@@ -265,10 +262,8 @@ class Gui < Window
 		
 =end
 			
-		window.add(vbox)
-		window.show_all
-		
-		Gtk.main
+		add(vbox)
+		show_all
 	end
 end
  
