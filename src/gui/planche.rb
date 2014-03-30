@@ -58,13 +58,12 @@ class Planche
 	#fonction qui prend la matrice jouable de jeu en parametre
 	def setup(jouable)
 			
-		@image = Array.new(jouable.taille) { Array.new(jouable.taille) }
-		@event_box = Array.new(jouable.taille) { Array.new(jouable.taille) }
+		@image = Array.new(jouable.taille, Array.new(jouable.taille))
+		@event_box = Array.new(jouable.taille, Array.new(jouable.taille))
 		
 		0.upto(jouable.taille - 1) { |y| 
 			0.upto(jouable.taille - 1) { |x|
-				#p jouable[x][y]
-				@image[x][y] = self.image(jouable.matriceDeJeu[x][y]) # à la place de 0
+				@image[x][y] = self.image(jouable.matriceDeJeu[x][y])
 				@event_box[x][y] = EventBox.new.add(@image[x][y])  
 				
 				#les 1+n éléments indiquent la position du widget

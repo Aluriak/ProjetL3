@@ -14,7 +14,7 @@ load "src/grille/jouable.rb"
 load "src/configuration/configuration.rb"
 load "src/picross/picross.rb"
 
-class Gui
+class Gui < Window
 
 	@tailleGrille	
 	
@@ -27,10 +27,11 @@ class Gui
 
 		p = Picross.new
 		@tailleGrille = p.config.derniereTailleGrille
-		
 
 		window = Window.new(titre)
+		#window.signal_connect("destroy") { Gtk.main_quit }
 		window.signal_connect("destroy") { Gtk.main_quit }
+		#window.set_resizable(false)
 		window.set_resizable(false)
 		vbox = VBox.new(false, 2)
 		jouable = GrilleJouable.deTaille(@tailleGrille)
@@ -48,10 +49,10 @@ class Gui
 		timer = Chronometre.initialiser("temps")
 		table.attach(timer.text, 0, 1, 0, 1)
 
-		chiffreHaut = TableChiffre.creer(@tailleGrille,5)
+		chiffreHaut = TableChiffre.creer(jouable.matriceDesColonnes)
 		table.attach(chiffreHaut.table, 1, 2, 0, 1)
 
-		chiffreBas = TableChiffre.creer(5,@tailleGrille)
+		chiffreBas = TableChiffre.creer(jouable.matriceDesLignes)
 		table.attach(chiffreBas.table, 0, 1, 1, 2)
 
 		planche = Planche.creer(jouable)
@@ -59,7 +60,7 @@ class Gui
 
 		#Partie basse droite de l"application
 		vBoxBas.add(vBoxBasGauche = VBox.new(false,3))	
-		menuDroit = Menu.creer(vBoxBasGauche,"Btn1", "Btn2", "Btn3")
+		menuDroit = Menu.creer(vBoxBasGauche,"Aide_1", "Aide_2", "Aide_3")
 		
 		#Ecouteur signal pour le bouton "Nouveau"
 		menuHaut.listBtns[0].signal_connect("clicked") {

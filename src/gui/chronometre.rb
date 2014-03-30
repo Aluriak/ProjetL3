@@ -14,6 +14,4 @@ class Chronometre
 		@minutes, @secondes = 0,0
 		@text = Label.new.set_text(notes + " " + @minutes.to_s + ":" + @secondes.to_s)
 	end
-	
-	
 end
