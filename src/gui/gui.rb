@@ -36,7 +36,7 @@ class Gui < Window
 	
 		#Partie haute de l"application
 		vbox.pack_start(hBoxHaut = HBox.new(false, 2))
-		menuHaut = Menu.creer(hBoxHaut,"Nouveau", "Editer", "Charger")#, "Sauvegarder", "Score" ,"Manuel", "A propos")
+		menuHaut = Menu.creer(hBoxHaut,"Nouveau", "Editer", "Charger", "Sauver", "Score" ,"Manuel", "A propos")
 
 		#Partie basse de l"application
 		vbox.pack_start(hBoxBas = HBox.new(false, 2))
@@ -60,12 +60,13 @@ class Gui < Window
 		vBoxBas.add(vBoxBasGauche = VBox.new(false,3))	
 		menuDroit = Menu.creer(vBoxBasGauche,"Aide_1", "Aide_2", "Aide_3")
 		
+		#version encore mieux : menuHaut.evement(Manuel){LeBloc } #faire un yield sur un bloc A FAIRE
 		#Ecouteur signal pour le bouton "Nouveau"
-		menuHaut.listBtns[0].signal_connect("clicked") {
+		menuHaut.nom("Nouveau").signal_connect("clicked") {
 
 			#Creation d'une 2eme fenetre pour choisir la taille de la grille
-			popupTailleGrille = Window.new("Nouvelle Grille")
-			popupTailleGrille.set_resizable(false)
+			fenetreNouvelleGrille = Window.new("Nouvelle Grille")
+			fenetreNouvelleGrille.set_resizable(false)
 
 			vb = VBox.new(false, 6)
 			
@@ -84,19 +85,25 @@ class Gui < Window
 
 			#Ajout de la 2eme horizontal box contenant boutons
 			hbBouton = HBox.new(false, 1)
-			hbBouton.pack_start(Button.new(Stock::OK), true, true)
+			hbBouton.pack_start(ok = Button.new(Stock::OK), true, true)
 			hbBouton.pack_start(cancel = Button.new(Stock::CLOSE), true, true)
-			#Marche pas!!!   cancel.signal_connect("clicked") { Gtk.main_exit }
+			
+			cancel.signal_connect("clicked"){fenetreNouvelleGrille.destroy}
+			ok.signal_connect("clicked"){
+				fenetreNouvelleGrille.destroy
+				#A FAIRE
+			}
+		
 			vb.pack_start(hbBouton)
 
 
-			popupTailleGrille.add(vb)
-			popupTailleGrille.show_all
+			fenetreNouvelleGrille.add(vb)
+			fenetreNouvelleGrille.show_all
 		}
 
 
 		#Ecouteur signal pour le bouton "Editer"
-		menuHaut.listBtns[1].signal_connect("clicked"){
+		menuHaut.nom("Editer").signal_connect("clicked"){
 
 
 			fenetreEditer = Window.new("Editer");
@@ -153,10 +160,10 @@ class Gui < Window
 			fenetreEditer.add(vBoxPrincipal)
 			fenetreEditer.show_all
 		
-			
+			cancel.signal_connect("clicked"){fenetreEditer.destroy}
+		
 			ok.signal_connect("clicked"){
 				fenetreEditer.destroy
-
 				popupEdition = Window.new("Edition Grille")
 				popupEdition.set_resizable(false)
 				vbox = VBox.new(false, 2)
@@ -180,7 +187,7 @@ class Gui < Window
 		}
 
 		#Ecouteur signal pour le bouton "Charger"
-		menuHaut.listBtns[2].signal_connect("clicked"){
+		menuHaut.nom("Charger").signal_connect("clicked"){
 			dialog = FileChooserDialog.new("Charger une grille",
 											nil,
 											FileChooser::ACTION_OPEN,
@@ -196,10 +203,8 @@ class Gui < Window
 
 		}
 
-=begin
-
 		#Ecouteur signal pour le bouton "Sauvegarder"
-		menuHaut.listBtns[3].signal_connect("clicked"){
+		menuHaut.nom("Sauver").signal_connect("clicked"){
 			dialog = FileChooserDialog.new("Sauvegarder une grille",
 											nil,
 											FileChooser::ACTION_OPEN,
@@ -216,9 +221,8 @@ class Gui < Window
 		}
 
 		#Ecouteur signal pour le bouton "Score"
-		menuHaut.listBtns[4].signal_connect("clicked"){
-
-		
+		#version encore mieux : menuHaut.evement(Manuel){LeBloc } #faire un yield sur un bloc
+		menuHaut.nom("Score").signal_connect("clicked"){
 
 			dialog = Gtk::MessageDialog.new(nil, 
                                 Gtk::Dialog::DESTROY_WITH_PARENT,
@@ -231,7 +235,9 @@ class Gui < Window
 		}
 
 		#evenement clique le bouton "Manuel"
-		menuHaut.listBtns[5].signal_connect("clicked") {
+		
+		#version encore mieux : menuHaut.evement(Manuel){LeBloc } #faire un yield sur un bloc
+		menuHaut.nom("Manuel").signal_connect("clicked") {
 			about = AboutDialog.new
 				about.set_website "http://fr.wikipedia.org/wiki/Picross"
 			about.run
@@ -242,14 +248,22 @@ class Gui < Window
 		#evenement clique le bouton "A Propos"
 		menuHaut.listBtns[6].signal_connect("clicked") {
 			about = AboutDialog.new
-					about.set_program_name "ProjetPicrossL3"
-					about.set_version "0.1"
-					about.set_copyright "(c) Groupe B"
-				about.run
-				about.destroy
+			about.set_program_name("Picross")
+			about.set_version("0.1")	
+			auteurs = [
+				"\nLucas Bourneuf(Chef de Projet)",
+				"Charlie Marechal(Documentaliste)",
+				"Nicolas Bourdin(Developpeur)",
+				"Ewen Cousin(Developpeur)",
+				"Jaweed Parwany(Developpeur)",
+				"Julien Le Gall(Developpeur)",
+		        "\n@ : prenom.nom.etu@univ-lemans.fr"
+		    ]
+			about.set_authors(auteurs)	
+			about.set_copyright("(c) Groupe B")
+			about.run
+			about.destroy
 		}
-		
-=end
 			
 		add(vbox)
 		show_all

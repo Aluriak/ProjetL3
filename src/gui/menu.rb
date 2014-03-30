@@ -18,4 +18,11 @@ class Menu
 			@listBtns << btn
 		}
 	end
+	
+	def nom(leNom)
+		@listBtns.each { |b|
+			if b.label == leNom then return b end
+		}
+		raise "ce bouton n'existe pas"
+	end
 end
