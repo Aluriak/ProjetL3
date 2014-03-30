@@ -60,9 +60,8 @@ class Gui < Window
 		vBoxBas.add(vBoxBasGauche = VBox.new(false,3))	
 		menuDroit = Menu.creer(vBoxBasGauche,"Aide_1", "Aide_2", "Aide_3")
 		
-		#version encore mieux : menuHaut.evement(Manuel){LeBloc } #faire un yield sur un bloc A FAIRE
 		#Ecouteur signal pour le bouton "Nouveau"
-		menuHaut.nom("Nouveau").signal_connect("clicked") {
+		menuHaut.clickerSur("Nouveau"){
 
 			#Creation d'une 2eme fenetre pour choisir la taille de la grille
 			fenetreNouvelleGrille = Window.new("Nouvelle Grille")
@@ -89,6 +88,7 @@ class Gui < Window
 			hbBouton.pack_start(cancel = Button.new(Stock::CLOSE), true, true)
 			
 			cancel.signal_connect("clicked"){fenetreNouvelleGrille.destroy}
+			
 			ok.signal_connect("clicked"){
 				fenetreNouvelleGrille.destroy
 				#A FAIRE
@@ -103,8 +103,7 @@ class Gui < Window
 
 
 		#Ecouteur signal pour le bouton "Editer"
-		menuHaut.nom("Editer").signal_connect("clicked"){
-
+		menuHaut.clickerSur("Editer"){
 
 			fenetreEditer = Window.new("Editer");
 			fenetreEditer.set_resizable(false)
@@ -187,13 +186,13 @@ class Gui < Window
 		}
 
 		#Ecouteur signal pour le bouton "Charger"
-		menuHaut.nom("Charger").signal_connect("clicked"){
+		menuHaut.clickerSur("Charger"){
 			dialog = FileChooserDialog.new("Charger une grille",
-											nil,
-											FileChooser::ACTION_OPEN,
-											nil,
-											[Stock::CANCEL, Dialog::RESPONSE_CANCEL],
-											[Stock::OPEN, Dialog::RESPONSE_ACCEPT])
+					nil,
+					FileChooser::ACTION_OPEN,
+					nil,
+					[Stock::CANCEL, Dialog::RESPONSE_CANCEL],
+					[Stock::OPEN, Dialog::RESPONSE_ACCEPT])
 
 
 		if dialog.run == Dialog::RESPONSE_ACCEPT
@@ -204,7 +203,7 @@ class Gui < Window
 		}
 
 		#Ecouteur signal pour le bouton "Sauvegarder"
-		menuHaut.nom("Sauver").signal_connect("clicked"){
+		menuHaut.clickerSur("Sauver"){
 			dialog = FileChooserDialog.new("Sauvegarder une grille",
 											nil,
 											FileChooser::ACTION_OPEN,
@@ -221,8 +220,7 @@ class Gui < Window
 		}
 
 		#Ecouteur signal pour le bouton "Score"
-		#version encore mieux : menuHaut.evement(Manuel){LeBloc } #faire un yield sur un bloc
-		menuHaut.nom("Score").signal_connect("clicked"){
+		menuHaut.clickerSur("Score"){
 
 			dialog = Gtk::MessageDialog.new(nil, 
                                 Gtk::Dialog::DESTROY_WITH_PARENT,
@@ -235,18 +233,15 @@ class Gui < Window
 		}
 
 		#evenement clique le bouton "Manuel"
-		
-		#version encore mieux : menuHaut.evement(Manuel){LeBloc } #faire un yield sur un bloc
-		menuHaut.nom("Manuel").signal_connect("clicked") {
+		menuHaut.clickerSur("Manuel"){
 			about = AboutDialog.new
-				about.set_website "http://fr.wikipedia.org/wiki/Picross"
+			about.set_website "http://fr.wikipedia.org/wiki/Picross"
 			about.run
 			about.destroy
-
 		}
-
+		
 		#evenement clique le bouton "A Propos"
-		menuHaut.listBtns[6].signal_connect("clicked") {
+		menuHaut.clickerSur("A propos") {
 			about = AboutDialog.new
 			about.set_program_name("Picross")
 			about.set_version("0.1")	
