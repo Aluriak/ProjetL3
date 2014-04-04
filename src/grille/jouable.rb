@@ -61,6 +61,11 @@ class GrilleJouable < Grille
   end
   
 
+  # Vrai si la matrice de jeu correspond aux facteurs
+  def terminee()
+  end
+
+
 
   # Marshal API : méthode de dump
   def marshal_dump
