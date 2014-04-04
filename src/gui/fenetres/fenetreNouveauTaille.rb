@@ -10,7 +10,7 @@ class FenetreNouveauTaille
 
 	@tailleNouvelleMatrice
 
-	def initialize()
+	def initialize
 
 			#Creation d'une 2eme fenetre pour choisir la taille de la grille
 			popupTailleGrille = Window.new("Nouvelle Grille")
@@ -38,11 +38,11 @@ class FenetreNouveauTaille
 
 			}			
 			hbBouton.pack_start(cancel = Button.new(Stock::CLOSE), true, true)
-			#Marche pas!!!   cancel.signal_connect("clicked") { Gtk.main_exit }
+			cancel.signal_connect("clicked") { popupTailleGrille.destroy }
 			vb.pack_start(hbBouton)
 
 
-			popupTailleGrille.add(vb)
+			popupTailleGrille.add(Frame.new.add(vb))
 			popupTailleGrille.show_all
 			
 	end
