@@ -6,15 +6,17 @@ include Gtk
 
 class FenetreScore
 
+	@score
+	
+	def initialize(score)
 
-	def initialize()
+		@score = score
 
-
-		dialog = Gtk::MessageDialog.new(nil, 
-			Gtk::Dialog::DESTROY_WITH_PARENT,
-			Gtk::MessageDialog::INFO,
-			Gtk::MessageDialog::BUTTONS_CLOSE,
-			"Voici les scores...\nToto - 4\nJaco -- -2\nAl Acampagne -- -1\n")
+		dialog = MessageDialog.new(nil, 
+			Dialog::DESTROY_WITH_PARENT,
+			MessageDialog::INFO,
+			MessageDialog::BUTTONS_CLOSE,
+			"Voici les scores:\nToto - 4\nJaco -- -2\nAl Acampagne -- -1\n")
 		dialog.run
 		dialog.destroy
 
