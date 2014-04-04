@@ -36,7 +36,6 @@ class Gui
 		p = Picross.new
 		@tailleGrille = p.config.derniereTailleGrille
 		
-
 		window = Window.new(titre)
 		window.signal_connect("destroy") { Gtk.main_quit }
 		window.set_resizable(false)
@@ -50,7 +49,9 @@ class Gui
 		#Partie basse de l"application
 		vbox.pack_start(hBoxBas = HBox.new(false, 2))
 		hBoxBas.add(vBoxBas = HBox.new(false))
-		vBoxBas.add(table = Table.new(4,4))
+		f = Frame
+		
+		vBoxBas.add(Frame.new.add(table = Table.new(4,4)))
 
 		#Chronometre
 		timer = Chronometre.initialiser("temps")
@@ -66,44 +67,29 @@ class Gui
 		table.attach(planche.table, 1, 2, 1, 2)
 
 		#Partie basse droite de l"application
-		vBoxBas.add(vBoxBasGauche = VBox.new(false,3))	
-		menuDroit = Menu.creer(vBoxBasGauche,"Btn1", "Btn2", "Btn3")
+		vBoxBas.add(Frame.new.add(vBoxBasGauche = VBox.new(false,3)))
+		menuDroit = Menu.creer(vBoxBasGauche,"Aide - Faible", "Aide - Fort")
 		
 		#Ecouteur signal pour le bouton "Nouveau"
-		menuHaut.clickerSur("Nouveau"){
-			nouveau = FenetreNouveauTaille.new
-		}
-
+		menuHaut.clickerSur("Nouveau"){ nouveau = FenetreNouveauTaille.new }
 
 		#Ecouteur signal pour le bouton "Editer"
-		menuHaut.clickerSur("Editer"){
-			editer = FenetreEditionTaille.new
-		}
+		menuHaut.clickerSur("Editer"){ editer = FenetreEditionTaille.new }
 
 		#Ecouteur signal pour le bouton "Charger"
-		menuHaut.clickerSur("Charger"){
-			fenetreCharger = FenetreCharger.new
-		}
+		menuHaut.clickerSur("Charger"){ fenetreCharger = FenetreCharger.new }
 
 		#Ecouteur signal pour le bouton "Sauvegarder"
-		menuHaut.clickerSur("Sauvegarder"){
-			fenetreSauvegarder = FenetreSauvegarder.new
-		}
+		menuHaut.clickerSur("Sauvegarder"){ fenetreSauvegarder = FenetreSauvegarder.new }
 
 		#Ecouteur signal pour le bouton "Score"
-		menuHaut.clickerSur("Score"){
-			fenetreScore = FenetreScore.new	
-		}
+		menuHaut.clickerSur("Score"){ fenetreScore = FenetreScore.new }
 
 		#evenement clique le bouton "Manuel"
-		menuHaut.clickerSur("Manuel"){
-			fenetreManuel = FenetreManuel.new
-		}
+		menuHaut.clickerSur("Manuel"){ fenetreManuel = FenetreManuel.new }
 
 		#evenement clique le bouton "A Propos"
-		menuHaut.clickerSur("A propos"){
-			fenetreAPropos = FenetreAPropos.new
-		}
+		menuHaut.clickerSur("A propos"){ fenetreAPropos = FenetreAPropos.new }
 			
 		window.add(vbox)
 		window.show_all
