@@ -54,7 +54,7 @@ class Grille
   # Attend une taille de grille valable (== contenu dans Grille.taille)
   def Grille.deTaille(taille)
     #taille not in @@tailles ? raise "Taille non définie" : nil
-    raise "Taille non définie" if not Grille.tailles.include? taille
+    raise "Taille non définie" if not Grille.tailles.include?(taille)
     return new(taille)
   end
 

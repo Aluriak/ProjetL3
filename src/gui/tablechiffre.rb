@@ -1,43 +1,54 @@
 class TableChiffre
 	
 	@table
-	@xMax
-	@yMax
+	@largeur
+	@hauteur
 	@labels
 	
-	#la table contient toutes cases à 3 états
+	#la table contient toutes cases à 3 états(graphique)
 	attr_reader :table
 	
-	#les dimensions en élements de la table
-	attr_reader :xMax, :yMax
+	#la matrice est un lien vers une matriceDeLigne ou matriceDeColonne(réél)
+	attr_reader :matrice
+	
+	#les dimensions de la table
+	attr_reader :largeur, :hauteur
 	
 	#creation de la tableChiffre
-	def TableChiffre.creer(xMax,yMax)
-		new(xMax,yMax)
+	def TableChiffre.creer(matrice)
+		new(matrice)
 	end
 	
-	def initialize(xMax,yMax)	
-		@table = Table.new(xMax,yMax)
-		@yMax, @xMax = yMax, xMax
-		self.setup(xMax,yMax)
+	def initialize(matrice)	
+		#il faudrait avoir ça
+		#@hauteur, @largeur = matrice.hauteur, matrice.largeur
+		@hauteur, @largeur = 5,5
+		
+		@table = Table.new(@hauteur, @largeur)
+		
+		
+		self.setup(@hauteur, @largeur)
 	end
 	
 	# affichage
 	def afficher
-		print "x,y:",@xMax,",","@yMax","\n"
+		print "l=#{@largeur};h=#{@hauteur}\n"
 	end
 	
-	def reinitialiser(xMax,yMax)
-		@table = @table.resize(xMax,yMax)
-		self.setup(xMax,yMax)
+	def reinitialiser(largeur,hauteur)
+		@table = @table.resize(largeur,hauteur)
+		self.setup(largeur,hauteur)
 	end
 	
-	def setup(xMax, yMax)
+	def setup(largeur, hauteur)
 			
-		@labels = Array.new(xMax) { Array.new(yMax) }
+		@labels = Array.new(largeur,Array.new(hauteur))
 		
-		0.upto(yMax - 1) { |y| 
-			0.upto(xMax - 1) { |x|
+		0.upto(hauteur - 1) { |y| 
+			0.upto(largeur - 1) { |x|
+				
+				#ce qu'il faudrait avoir
+				#@labels[x][y] = Label.new.set_text(matrice[x][y])
 				@labels[x][y] = Label.new.set_text(rand(10).to_s) #arbitraire
 				
 				#les 1+n éléments indiquent la position du widget

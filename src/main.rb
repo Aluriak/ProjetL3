@@ -6,5 +6,7 @@
 load "src/gui/gui.rb"
 
 ############JEU###############
-Gui.lancer("PICROSS")
+Gtk.init
+	Gui.lancer("PICROSS")
+Gtk.main
 

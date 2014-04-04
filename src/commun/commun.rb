@@ -26,6 +26,9 @@ CONSTANT_MODE_EDTION		= -6 			unless defined?	CONSTANT_MODE_EDTION
 # Fichiers images pour la GUI
 CONSTANT_FICHIER_GUI_IMAGE	= 'data/gui/'		unless defined?	CONSTANT_FICHIER_GUI_IMAGE
 
+#le nombre de chiffres que l'utilisateur peut entrer pour une taille de grille
+CONSTANT_MAX_CHIFFRES = 2 unless defined?	CONSTANT_MAX_CHIFFRES
+
 #################################
 # TAILLE			#
 #################################
