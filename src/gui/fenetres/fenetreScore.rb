@@ -11,10 +11,10 @@ class FenetreScore
 
 
 		dialog = Gtk::MessageDialog.new(nil, 
-                                Gtk::Dialog::DESTROY_WITH_PARENT,
-                                Gtk::MessageDialog::INFO,
-                                Gtk::MessageDialog::BUTTONS_CLOSE,
-                                "Dlaaaaa merde j'arrive pas a mettre plusieurs lignes dans cette boite de dialogue ><")
+			Gtk::Dialog::DESTROY_WITH_PARENT,
+			Gtk::MessageDialog::INFO,
+			Gtk::MessageDialog::BUTTONS_CLOSE,
+			"Voici les scores...\nToto - 4\nJaco -- -2\nAl Acampagne -- -1\n")
 		dialog.run
 		dialog.destroy
 
