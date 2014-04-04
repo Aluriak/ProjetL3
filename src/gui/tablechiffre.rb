@@ -3,6 +3,7 @@ class TableChiffre
 	@table
 	@largeur
 	@hauteur
+	@matrice
 	@labels
 	
 	#la table contient toutes cases à 3 états(graphique)
@@ -14,20 +15,30 @@ class TableChiffre
 	#les dimensions de la table
 	attr_reader :largeur, :hauteur
 	
+	#les conteneurs afficheurs
+	attr_reader :labels
+	
 	#creation de la tableChiffre
 	def TableChiffre.creer(matrice)
 		new(matrice)
 	end
 	
 	def initialize(matrice)	
-		#il faudrait avoir ça
-		#@hauteur, @largeur = matrice.hauteur, matrice.largeur
-		@hauteur, @largeur = 5,5
 		
-		@table = Table.new(@hauteur, @largeur)
+		#@largeur = matrice.largeur
+		#@longueur = matrice.longueur
+		@matrice = matrice
 		
+		@largeur = matrice.length
+				
+		@hauteur = matrice[0].length
 		
-		self.setup(@hauteur, @largeur)
+		p @largeur
+		p @longueur
+		
+		#@matrice = 5#matrice.size
+		@table = Table.new(@largeur, @hauteur) #à remplacer par matrice.largeur, materice.longueur
+		self.setup(@largeur, @hauteur)
 	end
 	
 	# affichage
@@ -49,7 +60,7 @@ class TableChiffre
 				
 				#ce qu'il faudrait avoir
 				#@labels[x][y] = Label.new.set_text(matrice[x][y])
-				@labels[x][y] = Label.new.set_text(rand(10).to_s) #arbitraire
+				@labels[x][y] = Label.new(@matrice[x][y].to_s)
 				
 				#les 1+n éléments indiquent la position du widget
 				@table.attach(@labels[x][y], x, x+1, y, y+1) 
