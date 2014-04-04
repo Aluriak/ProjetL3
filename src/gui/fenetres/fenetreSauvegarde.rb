@@ -18,7 +18,7 @@ class FenetreSauvegarder
 			"Sauvegarde faite!")
 
 		dialog.run
-		dialog.detroy
+		dialog.destroy
 
 	end
 
