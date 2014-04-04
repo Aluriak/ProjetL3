@@ -163,8 +163,18 @@ class Picross
   end
 
 
-  # Définit une nouvelle grille jouable de la taille demandée
-  def 
+  # Définit une nouvelle @grille jouable de la taille demandée pour self
+  def nouvelleGrilleDeTaille(taille)
+    #TODO
+  end
+
+
+  # Vrai si la @grille correspond au facteurs
+  def grilleTerminee?()
+    return @grille.terminee?
+  end
+
+
   # Remise à zéro de la configuration
   # METHODE DE DEBUG
   def remiseAZero
