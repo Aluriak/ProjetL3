@@ -25,16 +25,16 @@ class TableChiffre
 	
 	def initialize(matrice)	
 		
-		#@largeur = matrice.largeur
-		#@longueur = matrice.longueur
 		@matrice = matrice
 		
-		@largeur = matrice.length
-				
-		@hauteur = matrice[0].length
-		
-		p @largeur
-		p @longueur
+		if matrice.orientationHorizontale?
+			@largeur = matrice[0].length	
+			@hauteur = matrice.length
+		else
+			@largeur = matrice.length	
+			@hauteur = matrice[0].length
+			
+		end
 		
 		#@matrice = 5#matrice.size
 		@table = Table.new(@largeur, @hauteur) #à remplacer par matrice.largeur, materice.longueur
@@ -65,7 +65,12 @@ class TableChiffre
 				#les 1+n éléments indiquent la position du widget
 				@table.attach(@labels[x][y], x, x+1, y, y+1) 
               
-				@labels[x][y].signal_connect("button_press_event") { 	
+		                        
+				#@labels[x][y].signal_connect("move-cursor"){
+					#@labels[x][y].label.set_markup("<color = blue>Small text</color>")
+				#}
+
+				@labels[x][y].signal_connect("button_press_event"){
 					#rien pour l'instant
 				}
 			}
