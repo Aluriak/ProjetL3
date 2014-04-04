@@ -3,6 +3,6 @@ run:
 
 
 doc:
-	rdoc -i src/ -x samples/  -o doc //genere la doc pour tout les repertoires de src sauf samples
+	rdoc -i src/ --[-no]dcov samples/  -o doc //genere la doc pour tout les repertoires de src sauf de samples
 
 
