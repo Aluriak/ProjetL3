@@ -55,8 +55,27 @@ class Gui
 		#Chronometre
 		timer = Chronometre.initialiser("temps")
 		table.attach(timer.text, 0, 1, 0, 1)
+=begin
 
-		chiffreHaut = TableChiffre.creer(@tailleGrille)
+		
+		jouable.matriceDesColonnes = Array.new(5){Array.new(4)}
+		
+		for i in 0..jouable.matriceDesColonnes.length-1
+			for j in 0..jouable.matriceDesColonnes[0].length-1
+			jouable.matriceDesColonnes[i][j] = -1
+			end
+		end
+		
+		jouable.matriceDesLignes = Array.new(4){Array.new(5)}
+		
+		for i in 0..jouable.matriceDesLignes.length-1
+			for j in 0..jouable.matriceDesLignes[0].length-1
+				jouable.matriceDesLignes[i][j] = -1
+			end
+		end
+		
+		chiffreHaut = TableChiffre.creer(jouable.matriceDesColonnes)
+=end
 		table.attach(chiffreHaut.table, 1, 2, 0, 1)
 
 		chiffreBas = TableChiffre.creer(jouable.matriceDesLignes)
