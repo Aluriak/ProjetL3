@@ -7,22 +7,18 @@ include Gtk
 class FenetreSauvegarder
 
 
-	def initialize()
+	def initialize
 
+		#A FAIRE
+		dialog = MessageDialog.new(
+			nil, 
+			Gtk::Dialog::DESTROY_WITH_PARENT,
+			Gtk::MessageDialog::INFO,
+			Gtk::MessageDialog::BUTTONS_CLOSE,
+			"Sauvegarde faite!")
 
-		dialog = FileChooserDialog.new("Charger une grille",
-									nil,
-									FileChooser::ACTION_OPEN,
-									nil,
-									[Stock::CANCEL, Dialog::RESPONSE_CANCEL],
-									[Stock::OPEN, Dialog::RESPONSE_ACCEPT])
-
-
-		if dialog.run == Dialog::RESPONSE_ACCEPT
-			puts "filename = #{dialog.filename}"
-		end
-		dialog.destroy
-
+		dialog.run
+		dialog.detroy
 
 	end
 
