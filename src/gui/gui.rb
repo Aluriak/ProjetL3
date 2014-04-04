@@ -22,6 +22,13 @@ load "src/gui/fenetres/fenetreScore.rb"
 load "src/gui/fenetres/fenetreManuel.rb"
 load "src/gui/fenetres/fenetreAPropos.rb"
 
+class Array
+	def orientationHorizontale?
+		# c'est effectivement l'inverse pour une orientation Verticale
+		return self.size > self[0].size 
+	end
+end
+
 class Gui
 
 	@tailleGrille	
@@ -55,7 +62,7 @@ class Gui
 		#Chronometre
 		timer = Chronometre.initialiser("temps")
 		table.attach(timer.text, 0, 1, 0, 1)
-=begin
+
 
 		
 		jouable.matriceDesColonnes = Array.new(5){Array.new(4)}
@@ -73,9 +80,10 @@ class Gui
 				jouable.matriceDesLignes[i][j] = -1
 			end
 		end
+
 		
 		chiffreHaut = TableChiffre.creer(jouable.matriceDesColonnes)
-=end
+
 		table.attach(chiffreHaut.table, 1, 2, 0, 1)
 
 		chiffreBas = TableChiffre.creer(jouable.matriceDesLignes)
