@@ -49,7 +49,6 @@ class Gui
 		#Partie basse de l"application
 		vbox.pack_start(hBoxBas = HBox.new(false, 2))
 		hBoxBas.add(vBoxBas = HBox.new(false))
-		f = Frame
 		
 		vBoxBas.add(Frame.new.add(table = Table.new(4,4)))
 
@@ -60,14 +59,14 @@ class Gui
 		chiffreHaut = TableChiffre.creer(@tailleGrille)
 		table.attach(chiffreHaut.table, 1, 2, 0, 1)
 
-		chiffreBas = TableChiffre.creer(@tailleGrille)
+		chiffreBas = TableChiffre.creer(jouable.matriceDesLignes)
 		table.attach(chiffreBas.table, 0, 1, 1, 2)
 
 		planche = Planche.creer(jouable)
 		table.attach(planche.table, 1, 2, 1, 2)
 
 		#Partie basse droite de l"application
-		vBoxBas.add(Frame.new.add(vBoxBasGauche = VBox.new(false,3)))
+		vBoxBas.add(Frame.new.add(vBoxBasGauche = VBox.new(2)))
 		menuDroit = Menu.creer(vBoxBasGauche,"Aide - Faible", "Aide - Fort")
 		
 		#Ecouteur signal pour le bouton "Nouveau"
@@ -83,7 +82,7 @@ class Gui
 		menuHaut.clickerSur("Sauvegarder"){ fenetreSauvegarder = FenetreSauvegarder.new }
 
 		#Ecouteur signal pour le bouton "Score"
-		menuHaut.clickerSur("Score"){ fenetreScore = FenetreScore.new }
+		menuHaut.clickerSur("Score"){ fenetreScore = FenetreScore.new(nil) } #remplacer par une instance de score
 
 		#evenement clique le bouton "Manuel"
 		menuHaut.clickerSur("Manuel"){ fenetreManuel = FenetreManuel.new }
