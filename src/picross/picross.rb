@@ -156,6 +156,15 @@ class Picross
     
   end
 
+
+  # Renvois la dernière taille de grille utilisée
+  def derniereTailleDeGrille()
+    return @config.derniereTailleGrille
+  end
+
+
+  # Définit une nouvelle grille jouable de la taille demandée
+  def 
   # Remise à zéro de la configuration
   # METHODE DE DEBUG
   def remiseAZero
