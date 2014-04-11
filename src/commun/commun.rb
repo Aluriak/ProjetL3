@@ -40,6 +40,7 @@ class Grille
   @@tailles = [5,10,15,20,25]
   # les tailles possibles de grilles sont listée dans la table de classe
   def Grille.tailles() return @@tailles end
+  def Grille.tailleValide(t) return @@tailles.include? t  end
 end
 
 
