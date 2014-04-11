@@ -31,23 +31,40 @@ end
 
 class Gui
 
+	@derniereTailleGrille	
+
+	p = Picross.new
+	@derniereTailleGrille = p.derniereTailleDeGrille
+	
+	
+	def Gui.lancerTailleDerniereGrille(titre)
+		puts "Derniere taille de la grille ",@derniereTailleGrille
+		new(titre, @derniereTailleGrille)
+	end
+
+	#A faire :  Différencier les deux constructeurs
+	#Soit on lance le constructeur avec la valeur de la derniere grille
+	#Soit on lance le constructeur avec la valeur définie par le joueur
+	
+	def Gui.lancerTailleChoisie(titre, tailleChoisie)
+		puts "Taille choisie : #{tailleChoisie}"
+		new(titre, tailleChoisie)
+	end
+
 	@tailleGrille	
 	
-	def Gui.lancer(titre)
-		new(titre)
-	end
 	
-	def initialize(titre)
+	def initialize(titre, tailleGrille)
 		Gtk.init
 
-		p = Picross.new
-		@tailleGrille = p.config.derniereTailleGrille
+		#p = Picross.new
+		#@tailleGrille = p.config.derniereTailleGrille
 		
 		window = Window.new(titre)
 		window.signal_connect("destroy") { Gtk.main_quit }
 		window.set_resizable(false)
 		vbox = VBox.new(false, 2)
-		jouable = GrilleJouable.deTaille(@tailleGrille)
+		jouable = GrilleJouable.deTaille(tailleGrille)
 	
 		#Partie haute de l"application
 		vbox.pack_start(hBoxHaut = HBox.new(false, 2))
@@ -65,9 +82,9 @@ class Gui
 
 
 		
-		jouable.matriceDesColonnes = Array.new(5){Array.new(4)}
+		#jouable.matriceDesColonnes = Array.new(5){Array.new(4)}
 		
-		for i in 0..jouable.matriceDesColonnes.length-1
+=begin	for i in 0..jouable.matriceDesColonnes.length-1
 			for j in 0..jouable.matriceDesColonnes[0].length-1
 			jouable.matriceDesColonnes[i][j] = -1
 			end
@@ -80,7 +97,7 @@ class Gui
 				jouable.matriceDesLignes[i][j] = -1
 			end
 		end
-
+=end
 		
 		chiffreHaut = TableChiffre.creer(jouable.matriceDesColonnes)
 
