@@ -48,24 +48,6 @@ class GestionnaireDeSauvegarde
     @grillesRacines += [grille]
     return nil
   end
-
-  # Retourne une liste contenant les grilles racines de taille reçue.
-  # Retourne nil si aucune grille valide trouvée.
-  def grillesRacinesDeTaille(taille)
-		grilleRacineTemp = nil
-    if @grillesRacines == nil then
-      raise "GestionnaireDeSauvegarde.ajouterGrilleRacine(1) "+
-     "nécessite que les grilles racines soient chargées. \n"
-    else
-      while(@grillesRacines[i] != nil) 
-      	if @grillesRacines[i].taille == taille then
-      	  grilleRacineTemp += [@grillesRacines[i]]
-      	end
-      end
-      return grilleRacinesTemp
-    end
-    return nil
-  end
   
   # Charge les grilles racines en mémoire.
   # Cette opération est nécessaire pour traiter les grilles racines
@@ -84,42 +66,38 @@ class GestionnaireDeSauvegarde
        f.puts Marshal.dump(@grillesRacines)
       end
     end
-  end
-
-  # Affichage de grillesRacines et grillesJouables
-  def to_s
-    str = @grillesRacines.to_s
-    str += @grillesJouables.to_s
-    str += "\n"
-    return str
-  end
-
- # Ajoute une grille jouable à la liste.
-  def ajouterGrilleJouable(grille)
-    if @grillesJouables == nil then
-      raise "GestionnaireDeSauvegarde.ajouterGrilleJouables(1) "+
-     "nécessite que les grilles jouables soient chargées. \n"
-    end
-    @grillesJouablesModifiees = true
-    @grillesJouables += [grille]
     return nil
   end
-  
-  # Retourne une liste contenant les grilles jouables de taille reçue.
+
+  # Retourne une liste contenant les grilles racines de taille reçue.
   # Retourne nil si aucune grille valide trouvée.
-  def grillesJouablesDeTaille(taille)
-    grilleRacineTemp = nil
-    if @grillesJouables == nil then
-      raise "GestionnaireDeSauvegarde.ajouterGrilleJouable(1) "+
-      "nécessite que les grilles jouables soient chargées. \n"
+  def grillesRacinesDeTaille(taille)
+    grilleRacineTemp = []
+    if @grillesRacines == nil then
+      self.chargerGrillesRacines
     else
-      while(@grillesJouables[i] != nil) 
-	if @grillesJouables[i].taille == taille then
-		grilleRacineTemp += [@grillesJouables[i]]
+      @grillesRacines.each do |grl|
+      	if grl.taille == taille then 
+      	  grilleRacineTemp += grl
 	end
       end
     end
     return grilleRacineTemp
+    return nil
+  end
+
+
+##########################################################
+
+
+ # Ajoute une grille jouable à la liste.
+  def ajouterGrilleJouable(grille)
+    if @grillesJouables == nil then
+      self.chargerGrillesJouables
+    end
+    @grillesJouablesModifiees = true
+    @grillesJouables += [grille]
+    return nil
   end
   
   # Charge les grilles jouables en mémoire.
@@ -141,6 +119,32 @@ class GestionnaireDeSauvegarde
     end
   end
 
+  # Retourne une liste contenant les grilles jouables de taille reçue.
+  # Retourne nil si aucune grille valide n'est trouvée.
+  def grillesJouablesDeTaille(taille)
+    grillesJouablesTemp = []
+    if @grillesJouables == nil then
+      self.chargerGrillesJouables
+    else
+      @grillesJouables.each do |grl|
+      	if grl.taille == taille then 
+      	  grillesJouablesTemp += grl
+	end
+      end
+    end
+    return grillesJouablesTemp
+  end
+  
+
+
+
+  # Affichage de grillesRacines et grillesJouables
+  def to_s
+    str = @grillesRacines.to_s
+    str += @grillesJouables.to_s
+    str += "\n"
+    return str
+  end
 
 
 end
