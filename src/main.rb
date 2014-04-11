@@ -7,6 +7,6 @@ load "src/gui/gui.rb"
 
 ############JEU###############
 Gtk.init
-	Gui.lancer("PICROSS")
+	Gui.lancerTailleDerniereGrille("PICROSS")
 Gtk.main
 
