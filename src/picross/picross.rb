@@ -174,6 +174,9 @@ class Picross
     return @grille.terminee?
   end
 
+  def tailleGrilleValide?(t)
+    return @@tailles.include?(t)
+  end
 
   # Remise à zéro de la configuration
   # METHODE DE DEBUG
