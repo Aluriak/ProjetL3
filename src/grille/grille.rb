@@ -49,13 +49,14 @@ class Grille
   end
 
 
-
+  ##
   # Créer une Grille de taille voulue
   # Attend une taille de grille valable (== contenu dans Grille.taille)
-  def Grille.deTaille(taille)
+  # :args: taille de la grille, matrice des facteurs de ligne, matrice des facteurs de colonne.
+  def Grille.deTaille(taille, matriceDesLignes = nil, matriceDesColonnes = nil)
     #taille not in @@tailles ? raise "Taille non définie" : nil
     raise "Taille non définie" if not Grille.tailles.include?(taille)
-    return new(taille)
+    return new(taille, matriceDesLignes, matriceDesColonnes)
   end
 
   # Retourne la taille de la grille
