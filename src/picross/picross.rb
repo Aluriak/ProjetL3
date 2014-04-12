@@ -157,30 +157,39 @@ class Picross
     
   end
 
-
-  # Renvois la dernière taille de grille utilisée
+  ##
+  # Renvois la dernière taille de grille utilisée.
   def derniereTailleDeGrille()
     return @config.derniereTailleGrille
   end
 
 
-  # Définit une nouvelle @grille jouable de la taille demandée pour self
+  ##
+  # Définit une nouvelle @grille jouable de la taille demandée pour self.
+  # :arg: taille de la grille
   def nouvelleGrilleDeTaille(taille)
-    grlRacine = self.gestionnaireDeSauvegarde.grillesRacinesDeTaille(taille)
-    @grille = GrilleJouable.creerDepuis(grlRacine)
+    listGrlRacine = self.gestionnaireDeSauvegarde.grillesRacinesDeTaille(taille)
+    grille = listGrlRacine.first#TODO prendre une grille au hasard dans la liste.
+    #Si elle est vide, en créer une à la volée.
+    @grille = GrilleJouable.creerDepuis(grille)
   end
 
+  ##
   # Sauvegarde la grille actuellement jouée dans une nouvelle sauvegarde.
+  # :arg: nom du profil lié à la grille
   def sauverGrilleJouee(profil_nom)
     #TODO
   end
 
+  ##
   # Predicat: Vrai si la @grille correspond au facteurs.
   def grilleTerminee?()
-    return @grille.terminee?
+    return @grille.terminee?    
   end
 
+  ##
   # Predicat: Vrai si t désigne une taille de grille valide, faux sinon.
+  # :arg: t une tialle de grille
   def tailleGrilleValide?(t)
     return @@tailles.include?(t)
   end
