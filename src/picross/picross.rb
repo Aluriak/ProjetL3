@@ -40,6 +40,7 @@ class Picross
       # En cas d'absence de fichier de configuration,
       #   création d'une configuration par défaut
       @config = Configuration.new(1,5)
+      self.sauverConfiguration
     end
     # Chargement d'une grille
     @gestionnaireDeSauvegarde = GestionnaireDeSauvegarde.new
@@ -165,15 +166,21 @@ class Picross
 
   # Définit une nouvelle @grille jouable de la taille demandée pour self
   def nouvelleGrilleDeTaille(taille)
+    grlRacine = self.gestionnaireDeSauvegarde.grillesRacinesDeTaille(taille)
+    @grille = GrilleJouable.creerDepuis(grlRacine)
+  end
+
+  # Sauvegarde la grille actuellement jouée dans une nouvelle sauvegarde.
+  def sauverGrilleJouee(profil_nom)
     #TODO
   end
 
-
-  # Vrai si la @grille correspond au facteurs
+  # Predicat: Vrai si la @grille correspond au facteurs.
   def grilleTerminee?()
     return @grille.terminee?
   end
 
+  # Predicat: Vrai si t désigne une taille de grille valide, faux sinon.
   def tailleGrilleValide?(t)
     return @@tailles.include?(t)
   end
