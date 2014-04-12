@@ -47,9 +47,9 @@ class GrilleJouable < Grille
     end
   end
 
- 
+  ## 
   # Retourne une GrilleJouable créée depuis la Grille envoyée en argument
-  # Attend la grille en argument
+  # :arg: grille instance de Grille ou dérivée
   def GrilleJouable.creerDepuis(grille)
     # création de la grille
     ret = GrilleJouable.deTaille(grille.taille)
@@ -60,19 +60,23 @@ class GrilleJouable < Grille
     return ret
   end
   
-
-  # Vrai si la matrice de jeu correspond aux facteurs
-  def terminee()
+  ##
+  # :return: Vrai si la matrice de jeu correspond aux facteurs
+  def terminee?()
+    #TODO
+    return false
   end
 
 
-
+  ##
   # Marshal API : méthode de dump
   def marshal_dump
     # concaténation de la structure de la classe mère et de self
     # l'item de self est placé en dernière place de tableau
     super + [matriceDeJeu]
   end
+
+  ##
   # Marshal API : méthode de chargement
   def marshal_load(ary)
     # le dernier item est pour self

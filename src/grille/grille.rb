@@ -29,9 +29,10 @@ class Grille
   attr_accessor :matriceDesColonnes
 
 
+  ##
   # Attend la taille de la grille.
   # Si les matrices de lignes et colonnes sont renseignées, elles sont utilisées telles quelles
-  # Sinon, elles sont remplacées par des matrices sans entiers
+  # Sinon, elles sont remplacées par des matrices sans entiers.
   def initialize(taille, matriceDesLignes = nil, matriceDesColonnes = nil)
     # matriceDesLignes[3][4] accède au 5ème chiffre de la 4ème ligne
     if matriceDesLignes == nil then 
