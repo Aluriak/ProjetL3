@@ -15,7 +15,7 @@ load "src/commun/commun.rb"
 # mainteneur : BOURNEUF
 # Groupement de valeurs nécessaires à l'autoconfiguration du prgm de Picross.
 # Classe instanciée une seule fois, chargée au démarrage et sauvegardée 
-#  lors des modifications des attributs.
+# lors des modifications des attributs.
 class Configuration
   @prochainIdGrille
   @derniereTailleGrille
@@ -26,25 +26,31 @@ class Configuration
   attr_reader :derniereTailleGrille
 
 
-  # ==Constructeur
+  ##
+  # Constructeur
+  # :args: id de la dernière grille racine, taille de la dernière grille jouée.
   def initialize(id, taille)
     @prochainIdGrille, @derniereTailleGrille = id, taille
   end
 
+  ##
   # Retourne le prochain id de grille valable
   def idGrilleSuivant 
     @prochainIdGrille += 1
     return @prochainIdGrille - 1
   end
   
+  ##
   # Affecte la nouvelle taille de grille
   # Lève une exception si la taille reçue est invalide
+  # :arg: taille de la dernière grille jouée
   def derniereTailleGrille=(taille)
-    raise "Taille non définie" if not Grille.tailles.include? taille
+    raise "Taille non définie" if not Grille.tailles.include?(taille)
     @derniereTailleGrille = taille
     return self
   end
 
+  ##
   # Marshal API : méthode de dump
   def marshal_dump
     [prochainIdGrille, derniereTailleGrille]
