@@ -17,9 +17,9 @@ load 'src/commun/commun.rb'
 #################################
 # mainteneur : BOURNEUF
 # Le Gestionnaire de Sauvegarde gère le chargement de sauvegarde
-# 	de GrillesRacines et GrillesJouables.
+# de GrillesRacines et GrillesJouables.
 # Il propose une API complète de lecture et écriture de ces sauvegardes,
-# 	et doit être le seul à inférer avec les fichiers de données.
+# et doit être le seul à inférer avec les fichiers de données.
 class GestionnaireDeSauvegarde
   #liste des sauvegardes de grilles racines
   @grillesRacines = nil
@@ -38,25 +38,30 @@ class GestionnaireDeSauvegarde
     @grillesJouablesModifiees = false
   end
 
+  ##
   # Ajoute une grille racine à la liste.
+  # :arg: grille racine à ajouter à la liste en mémoire.
   def ajouterGrilleRacine(grille)
     if @grillesRacines == nil then
-      raise "GestionnaireDeSauvegarde.ajouterGrilleRacine(1) "+
-     "nécessite que les grilles racines soient chargées. \n"
+      self.chargerGrillesRacines
     end
     @grillesRacinesModifiees = true
     @grillesRacines += [grille]
     return nil
   end
   
+  ##
   # Charge les grilles racines en mémoire.
-  # Cette opération est nécessaire pour traiter les grilles racines
+  # Cette opération est opérée par les autres 
+  # méthodes si nécessaire avant d'effectuer leur traitement.
   def chargerGrillesRacines()
     if @grillesRacines == nil then
       @grillesRacines = Marshal.load(File.read(CONSTANT_FICHIER_DATA_RACINE))
     end
+    return nil
   end
 
+  ##
   # Sauvegarde les grilles racines si une modification à été réalisée.
   # Cela écrase la sauvegarde précédente.
   def sauvegarderGrillesRacines()
@@ -69,8 +74,9 @@ class GestionnaireDeSauvegarde
     return nil
   end
 
+  ##
   # Retourne une liste contenant les grilles racines de taille reçue.
-  # Retourne nil si aucune grille valide trouvée.
+  # :arg: taille de la grille souhaitée
   def grillesRacinesDeTaille(taille)
     grilleRacineTemp = []
     if @grillesRacines == nil then
@@ -83,14 +89,14 @@ class GestionnaireDeSauvegarde
       end
     end
     return grilleRacineTemp
-    return nil
   end
 
 
 ##########################################################
 
-
- # Ajoute une grille jouable à la liste.
+  ##
+  # Ajoute une grille jouable à la liste.
+  # :arg: grille jouable ajoutée à la liste en mémoire.
   def ajouterGrilleJouable(grille)
     if @grillesJouables == nil then
       self.chargerGrillesJouables
@@ -100,14 +106,17 @@ class GestionnaireDeSauvegarde
     return nil
   end
   
+  ##
   # Charge les grilles jouables en mémoire.
-  # Cette opération est nécessaire pour traiter les grilles jouables
+  # Cette opération est opérée par les autres 
+  # méthodes si nécessaire avant d'effectuer leur traitement.
   def chargerGrillesJouables()
     if @grillesJouables == nil then
       @grillesJouables = Marshal.load(File.read(CONSTANT_FICHIER_DATA_JOUABLE))
     end
   end
 
+  ##
   # Sauvegarde les grilles jouables si une modification à été réalisée.
   # Cela écrase la sauvegarde précédente.
   def sauvegarderGrillesJouables()
@@ -119,8 +128,9 @@ class GestionnaireDeSauvegarde
     end
   end
 
+  ##
   # Retourne une liste contenant les grilles jouables de taille reçue.
-  # Retourne nil si aucune grille valide n'est trouvée.
+  # :arg: taille de la grille souhaitée
   def grillesJouablesDeTaille(taille)
     grillesJouablesTemp = []
     if @grillesJouables == nil then
