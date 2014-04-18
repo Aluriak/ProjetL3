@@ -57,6 +57,9 @@ class GestionnaireDeSauvegarde
     if @grillesRacines == nil then
       @grillesRacines = Marshal.load(File.read(CONSTANT_FICHIER_DATA_RACINE))
     end
+    if @grillesRacines.size == 0 then
+      self.ajouterGrilleRacine(GrilleRacine.deTaille(5, cnf.idGrilleSuivant))
+    end
     return nil
   end
 
