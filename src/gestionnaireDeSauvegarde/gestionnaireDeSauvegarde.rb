@@ -40,7 +40,6 @@ class GestionnaireDeSauvegarde
 
   ##
   # Ajoute une grille racine à la liste.
-  # :arg: grille racine à ajouter à la liste en mémoire.
   def ajouterGrilleRacine(grille)
     if @grillesRacines == nil then
       self.chargerGrillesRacines
@@ -76,7 +75,6 @@ class GestionnaireDeSauvegarde
 
   ##
   # Retourne une liste contenant les grilles racines de taille reçue.
-  # :arg: taille de la grille souhaitée
   def grillesRacinesDeTaille(taille)
     grilleRacineTemp = []
     if @grillesRacines == nil then
@@ -96,7 +94,6 @@ class GestionnaireDeSauvegarde
 
   ##
   # Ajoute une grille jouable à la liste.
-  # :arg: grille jouable ajoutée à la liste en mémoire.
   def ajouterGrilleJouable(grille)
     if @grillesJouables == nil then
       self.chargerGrillesJouables
@@ -130,7 +127,6 @@ class GestionnaireDeSauvegarde
 
   ##
   # Retourne une liste contenant les grilles jouables de taille reçue.
-  # :arg: taille de la grille souhaitée
   def grillesJouablesDeTaille(taille)
     grillesJouablesTemp = []
     if @grillesJouables == nil then
