@@ -83,7 +83,7 @@ class Picross
       # compteur de noir
       nbNoirConsecutif = 0 
       # ajouter une liste d'entier à la matrice de facteurs
-      matriceFacteurColonne.push(Array.new)
+      matriceFacteursColonne.push(Array.new)
       # pour chacune des colonnes
       tableEtat.size.times do |row|
       	# obtenir l'état de la case
@@ -117,7 +117,7 @@ class Picross
       # compteur de noir
       nbNoirConsecutif = 0 
       # ajouter une liste d'entier à la matrice de facteurs
-      matriceFacteurColonne.push(Array.new)
+      matriceFacteursLigne.push(Array.new)
       # pour chacune des colonnes
       tableEtat.size.times do |col|
       	# obtenir l'état de la case
