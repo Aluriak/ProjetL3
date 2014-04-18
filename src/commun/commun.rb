@@ -66,7 +66,6 @@ class Etat
   ##
   # Renvois l'état suivant à celui reçu
   # Lève une exception si l'état n'est pas valide
-  # :arg: etat prédécesseur
   def Etat.suivant(etat)
     # Assertion
     raise "Etat non valide" if not (Etat.include?(etat) and etat != nil)
