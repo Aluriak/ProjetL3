@@ -63,7 +63,12 @@ class GrilleJouable < Grille
   ##
   # :return: Vrai si la matrice de jeu correspond aux facteurs
   def terminee?()
-    #TODO
+    # Etudie les matrices de facteurs attendues et celle générées depuis 
+    # la grille courante. Si elles sont identiques, la grille est considérée
+    # justement remplie.
+    matriceFacteursColonne, matriceFacteursLigne = 
+      Grille.matriceEtats2facteurs(matriceEtat)
+    #TODO: comparaison matrices de facteurs
     return false
   end
 
