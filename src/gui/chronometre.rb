@@ -18,7 +18,7 @@ class Chronometre
 	end
 	
 	#mise en pause du chronomètre
-	def enpause(){
+	def enpause()
 		
 		if @pause != false then
 			@pause = true
