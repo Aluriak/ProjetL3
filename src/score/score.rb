@@ -28,59 +28,55 @@ class Score
 	@taille
 	@nbrAide
 	
-	#commentaires A FAIRE
+	#temps réalisé
 	attr_reader :temps
-	
-	#commentaires A FAIRE
+
+	#taille de la grille réalisée
 	attr_reader :taille
 	
-	#commentaires A FAIRE
+	#nombre d'appels à l'aide effectués
 	attr_reader :nbrAide
 	
 	private_class_method:new
 	
-	def Score.creer(taille, tps, aide)
-	
-		new(taille,tps,aide)
+	def Score.creer(taille, temps, aide)
+		new(taille, temps, aide)
 	end
 	
-	def initialize(taille,tps,aide)
-		@temps = tps
+	def initialize(taille, temps, aide)
+		@temps = temps
 		@taille = taille
 		@nbrAide = aide
 	end
 	
-	#Cette methode est voué à être modifié par la suite. 
-	#Ce n'est qu'un brouillon
-	def <=>(another)		
-		@temps <=> another.@temps
-		@taille = another.@taille
-		@nbrAide = another.@nbrAide
+	# Méthode de comparaison de score
+	# Nécessaire pour ordonner les listes et définir les meilleurs joueurs
+	# Comparaison sur le temps
+	def <=>(another)	
+		selfscore = @temps * @taille / @nbrAide	
+		othrscore = another.temps * another.taille / another.nbrAide	
+		selfscore <=> othrscore
 	end
 
-end#end class
+end #end class
 
 
 
 #La classe Score contient deux Hash permettant de stocker les scores.
-#Le hash des grilles prend l'idGrille en tant que clé.
-#Le hash des joueurs prend le nom du joueur en tant que clé.
-#
-#NB : 	- comment on s'en sert?
-#		- quels liens dans le projet? (utilisé par quelles classes? indépendantes?)
-#		- utile de faire une méthode de classe sans arguments????
+# Hashtable des grilles tel que idGrille => score (meilleur score sur la grille)
+# Hashtable des joueurs tel que nom du joueur => score (meilleur du joueur)
 class Scores
 
 	@scoreGrille
 	@scoreJoueur
 	
-	#commentaires A FAIRE
+	# hashtable des scores de grilles
 	attr_reader :scoreGrille
 	
-	#commentaires A FAIRE
+	# hashtable des scores de joueurs
 	attr_reader :scoreJoueur
 	
-	private_class_method:new
+	private_class_method :new
 
 	def Scores.creer()
 		new()
@@ -91,40 +87,42 @@ class Scores
 		@scoreJoueur = Hash.new
 	end
 	
-	#Ajoute au hash des grilles, un id grille et son score. 
+	#Ajoute au hash des grilles, un id grille et son score, 
+	#  avec le nom du joueur l'ayant réalisé. 
 	#Si l'idGrille est déjà présent, met à jour le hash. 	
-	def ajouterScoresGrille(idGrille, score)		
-		if @scoreGrille.has_key?(idGrille)
-			if (@scoreGrille.fetch(idGrille) <=> score) >= 0
-				@scoreGrille[idGrille] = score
+	def ajouterScoresGrille(idGrille, score, nomJoueur)		
+		if @scoreGrille.has_key?(idGrille) then
+			if score > @scoreGrille[idGrille] then
+				@scoreGrille[idGrille] = [score, nomJoueur]
 			end
 		else
-			@scoreGrille[idGrille] = score
+			@scoreGrille[idGrille] = [score, nomJoueur]
 		end
 	end
 	
-	#Ajoute au hash des joueurs, un nom de joueur et son score. 
+	#Ajoute au hash des joueurs, un nom de joueur et son score, 
+	#  avec l'id de la grille réalisée. 
 	#Si le nomjoueur est déjà présent, met à jour le hash. 
-	def ajouterScoresJoueur(nomjoueur, score)		
-		if @scoreJoueur.has_key?(nomjoueur)
-			if (@scoreJoueur.fetch(nomjoueur) <=> score) >= 0
-				@scoreJoueur[nomjoueur] = score
+	def ajouterScoresJoueur(nomjoueur, score, idGrille)		
+		if @scoreJoueur.has_key?(nomjoueur) then
+			if score > @scoreJoueur[nomjoueur].first then
+				@scoreJoueur[nomjoueur] = [score, idGrille]
 			end
 		else
-			@scoreJoueur[nomjoueur] = score
+			@scoreJoueur[nomjoueur] = [score, idGrille]
 		end
 	end
 	
-	#Retourne la pair idGrille-score associé
+	# Retourne la liste [meilleur score sur la grille donnée, nom du joueur]
 	def getScoresGrille(idGrille)		
-		return @scoreGrille.assoc(idGrille)
+		return @scoreGrille[idGrille]
 	end
 	
-	#Retourne la pair nomJoueur-score associé
+	# Retourne la liste [meilleur score du joueur donné, id de la grille]
 	def getScoreJoueur(nomJoueur)		
-		return @scoreJoueur.assoc(nomJoueur)
+		return @scoreJoueur[nomJoueur]
 	end
 	
 	
-end	#end class
+end #end class
 	
