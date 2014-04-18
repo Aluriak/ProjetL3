@@ -20,14 +20,15 @@ load "src/grille/racine.rb"
 class Picross
   @config
   @grille
+  @registreTemporaire
   @gestionnaireDeSauvegarde
 
   # Référence vers une instance de classe Configuration
-  attr_reader :config
+  #attr_reader :config
   # Référence vers une instance de classe GrilleJouable
-  attr_reader :grille
+  #attr_reader :grille
   # Référence vers une instance de classe GestionnaireDeSauvegarde
-  attr_reader :gestionnaireDeSauvegarde
+  #attr_reader :gestionnaireDeSauvegarde
 
 
   def initialize
@@ -103,11 +104,56 @@ class Picross
     @grille = GrilleJouable.creerDepuis(grille)
   end
 
+
+  ##
+  # Retourne l'état de la grille aux coordonnées demandées
+  def etatGrille(i, j)
+    raise i >= 0 and i < @grille.taille, "coordonnée i non valide."
+    raise j >= 0 and j < @grille.taille, "coordonnée j non valide."
+    return @grille.matriceDeJeu[i][j]
+  end
+
+
+  ##
+  # Bascule l'état de la grille aux coordonnées données à l'état donné,
+  # ou au suivant si l'état n'est pas communiqué
+  def basculerEtat(i, j, etat = nil)
+    @grille.basculer(i, j, etat)
+  end
+
+
   ##
   # Sauvegarde la grille actuellement jouée dans une nouvelle sauvegarde.
-  def sauverGrilleJouee(profil_nom)
+  # Le nom de sauvegarde permet d'identifier la sauvegarde.
+  # TODO:EN COURS D'IMPLEMENTATION
+  def sauverGrilleCommeGrilleJouable(nom_sauvegarde)
     #TODO
   end
+
+
+  ##
+  # Sauvegarde la grille actuellement jouée comme grille racine.
+  # TODO:EN COURS D'IMPLEMENTATION
+  def sauverGrilleCommeGrilleRacine()
+    #TODO
+  end
+
+
+  ##
+  # Sauvegarde la grille actuelle dans un registre temporaire non persistant.
+  # Ecrase une éventuelle ancienne sauvegarde, ne modifie pas la grille.
+  def sauverGrilleEnRegistreTmp()
+    @registreTemporaire = @grille
+  end
+
+
+  ##
+  # Charge dans la grille le contenu du registre temporaire
+  # Ecrase le contenu précédent de la grille, ne modifie pas le registre.
+  def chargerRegistreTemporaire()
+    @grille = @registreTemporaire
+  end
+
 
   ##
   # Predicat: Vrai si la @grille correspond au facteurs.
@@ -115,11 +161,14 @@ class Picross
     return @grille.terminee?    
   end
 
+
   ##
   # Predicat: Vrai si t désigne une taille de grille valide, faux sinon.
   def tailleGrilleValide?(t)
     return @@tailles.include?(t)
   end
+
+
 
   # Remise à zéro de la configuration
   # METHODE DE DEBUG
