@@ -6,5 +6,5 @@ doc_:
 	# delete already existing documentation
 	rm -rf doc/
 	#genere la doc pour tout les repertoires de src sauf de samples
-	rdoc -i src/ --exclude samples/ -o doc 
+	rdoc -i src/ -x src/samples/ -o doc 
 
