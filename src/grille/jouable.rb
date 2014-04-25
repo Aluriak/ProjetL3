@@ -20,14 +20,23 @@ load "src/grille/grille.rb"
 # de Picross modifiée par l'utilisateur.
 class GrilleJouable < Grille
   @matriceDeJeu
+  @nom
 
   # matrice carrée d'états de cases du picross
   attr_reader :matriceDeJeu
+  # nom identifiant la grille
+  attr_reader :nom
 
-  def initialize(taille)
+  def initialize(taille, nom=nil)
     super(taille)
     @matriceDeJeu = Array.new(taille) do |ligne|
       ligne = Array.new(taille) {Etat.Blanc}
+    end
+    if nom == nil then
+      @nom = taille.to_s + 'x' 
+	+ taille.to_s + Date.now.strftime(format='_%d%b%Y')
+    else
+      @nom = nom
     end
   end
 
