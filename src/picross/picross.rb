@@ -108,8 +108,8 @@ class Picross
   ##
   # Retourne l'état de la grille aux coordonnées demandées
   def etatGrille(i, j)
-    raise i >= 0 and i < @grille.taille, "coordonnée i non valide."
-    raise j >= 0 and j < @grille.taille, "coordonnée j non valide."
+    raise "coordonnée i non valide." if i >= 0 and i < @grille.taille
+    raise "coordonnée j non valide." if j >= 0 and j < @grille.taille
     return @grille.matriceDeJeu[i][j]
   end
 
