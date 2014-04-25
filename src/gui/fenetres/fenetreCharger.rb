@@ -11,12 +11,12 @@ class FenetreCharger
 
 
 		dialog = FileChooserDialog.new("Charger une grille",
-									nil,
-									FileChooser::ACTION_OPEN,
-									nil,
-									[Stock::CANCEL, Dialog::RESPONSE_CANCEL],
-									[Stock::OPEN, Dialog::RESPONSE_ACCEPT])
-
+			nil,
+			FileChooser::ACTION_OPEN,
+			nil,
+			[Stock::CANCEL, Dialog::RESPONSE_CANCEL],
+			[Stock::OPEN, Dialog::RESPONSE_ACCEPT]
+		)
 
 		if dialog.run == Dialog::RESPONSE_ACCEPT
 			puts "filename = #{dialog.filename}"

@@ -3,60 +3,15 @@ class Chronometre
 	@text
 	@minutes
 	@secondes
-	@finish
-	
 	attr_reader :text
-	attr_reader:secondes, :minutes
 	
-	# initialisation du chronomètre
-	def Chronometre.initialiser(refLabel)
-		new(refLabel)
+	# initialisation du chronométre
+	def Chronometre.initialiser(notes)
+		new(notes)
 	end
-
-	 #initialisation des attributs
-	def initialize(refLabel)
+	
+	def initialize(notes)
 		@minutes, @secondes = 0,0
-		@finish, @pause = false, false
-	end
-
-	#Methode qui lance le chronomètre et affiche le temps
-	def tictacmieux
-		counter = 0
-		while not @finish do
-			if not @pause and counter >= 10 then
-				counter = 0
-				puts(@minutes.to_s + ":" + @secondes.to_s)
-				@secondes += 1
-				if @secondes == 60 then
-					@secondes = 0
-					@minutes += 1
-				end
-			end
-			sleep(0.1)
-			counter += 1
-		end
-	end
-
-
-	#remise à zero du chronomètre
-	def raz
-		@secondes = 0
-		@minutes = 0
+		@text = Label.new.set_text(notes + " " + @minutes.to_s + ":" + @secondes.to_s)
 	end
 end
-
-
-
-
-
-=begin
-
-c = Chronometre.new("plop")
-
-c.tictacmieux
-
-=end
-
-
-
-

@@ -9,6 +9,10 @@ class Planche
 	@event_box
 	@image
 	@table
+	@jouable
+	@modeEdition
+
+	DEBUG = 0
 	
 	#la table est un conteneur d'images/event box
 	attr_reader :table
@@ -22,24 +26,32 @@ class Planche
 	#jouable d'image
 	attr_reader :image		
 	
+	attr_reader :jouable
+	
+	attr_reader :modeEdition
+	
 	#creation de planche
-	def Planche.creer(jouable)
-		new(jouable)
+	def Planche.creer(jouable, modeEdition = false)
+		new(jouable, modeEdition)
 	end
 	
-	def initialize(jouable)
+	def initialize(jouable, modeEdition)
 		dossier = CONSTANT_FICHIER_GUI_IMAGE #dossier contenant les images
 		@tabImg = ["blanc.jpg", "noir.jpg", "croix.jpg"]
 		@tabImg.map!{|img| dossier + img}
+		@jouable = jouable
 		@table = Table.new(jouable.taille,jouable.taille)
 		self.setup(jouable)
+		@modeEdition = modeEdition
 	end
 	
+=begin
 	#reinitialisation de grille jouable
 	def reinitialiser(jouable)
 		@table = @table.resize(jouable.taille,jouable.taille)
 		self.setup(jouable)
 	end
+=end
 	
 	def image(etat)
 		if Etat.include?(etat) then return Image.new(@tabImg[etat]) end
@@ -47,8 +59,29 @@ class Planche
 	
 	#si la case est cochée, elle devient noire, etc..
 	def suivante(image)
-		 image.file = @tabImg[Etat.suivant(@tabImg.index(image.file))]
+		
+		if modeEdition == true
+			image.file = (@tabImg[@tabImg.index(image.file)] == Etat.Noir) ?
+				@tabImg[Etat.Blanc] : @tabImg[Etat.Noir]
+		else
+			image.file = @tabImg[Etat.suivant(@tabImg.index(image.file))]
+		end
+		
+		#image.file = 
 	end
+	
+	#pour l'edition seulement
+
+	def toMatrice
+		matrice = Array.new(@jouable.taille) { Array.new(@jouable.taille) }
+		0.upto(jouable.taille - 1) { |y| 
+			0.upto(jouable.taille - 1) { |x|                     
+				matrice[x][y] = @tabImg.index(@image[x][y].file) == 1 ? 1 : 0
+			}
+		}
+		return matrice
+	end	
+
 	
 	#fonction qui prend la matrice jouable de jeu en parametre
 	def setup(jouable)
@@ -57,8 +90,7 @@ class Planche
 		@event_box = Array.new(jouable.taille) { Array.new(jouable.taille) }
 		
 		0.upto(jouable.taille - 1) { |y| 
-			0.upto(jouable.taille - 1) { |x|
-				#p jouable[x][y]
+			0.upto(jouable.taille - 1) { |x|                         
 				@image[x][y] = self.image(jouable.matriceDeJeu[x][y])
 				@event_box[x][y] = EventBox.new.add(@image[x][y])  
 				
@@ -66,11 +98,7 @@ class Planche
 				@table.attach(@event_box[x][y], x, x+1, y, y+1) 
               
 				#crée les évenements de click sur chaque cases
-				@event_box[x][y].signal_connect("button_press_event") { 	
-					self.suivante(@image[x][y])
-				}
-		                               
-				#A faire : les autres evenements
+				@event_box[x][y].signal_connect("button_press_event") { self.suivante(@image[x][y]) }
 			}
 		}
 		self.miseAJour

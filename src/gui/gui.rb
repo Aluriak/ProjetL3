@@ -7,7 +7,8 @@ require "glib2"
 include Gtk
 
 load "src/gui/planche.rb"
-load "src/gui/menu.rb"
+load "src/gui/menuAide.rb"
+load "src/gui/menuPrincipal.rb"
 load "src/gui/tablechiffre.rb"
 load "src/gui/chronometre.rb"
 load "src/grille/jouable.rb"
@@ -21,6 +22,7 @@ load "src/gui/fenetres/fenetreSauvegarde.rb"
 load "src/gui/fenetres/fenetreScore.rb"
 load "src/gui/fenetres/fenetreManuel.rb"
 load "src/gui/fenetres/fenetreAPropos.rb"
+#load "src/image/image.rb"
 
 class Array
 	def orientationHorizontale?
@@ -31,12 +33,16 @@ end
 
 class Gui
 
-	@derniereTailleGrille	
 
-	p = Picross.new
-	@derniereTailleGrille = p.derniereTailleDeGrille
+	@window
+
+	@derniereTailleGrille
+	@p = Picross.new
+	@derniereTailleGrille = @p.derniereTailleDeGrille
 	
 	
+	
+=begin
 	def Gui.lancerTailleDerniereGrille(titre)
 		puts "Derniere taille de la grille ",@derniereTailleGrille
 		new(titre, @derniereTailleGrille)
@@ -50,37 +56,62 @@ class Gui
 		puts "Taille choisie : #{tailleChoisie}"
 		new(titre, tailleChoisie)
 	end
+	
+=end	
+	def Gui.lancer(tailleChoisie = @derniereTailleGrille)
+		puts "Taille choisie : #{tailleChoisie}"
+		new(tailleChoisie)
+	end
 
-	@tailleGrille	
+		
+	def Gui.fermer
+		@window.destroy
+	end	
 	
-	
-	def initialize(titre, tailleGrille)
+	def initialize(tailleGrille)
 		Gtk.init
-
-		#p = Picross.new
+		p @p.class
+		@p = Picross.new
 		#@tailleGrille = p.config.derniereTailleGrille
 		
-		window = Window.new(titre)
-		window.signal_connect("destroy") { Gtk.main_quit }
-		window.set_resizable(false)
+		@window = Window.new(" - Picross Grrr - ")
+		@window.signal_connect("destroy") { Gtk.main_quit }
+		@window.set_resizable(false)
 		vbox = VBox.new(false, 2)
 		jouable = GrilleJouable.deTaille(tailleGrille)
 	
 		#Partie haute de l"application
 		vbox.pack_start(hBoxHaut = HBox.new(false, 2))
-		menuHaut = Menu.creer(hBoxHaut,"Nouveau", "Editer", "Charger", "Sauvegarder", "Score" ,"Manuel", "A propos")
+		#menuHaut = Menu.creerMenuHaut(hBoxHaut, Stock::NEW, Stock::EDIT, Stock::OPEN, Stock::SAVE, ("Score"), Stock::HELP, Stock::ABOUT)
+		menuHaut = MenuPrincipal.creerMenuHaut(hBoxHaut)
+
 
 		#Partie basse de l"application
 		vbox.pack_start(hBoxBas = HBox.new(false, 2))
 		hBoxBas.add(vBoxBas = HBox.new(false))
-		
+
 		vBoxBas.add(Frame.new.add(table = Table.new(4,4)))
 
-		#Chronometre
+
+
+		boxTimer = VBox.new(false, 2)
+
+		
 		timer = Chronometre.initialiser("temps")
-		table.attach(timer.text, 0, 1, 0, 1)
+		buttonStart = Button.new("Start")
+
+		boxTimer.pack_start(timer.text)
+		boxTimer.pack_start(buttonStart)
+
+		#Chronometre
+		
+		table.attach(boxTimer, 0, 1, 0, 1)
 
 
+		#pimg = PicrossImage.lire("src/image/lettreD.jpg")
+		
+
+		#picross.creerGrilleRacine(pimg.toPicross(tailleGrille))
 		
 		#jouable.matriceDesColonnes = Array.new(5){Array.new(4)}
 		
@@ -100,7 +131,8 @@ class Gui
 =end
 		
 		chiffreHaut = TableChiffre.creer(jouable.matriceDesColonnes)
-
+		
+			
 		table.attach(chiffreHaut.table, 1, 2, 0, 1)
 
 		chiffreBas = TableChiffre.creer(jouable.matriceDesLignes)
@@ -111,31 +143,37 @@ class Gui
 
 		#Partie basse droite de l"application
 		vBoxBas.add(Frame.new.add(vBoxBasGauche = VBox.new(2)))
-		menuDroit = Menu.creer(vBoxBasGauche,"Aide - Faible", "Aide - Fort")
+		menuDroit = MenuAide.creerMenuDroit(vBoxBasGauche,"Aide - Faible", "Aide - Fort")
 		
 		#Ecouteur signal pour le bouton "Nouveau"
-		menuHaut.clickerSur("Nouveau"){ nouveau = FenetreNouveauTaille.new }
+		menuHaut.listMenuBtns[0].signal_connect('clicked'){ nouveau = FenetreNouveauTaille.new}
 
 		#Ecouteur signal pour le bouton "Editer"
-		menuHaut.clickerSur("Editer"){ editer = FenetreEditionTaille.new }
+		menuHaut.listMenuBtns[1].signal_connect('clicked'){editer = FenetreEditionTaille.new(@p) }
 
 		#Ecouteur signal pour le bouton "Charger"
-		menuHaut.clickerSur("Charger"){ fenetreCharger = FenetreCharger.new }
+		menuHaut.listMenuBtns[2].signal_connect('clicked'){ fenetreCharger = FenetreCharger.new }
 
 		#Ecouteur signal pour le bouton "Sauvegarder"
-		menuHaut.clickerSur("Sauvegarder"){ fenetreSauvegarder = FenetreSauvegarder.new }
+		menuHaut.listMenuBtns[3].signal_connect('clicked'){ fenetreSauvegarder = FenetreSauvegarder.new }
 
 		#Ecouteur signal pour le bouton "Score"
-		menuHaut.clickerSur("Score"){ fenetreScore = FenetreScore.new(nil) } #remplacer par une instance de score
+		menuHaut.listMenuBtns[4].signal_connect('clicked'){ fenetreScore = FenetreScore.new(nil) } #remplacer par une instance de score
 
 		#evenement clique le bouton "Manuel"
-		menuHaut.clickerSur("Manuel"){ fenetreManuel = FenetreManuel.new }
+		menuHaut.listMenuBtns[5].signal_connect('clicked'){ fenetreManuel = FenetreManuel.new }
 
 		#evenement clique le bouton "A Propos"
-		menuHaut.clickerSur("A propos"){ fenetreAPropos = FenetreAPropos.new }
-			
-		window.add(vbox)
-		window.show_all
+		menuHaut.listMenuBtns[6].signal_connect('clicked'){ fenetreAPropos = FenetreAPropos.new }
+		
+		#menuDroit.clickerSur("Aide - Faible"){aideFaible(p)}
+
+		#menuDroit.clickerSur("Aide - Fort"){aideFort(p)}
+		
+
+
+		@window.add(vbox)
+		@window.show_all
 		
 		Gtk.main
 	end
