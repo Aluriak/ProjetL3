@@ -27,7 +27,7 @@ class GrilleJouable < Grille
   # nom identifiant la grille
   attr_accessor :nom
 
-  def initialize(taille, nom=nil)
+  def initialize(taille, nom = nil)
     super(taille)
     @matriceDeJeu = Array.new(taille) do |ligne|
       ligne = Array.new(taille) {Etat.Blanc}
