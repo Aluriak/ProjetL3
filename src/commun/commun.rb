@@ -30,7 +30,7 @@ CONSTANT_FICHIER_GUI_IMAGE	= 'data/gui/'		unless defined?	CONSTANT_FICHIER_GUI_I
 CONSTANT_MAX_CHIFFRES 		= 2 			unless defined?	CONSTANT_MAX_CHIFFRES
 
 # Mode d'interprétation.
-MODE_DEBUG			= true			unless defined?	MODE_DEBUG
+CONSTANT_MODE_DEBUG		= true			unless defined?	CONSTANT_MODE_DEBUG
 
 #################################
 # TAILLE			#
