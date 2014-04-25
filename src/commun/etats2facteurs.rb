@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 # ETATS2FACTEURS.RB
-# définition d'une méthode compliquée de Grille.
+# définition d'une méthode compliquée de GrilleRacine.
 # BOURNEUF
  
 #################################

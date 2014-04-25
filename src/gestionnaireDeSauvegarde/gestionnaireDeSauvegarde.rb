@@ -106,15 +106,27 @@ class GestionnaireDeSauvegarde
     return nil
   end
   
+
+
   ##
   # Charge les grilles jouables en mémoire.
   # Cette opération est opérée par les autres 
   # méthodes si nécessaire avant d'effectuer leur traitement.
   def chargerGrillesJouables()
     if @grillesJouables == nil then
-      @grillesJouables = Marshal.load(File.read(CONSTANT_FICHIER_DATA_JOUABLE))
+      @grillesJouablesModifiees = false
+      begin
+      	File.open(CONSTANT_FICHIER_DATA_JOUABLE, "r") do |f|
+      	  @grillesJouables = Marshal.load(f)
+      	end
+      rescue Errno::ENOENT
+      	puts "ERREUR: GestionnaireDeSauvegarde: chargerGrillesJouables(): le fichier #{CONSTANT_FICHIER_DATA_JOUABLE} n'est pas accessible."
+      	@grillesJouables = []
+      end
     end
   end
+
+
 
   ##
   # Sauvegarde les grilles jouables si une modification à été réalisée.
@@ -127,6 +139,8 @@ class GestionnaireDeSauvegarde
       end
     end
   end
+
+
 
   ##
   # Retourne une liste contenant les grilles jouables de taille reçue.

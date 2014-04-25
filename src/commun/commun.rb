@@ -37,7 +37,7 @@ CONSTANT_MODE_DEBUG		= true			unless defined?	CONSTANT_MODE_DEBUG
 #################################
 # mainteneur : BOURNEUF
 
-# Définition de la taille d'une grille
+# Définition de la taille d'une grille de picross
 # toutes les tailles possibles sont référencées dans cette classe
 class Grille
   @@tailles = [5,10,15,20,25]

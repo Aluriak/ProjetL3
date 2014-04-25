@@ -6,8 +6,8 @@
 #################################
 # IMPORTS			#
 #################################
+require "date"
 load "src/commun/commun.rb"
-load "src/grille/grille.rb"
 
 
 
@@ -16,55 +16,94 @@ load "src/grille/grille.rb"
 #################################
 # mainteneur : BOURNEUF
 
-# une GrilleRacine est une grille avec un id.
-class GrilleRacine < Grille
-  @id
+# une GrilleRacine possède un nom et des facteurs de ligne/colonne.
+class GrilleRacine 
+  @matriceDesLignes
+  @matriceDesColonnes
+  @nom
 
-  # identificateur unique de la grille
-  attr_reader :id
+  # les entiers définissant les lignes
+  attr_accessor :matriceDesLignes
+  # les entiers définissant les colonnes
+  attr_accessor :matriceDesColonnes
+  # nom identifiant la grille
+  attr_reader :nom
 
 
-  def initialize(taille, id)
-    super(taille)
-    @id = id
+  def initialize(taille, nom, matriceDesLignes, matriceDesColonnes)
+    # matriceDesLignes[3][4] accède au 5ème chiffre de la 4ème ligne
+    if matriceDesLignes == nil then 
+      @matriceDesLignes = Array.new(taille) { Array.new }
+      @matriceDesLignes.each do |lne|
+      	(1+rand((taille/2).to_i)).times do 
+      	  lne.push(rand(1)+1)
+	end
+      end
+    else
+      @matriceDesLignes = matriceDesLignes
+    end
+
+    # matriceDesColonnes[0][10] accède au 11ème chiffre de la 1ère ligne
+    if matriceDesColonnes == nil then 
+      @matriceDesColonnes = Array.new(taille) { Array.new } 
+      @matriceDesColonnes.each do |col|
+      	(1+rand((taille/2).to_i)).times do 
+      	  col.push(rand(1)+1)
+	end
+      end
+    else
+      @matriceDesColonnes = matriceDesColonnes
+    end
+
+
+    # Nom
+    if nom == nil then
+      @nom =  self.taille.to_s + 'x' + self.taille.to_s 
+      @nom += DateTime.now.strftime(format='_%d%b%Y_%H%M%S')
+    else
+      @nom = nom
+    end
   end
 
-  # Création d'une grille racine.
-  # Attend la taille et l'id de la grille.
-  # La taille doit être un entier de valeur contenue dans Grille.Tailles
-  def GrilleRacine.deTaille(taille, id)
-    return new(taille, id)
+
+
+
+  ##
+  # Attend la taille de la grille, et optionnellement les matrices 
+  # de ligne/colonne et le nom. 
+  # Si les matrices de lignes et colonnes sont renseignées, 
+  # elles sont utilisées telles quelles.
+  # Sinon, elles sont remplacées par des matrices initialisées aléatoirement.
+  # Le nom généré aléatoirement se base sur la taille et la date courante.
+  def GrilleRacine.deTaille(taille, nom = nil, 
+  			    matriceDesLignes = nil, matriceDesColonnes = nil)
+    raise "Taille non définie" if not Grille.tailles.include?(taille)
+    return new(taille, nom, matriceDesLignes, matriceDesColonnes)
   end
 
-  # Retourne une GrilleRacine créée depuis la Grille envoyée en argument
-  # Attend la grille et l'id de la nouvelle grille racine en argument
-  def GrilleRacine.creerDepuis(grille, id)
-    # création de la grille
-    ret = GrilleRacine.deTaille(grille.taille, id)
-    # recopie des matrices de lignes et de colonnes
-    ret.matriceDesLignes   =   Marshal.load(Marshal.dump(grille.matriceDesLignes))
-    ret.matriceDesColonnes = Marshal.load(Marshal.dump(grille.matriceDesColonnes))
-    # retour de la grille
-    return ret
+
+
+
+  # Retourne la taille de la grille
+  def taille
+    return @matriceDesLignes.size
   end
-  
+
+
 
   # Marshal API : méthode de dump
   def marshal_dump
-    # concaténation de la structure de la classe mère et de self
-    # l'item de self est placé en dernière place de tableau
-    super + [id]
+    [matriceDesLignes, matriceDesColonnes]
   end
+  
   # Marshal API : méthode de chargement
   def marshal_load(ary)
-    # le dernier item est pour self
-    @id = ary.pop
-    # les autres sont pour la classe-mère
-    super ary
+    @matriceDesLignes, @matriceDesColonnes = ary
   end
 
 
-  # Obligation de passer par le constructeur deTaille(2) pour créer une Grille
+
+  # Obligation de passer par le constructeur deTaille(1) pour créer une Grille
   private_class_method :new
 end
 

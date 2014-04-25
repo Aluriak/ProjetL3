@@ -7,7 +7,7 @@
 # IMPORTS			#
 #################################
 load "src/commun/commun.rb"
-load "src/grille/grille.rb"
+load "src/grille/racine.rb"
 
 
 
@@ -16,24 +16,57 @@ load "src/grille/grille.rb"
 #################################
 # mainteneur : BOURNEUF
 
-# Une Grille Jouable est une grille affichable dans l'interface graphique et représentant la grille 
+# Une Grille Jouable est une grille Racine avec une matrice d'état.
 # de Picross modifiée par l'utilisateur.
-class GrilleJouable < Grille
+class GrilleJouable < GrilleRacine
   @matriceDeJeu
-  @nom
 
   # matrice carrée d'états de cases du picross
   attr_reader :matriceDeJeu
-  # nom identifiant la grille
-  attr_accessor :nom
 
-  def initialize(taille, nom = nil)
-    super(taille)
+
+
+  ##
+  def initialize(taille, nom = nil, matriceDesLignes = nil, matriceDesColonnes = nil)
+    super(taille, nom, matriceDesLignes, matriceDesColonnes)
     @matriceDeJeu = Array.new(taille) do |ligne|
       ligne = Array.new(taille) {Etat.Blanc}
     end
-    self.genererNom(nom)
   end
+
+
+
+
+  ##
+  # Attend la taille de la grille, et optionnellement les matrices 
+  # de ligne/colonne et le nom. 
+  # Si les matrices de lignes et colonnes sont renseignées, 
+  # elles sont utilisées telles quelles.
+  # Sinon, elles sont remplacées par des matrices initialisées aléatoirement.
+  # Le nom généré aléatoirement se base sur la taille et la date courante.
+  def GrilleJouable.deTaille(taille, nom = nil, 
+  			    matriceDesLignes = nil, matriceDesColonnes = nil)
+    raise "Taille #{taille} non définie" if not Grille.tailles.include?(taille)
+    return new(taille, nom, matriceDesLignes, matriceDesColonnes)
+  end
+
+
+
+
+  ## 
+  # Retourne une GrilleJouable créée depuis la GrilleRacine envoyée en argument
+  def GrilleJouable.creerDepuis(grilleRacine)
+    # création et retour de la grille
+    return GrilleJouable.new(grilleRacine.taille,
+      grilleRacine.nom,
+      # recopie profonde des matrices de facteurs
+      Marshal.load(Marshal.dump(grilleRacine.matriceDesLignes)),
+      Marshal.load(Marshal.dump(grilleRacine.matriceDesColonnes))
+    )
+  end
+  
+
+
 
   # Bascule l'état de la case située en (i, j) vers l'état donné.
   # Si l'état est nil ou laissé par défaut, l'état de la case passera 'au suivant' 
@@ -52,30 +85,11 @@ class GrilleJouable < Grille
   end
 
 
+
+
+
   ##
-  # Génère un nom pour la grille. S'appuie sur sa taille et la date courante,
-  # si aucun nom n'est donné explicitement
-  def genererNom(nom = nil)
-    if nom == nil then
-      @nom = self.taille.to_s + 'x' 
-	+ self.taille.to_s + Date.now.strftime(format='_%d%b%Y')
-    else
-      @nom = nom
-    end
-  end
-  ## 
-  # Retourne une GrilleJouable créée depuis la Grille envoyée en argument
-  def GrilleJouable.creerDepuis(grille)
-    # création de la grille
-    ret = GrilleJouable.deTaille(grille.taille)
-    # recopie profonde des matrices de lignes et de colonnes
-    ret.matriceDesLignes   =   Marshal.load(Marshal.dump(grille.matriceDesLignes))
-    ret.matriceDesColonnes = Marshal.load(Marshal.dump(grille.matriceDesColonnes))
-    # retour de la grille
-    return ret
-  end
-  
-  ##
+  # Prédicat sur l'état actuel du jeu.
   # :return: Vrai si la matrice de jeu correspond aux facteurs
   def terminee?()
     # Etudie les matrices de facteurs attendues et celle générées depuis 

@@ -17,47 +17,76 @@ load "src/commun/commun.rb"
 # Classe instanciée une seule fois, chargée au démarrage et sauvegardée 
 # lors des modifications des attributs.
 class Configuration
-  @prochainIdGrille
   @derniereTailleGrille
 
-  # prochain id de grille racine à affecter
-  attr_accessor :prochainIdGrille
   # taille de la dernière grille jouée
   attr_reader :derniereTailleGrille
 
 
-  ##
-  # Constructeur
-  # :args: id de la dernière grille racine, taille de la dernière grille jouée.
-  def initialize(id, taille)
-    @prochainIdGrille, @derniereTailleGrille = id, taille
-  end
 
   ##
-  # Retourne le prochain id de grille valable
-  def idGrilleSuivant 
-    @prochainIdGrille += 1
-    return @prochainIdGrille - 1
+  # Constructeur
+  def initialize(taille)
+    @derniereTailleGrille = taille
+  end
+
+
+
+
+  ## 
+  # Sauvegarde la configuration dans le fichier de config
+  def sauvegarder()
+    begin
+      File.open(CONSTANT_FICHIER_DATA_CONFIG, "w") do |f|
+      	f.puts Marshal.dump(self)
+      end
+    rescue Errno::ENOENT
+      puts "ERREUR: Configuration: sauvegarder(): le fichier #{CONSTANT_FICHIER_DATA_CONFIG} n'est pas accessible."
+    end
+  end
+
+
+  ## 
+  # Charge la configuration depuis le fichier de config
+  def Configuration.charger()
+    config = nil
+    begin
+      File.open(CONSTANT_FICHIER_DATA_CONFIG, "r") do |f|
+      	config = Marshal.load(f)
+      end
+    rescue Errno::ENOENT
+      # En cas d'absence de fichier de configuration,
+      #   création d'une configuration par défaut
+      config = Configuration.new(1)
+      config.sauvegarder
+    end
+    return config
   end
   
+
+
+
   ##
   # Affecte la nouvelle taille de grille
   # Lève une exception si la taille reçue est invalide
-  # :arg: taille de la dernière grille jouée
   def derniereTailleGrille=(taille)
     raise "Taille non définie" if not Grille.tailles.include?(taille)
     @derniereTailleGrille = taille
     return self
   end
 
+
+
+
   ##
   # Marshal API : méthode de dump
   def marshal_dump
-    [prochainIdGrille, derniereTailleGrille]
+    derniereTailleGrille
   end
+  
   # Marshal API : méthode de chargement
   def marshal_load(ary)
-    @prochainIdGrille, @derniereTailleGrille = ary
+    @derniereTailleGrille = ary
   end
 
 end
