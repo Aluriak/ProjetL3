@@ -60,20 +60,20 @@ class Picross
 
   # Création d'une grille racine à partir de la table d'état passée en argument.
   # Aucun effet si la table n'est pas de la taille réglementaire.
-  def creerGrilleRacine(matriceEtat) 
+  # Si aucun nom n'est spécifié, il sera généré aléatoirement
+  def creerGrilleRacine(matriceEtat, nom=nil) 
     matriceFacteursColonne, matriceFacteursLigne = 
       Grille.matriceEtats2facteurs(matriceEtat)
 
     # Créer la grille racine
-    grilleRacine = GrilleRacine.creerDepuis(
-      Grille.deTaille(matriceEtat.size, 
-      	 matriceFacteursLigne,
-	 matriceFacteursColonne),
-      self.idGrilleSuivant
+    grilleRacine = GrilleRacine.deTaille(matriceEtat.size, 
+	nom,
+      	matriceFacteursLigne,
+	matriceFacteursColonne
     )
 
     # Enregistrer la grille racine
-    self.gestionnaireDeSauvegarde.ajouterGrilleRacine(grilleRacine)
+    @gestionnaireDeSauvegarde.ajouterGrilleRacine(grilleRacine)
     
   end
 
