@@ -73,18 +73,20 @@ class Picross
     matriceFacteursColonne, matriceFacteursLigne = 
       Grille.matriceEtats2facteurs(matriceEtat)
 
-    # CRÉER LA GRILLE RACINE
+    # Créer la grille racine
     grilleRacine = GrilleRacine.creerDepuis(
-      Grille.new(matriceEtat.size, 
+      Grille.deTaille(matriceEtat.size, 
       	 matriceFacteursLigne,
 	 matriceFacteursColonne),
       self.idGrilleSuivant
     )
 
-    # ENREGISTRER LA GRILLE RACINE
+    # Enregistrer la grille racine
     self.gestionnaireDeSauvegarde.ajouterGrilleRacine(grilleRacine)
     
   end
+
+
 
   ##
   # Renvois la dernière taille de grille utilisée.
@@ -93,9 +95,9 @@ class Picross
   end
 
 
+
   ##
   # Définit une nouvelle @grille jouable de la taille demandée pour self.
-  # :arg: taille de la grille
   def nouvelleGrilleDeTaille(taille)
     listGrlRacine = self.gestionnaireDeSauvegarde.grillesRacinesDeTaille(taille)
     grille = listGrlRacine.first#TODO prendre une grille au hasard dans la liste.
@@ -171,16 +173,7 @@ class Picross
     return @@tailles.include?(t)
   end
 
-
-
-  # Remise à zéro de la configuration
-  # METHODE DE DEBUG
-  def remiseAZero
-    @config.prochainIdGrille = 1
-    @config.derniereTailleGrille = 5
-    self.sauverConfiguration
-  end
-end
+end # end class
 
 
 
