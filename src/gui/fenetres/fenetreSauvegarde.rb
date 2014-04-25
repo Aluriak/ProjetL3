@@ -5,11 +5,12 @@ require "glib2"
 include Gtk
 
 class FenetreSauvegarder
+	
+	#prend le picross en paramètre
+	#pour ::
+	def initialize(picross)
 
-
-	def initialize
-
-		#A FAIRE
+		#picross.
 		dialog = MessageDialog.new(
 			nil, 
 			Gtk::Dialog::DESTROY_WITH_PARENT,

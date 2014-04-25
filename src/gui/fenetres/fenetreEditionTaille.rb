@@ -1,73 +1,91 @@
-			
+
 require "gtk2"
 require "glib2"
 include Gtk
 
 load "src/gui/fenetres/grilleEditable.rb"
 
+#		
+#				FENETRE EDITION TAILLE
+#
+#	Cette fenetre affiche les différents élements qu'on veut parametrer pour ensuite travailler
+#	sur une grille en mode Edition
+#
 class FenetreEditionTaille
 
 	@tailleNouvelleMatrice
+	@chemin	#texte qui est soit "vierge" soit le chemin de l'image (soit "pleine" +tard)
 	
 	def initialize(picross)
 
-		fenetreEditer = Window.new("Editer");
+		@chemin = "vierge"
+		
+		fenetreEditer = Window.new("Editer")
 		fenetreEditer.set_resizable(false)
 
-		vBoxPrincipal = VBox.new(false, 2)
-		vBoxPrincipal.pack_start(hBoxHaut = HBox.new(false, 2))
-		hBoxHaut.pack_start(vBoxTaille = VBox.new(false, 2))
-
-		vBoxTaille.pack_start(Label.new("Taille"))	
-		vBoxTaille.pack_start(b5 	= RadioButton.new("5 x 5"))
-		vBoxTaille.pack_start(b10 	= RadioButton.new(b5, "10 x 10"))
-		vBoxTaille.pack_start(b15	= RadioButton.new(b10, "15 x 15"))
-		vBoxTaille.pack_start(b20 	= RadioButton.new(b15, "20 x 20"))
-		vBoxTaille.pack_start(b25 	= RadioButton.new(b20, "25 x 25"))
+		vBoxPrincipal = VBox.new(false, 3)
+		vBoxPrincipal.pack_start(hBoxHaut 	= HBox.new(false, 2))
+		vBoxPrincipal.pack_start(hBoxMilieu	= HBox.new(false, 1))
+		vBoxPrincipal.pack_start(hBoxBas 	= HBox.new(false, 2))
 		
-		hBoxHaut.pack_start(vBoxType = VBox.new(false, 2))
-		vBoxType.pack_start( Label.new("Type"))
-		vBoxType.pack_start(b4 = RadioButton.new("Vierge"))
+		hBoxHaut.pack_start(Frame.new("Taille").add(vBoxTaille = VBox.new(false, 2)))
+		
+		hBoxMilieu.pack_start(entryPath = Entry.new)
+		entryPath.set_text(@chemin)
+		entryPath.set_editable(false)
 
+		vBoxTaille.pack_start(rb5 	= RadioButton.new("5 x 5"))
+		vBoxTaille.pack_start(rb10 	= RadioButton.new(rb5, "10 x 10"))
+		vBoxTaille.pack_start(rb15	= RadioButton.new(rb10, "15 x 15"))
+		vBoxTaille.pack_start(rb20 	= RadioButton.new(rb15, "20 x 20"))
+		vBoxTaille.pack_start(rb25 	= RadioButton.new(rb20, "25 x 25"))
+		
+		hBoxHaut.pack_start(Frame.new("Type").add(vBoxType = VBox.new(false, 2)))
+		vBoxType.pack_start(rbVierge = RadioButton.new("Vierge"))
+		vBoxType.pack_start(rbPleine = RadioButton.new(rbVierge, "Pleine"))
+		
+		
 		vBoxType.pack_start(hBoxChargerImage = HBox.new(false, 2))
-		hBoxChargerImage.pack_start(b5 = RadioButton.new(b4, ""))
-
-		#Ecouteur boutton charger Image
-		hBoxChargerImage.pack_start(btnChargerImage = Button.new("Charger Image"))
+		hBoxChargerImage.pack_start(rbCharger = RadioButton.new(rbPleine, ""))
+		hBoxChargerImage.pack_start(boutonChargerImage = Button.new("Charger Image"))
 		
-
-		btnChargerImage.signal_connect("clicked"){
-			dialog = FileChooserDialog.new("Charger Image",
-				nil,
-				FileChooser::ACTION_OPEN,
-				nil,
+		#Ecouteur boutton charger Image
+		boutonChargerImage.signal_connect("clicked"){
+			dialog = FileChooserDialog.new("Charger Image", nil, FileChooser::ACTION_OPEN, nil,
 				[Stock::CANCEL, Dialog::RESPONSE_CANCEL],
 				[Stock::OPEN, Dialog::RESPONSE_ACCEPT]
 			)
+
 			if dialog.run == Dialog::RESPONSE_ACCEPT
 				puts "filename = #{dialog.filename}"
 			end
 		
+			entryPath.set_text(@chemin = dialog.filename)
+		
 			dialog.destroy
 		}
-
-		vBoxPrincipal.pack_start(hBoxBas = HBox.new(false, 2))
-		#Ajout de la 2eme horizontal box contenant boutons
-		hBoxBas.pack_start(ok = Button.new(Stock::OK), true, true)
-		hBoxBas.pack_start(boutonAnnuler = Button.new(Stock::CLOSE), true, true)
 		
-			
-		ok.signal_connect("clicked"){
-			
-			if (b5.active?)
+		
+		#Ajout de la 2eme horizontal box contenant boutons
+		hBoxBas.pack_start(boutonOK = Button.new(Stock::OK), true, true)
+		hBoxBas.pack_start(boutonFermer = Button.new(Stock::CLOSE), true, true)
+		
+		boutonFermer.signal_connect("clicked"){
+			fenetreEditer.destroy
+			Gui.lancer
+		}
+		
+		boutonOK.signal_connect("clicked"){
+				
+			if (rb5.active?)
 				@tailleNouvelleMatrice = 5
-			elsif (b10.active?)
+			elsif (rb10.active?)
 				@tailleNouvelleMatrice = 10
-			elsif (b15.active?)
+			elsif (rb15.active?)
 				@tailleNouvelleMatrice = 15
-			elsif (b20.active?)
+			elsif (rb20.active?)
 				@tailleNouvelleMatrice = 20
-			elsif (b25.active?)
+			elsif (rb25.active?)
 				@tailleNouvelleMatrice = 25
 			end
 
@@ -75,7 +93,7 @@ class FenetreEditionTaille
 
 			grilleEditable = GrilleEditable.new(@tailleNouvelleMatrice, picross)
 		}
-		boutonAnnuler.signal_connect("clicked"){ fenetreEditer.destroy }
+		boutonFermer.signal_connect("clicked"){ fenetreEditer.destroy }
 
 		fenetreEditer.add(vBoxPrincipal)
 		fenetreEditer.show_all
