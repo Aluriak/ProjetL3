@@ -1,0 +1,184 @@
+\documentclass[12pt]{beamer}
+
+\usepackage[frenchb]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8x]{inputenc}    % accent
+\usepackage{graphicx}           % pictures
+\usepackage{multimedia}         % sounds and movies
+
+\usetheme{Warsaw}
+
+
+
+
+
+%%%%%%%%%%%%%%%%%
+% PREAMBULE     %
+%%%%%%%%%%%%%%%%%
+\title{Soutenance de projet}
+\subtitle{Picross}
+\author{Groupe B}
+\date{\today}
+\institute{Université du Maine}
+%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%
+\setbeamertemplate{itemize item}[circle]
+\hypersetup{
+        pdfpagemode = FullScreen,% afficher le pdf en plein écran
+        pdfauthor   = {groupe B},%
+        pdftitle    = {Soutenance}%
+        pdfsubject  = {Soutenance},%
+        pdfcreator  = {PDFLaTeX},%
+}
+\setbeamertemplate{navigation symbols}{
+        \insertslidenavigationsymbol
+        \insertframenavigationsymbol
+        %\insertsubsectionnavigationsymbol
+        %\insertsectionnavigationsymbol
+        %\insertdocnavigationsymbol
+        %\insertbackfindforwardnavigationsymbol
+}
+% Faire apparaître un sommaire avant chaque section
+\AtBeginSection[]{
+        \begin{frame}
+        \begin{center}{\Large Plan }\end{center}
+        %%% affiche en début de chaque section, les noms de sections et
+        %%% noms de sous-sections de la section en cours.
+        \tableofcontents[currentsection,hideothersubsections]
+        \end{frame} 
+}
+
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%
+% BEGINNING     %
+%%%%%%%%%%%%%%%%%
+\begin{document}
+        \frame{\titlepage}
+        \frame{\tableofcontents}
+
+
+
+
+% % % % % % %
+% FRAME     %
+% % % % % % %
+\section[]{Première section}
+\begin{frame}
+       \frametitle{Le Pingouin}
+        \framesubtitle{un ennemi mortel du Batman}
+
+        \begin{columns}[c] % column structure
+        	\begin{column}{5.5cm} % right column 
+			\begin{itemize}
+				\item bois ou métal;
+				\bigskip
+				\item hanche double;
+				%\bigskip
+				\item 50 cm de long;
+			\end{itemize}
+
+        	\end{column}
+        	\begin{column}{5.0cm} % left column
+                        %\includegraphics[scale=0.3]{data/Shehnai.jpg}
+			mortadelle == ventre.getContent()
+        	\end{column}
+        \end{columns}
+
+% END FRAME 
+\end{frame}
+
+
+                
+% % % % % % %
+% FRAME     %
+% % % % % % %
+\begin{frame}
+        \frametitle{Pour le musicien}
+        \framesubtitle{cookbook du Shenaï en 1 diapo}
+
+        \begin{columns}[c] % column structure
+        	\begin{column}{5.5cm} % right column 
+			\begin{exampleblock}{Instrument seul}
+				\begin{itemize}
+					\item s'étend sur 2 octaves;
+					\item souffle continu très utilisé;
+					\item instrument solo depuis récemment;
+				\end{itemize}
+			\end{exampleblock}
+        	\end{column}
+        	\begin{column}{5.0cm} % left column
+			\begin{exampleblock}{En groupe}
+        			\begin{itemize}
+					\item souvent joué en groupe, ou \textit{naubat};
+					\item accompagné d'un \textit{khurdak};
+        			\end{itemize}
+			\end{exampleblock}
+        	\end{column}
+        \end{columns}
+
+% END FRAME 
+\end{frame}
+
+
+
+                
+% % % % % % %
+% FRAME     %
+% % % % % % %
+\section[]{Basmillah Khan}
+\begin{frame}
+        \frametitle{Sa vie}
+        \framesubtitle{21 mars 1913 - 21 août 2006}
+
+        \begin{columns}[c] % column structure
+        	\begin{column}{5.5cm} % right column 
+        	\end{column}
+        	\begin{column}{5.0cm} % left column
+        		\begin{itemize}
+				\item né à Dumraon, dans le Bihar;
+		\bigskip
+				\item famille de musicien, notamment \textit{Rasool Bux Khan} son grand-père;
+		\bigskip
+				\item mort à Bénarès;
+        		\end{itemize}
+        	\end{column}
+        \end{columns}
+
+		\bigskip
+        \begin{center}
+        	\begin{quote}
+			Music has no caste -- Basmillah Khan
+        	\end{quote}
+        \end{center}
+
+% END FRAME 
+\end{frame}
+
+
+                
+
+% % % % % % %
+% FRAME     %
+% % % % % % %
+\begin{frame}
+        \frametitle{Thaat : Todi}
+        \framesubtitle{}
+	Un thaat du matin contenant 5 ragas\\
+	\bigskip
+        \begin{tabular*}{0.75\textwidth}{ c | c | c | c | c | c | c | c}
+		Do & Re$\flat$ & Mi$\flat$ & Fa\# & Sol & La$\flat$ & Si & Do\\
+		S & r & g & M & P & d & N & S'
+        \end{tabular*}
+	
+% END FRAME 
+\end{frame}
+
+
+
+
+\end{document}
