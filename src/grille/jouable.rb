@@ -25,19 +25,14 @@ class GrilleJouable < Grille
   # matrice carrée d'états de cases du picross
   attr_reader :matriceDeJeu
   # nom identifiant la grille
-  attr_reader :nom
+  attr_accessor :nom
 
   def initialize(taille, nom=nil)
     super(taille)
     @matriceDeJeu = Array.new(taille) do |ligne|
       ligne = Array.new(taille) {Etat.Blanc}
     end
-    if nom == nil then
-      @nom = taille.to_s + 'x' 
-	+ taille.to_s + Date.now.strftime(format='_%d%b%Y')
-    else
-      @nom = nom
-    end
+    self.genererNom(nom)
   end
 
   # Bascule l'état de la case située en (i, j) vers l'état donné.
@@ -56,9 +51,20 @@ class GrilleJouable < Grille
     end
   end
 
+
+  ##
+  # Génère un nom pour la grille. S'appuie sur sa taille et la date courante,
+  # si aucun nom n'est donné explicitement
+  def genererNom(nom = nil)
+    if nom == nil then
+      @nom = self.taille.to_s + 'x' 
+	+ self.taille.to_s + Date.now.strftime(format='_%d%b%Y')
+    else
+      @nom = nom
+    end
+  end
   ## 
   # Retourne une GrilleJouable créée depuis la Grille envoyée en argument
-  # :arg: grille instance de Grille ou dérivée
   def GrilleJouable.creerDepuis(grille)
     # création de la grille
     ret = GrilleJouable.deTaille(grille.taille)
