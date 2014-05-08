@@ -80,11 +80,16 @@ class Gui
 		
 		boxTimer = VBox.new(false, 2)
 		
-		timer = Chronometre.initialiser("temps")
-		buttonStart = Button.new("Start")
+                timer_label = Label.new("")
+		timer = Chronometre.new(timer_label)
+                @window.signal_connect("focus_in_event") {
+                    timer.start()
+                }
+                @window.signal_connect("focus_out_event") {
+                    timer.stop() 
+                }
 
-		boxTimer.pack_start(timer.text)
-		boxTimer.pack_start(buttonStart)
+		boxTimer.pack_start(timer_label)
 
 		#Chronometre
 		
