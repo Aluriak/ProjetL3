@@ -4,6 +4,7 @@ require "glib2"
 include Gtk
 
 load "src/gui/fenetres/grilleEditable.rb"
+#load "src/image/image.rb" # cause des problèmes(conflits) entre Gtk::Image et RMagick::Image, à voir comment changer ça
 
 #		
 #				FENETRE EDITION TAILLE
@@ -33,7 +34,7 @@ class FenetreEditionTaille
 		hBoxMilieu.pack_start(entryPath = Entry.new)
 		entryPath.set_text(@chemin)
 		entryPath.set_editable(false)
-
+		
 		vBoxTaille.pack_start(rb5 	= RadioButton.new("5 x 5"))
 		vBoxTaille.pack_start(rb10 	= RadioButton.new(rb5, "10 x 10"))
 		vBoxTaille.pack_start(rb15	= RadioButton.new(rb10, "15 x 15"))
@@ -48,6 +49,12 @@ class FenetreEditionTaille
 		vBoxType.pack_start(hBoxChargerImage = HBox.new(false, 2))
 		hBoxChargerImage.pack_start(rbCharger = RadioButton.new(rbPleine, ""))
 		hBoxChargerImage.pack_start(boutonChargerImage = Button.new("Charger Image"))
+		boutonChargerImage.set_sensitive(false)
+		
+		rbVierge.signal_connect("clicked") { boutonChargerImage.set_sensitive(false) }		
+		rbPleine.signal_connect("clicked") { boutonChargerImage.set_sensitive(false) }
+		rbCharger.signal_connect("clicked"){ boutonChargerImage.set_sensitive(true)  }
+		
 		
 		#Ecouteur boutton charger Image
 		boutonChargerImage.signal_connect("clicked"){
@@ -66,13 +73,13 @@ class FenetreEditionTaille
 		}
 		
 		
-		#Ajout de la 2eme horizontal box contenant boutons
+		#Ajout de la 2eme horizontal box contenant les boutons
 		hBoxBas.pack_start(boutonOK = Button.new(Stock::OK), true, true)
 		hBoxBas.pack_start(boutonFermer = Button.new(Stock::CLOSE), true, true)
 		
 		boutonFermer.signal_connect("clicked"){
 			fenetreEditer.destroy
-			Gui.lancer
+			#Gui.lancer
 		}
 		
 		boutonOK.signal_connect("clicked"){
