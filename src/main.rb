@@ -8,5 +8,5 @@ load "src/gui/gui.rb"
 ############JEU###############
 Gtk.init
 Gui.lancer
-Gtk.main
+#Gtk.main
 
