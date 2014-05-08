@@ -49,7 +49,6 @@ class FenetreNouveauTaille
 			#Il faudra donc surcharger le constructeur de gui pour pouvoir y ajouter une taille de matrice
 			print "Lancement de la nouvelle grille de taille : ", @tailleNouvelleMatrice, "\n"
 
-			Gui.fermer
 			popupTailleGrille.destroy
 			Gui.lancer(@tailleNouvelleMatrice)
 		}
