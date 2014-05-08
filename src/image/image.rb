@@ -162,6 +162,7 @@ class PicrossImage
 	
 end #fin de classe
 
+=begin
 
 folder = "."
 
@@ -174,7 +175,8 @@ image.enregistrer("./#{taille.to_s*2}-1.jpg")
 
 output = File.new("output.txt", "w")
 output.write(image.afficherMatrice)
-=begin
+
+
 #méthode qui crée une imagePicross
 pi = PicrossImage.lire(folder+"/cascade4.jpg")
 #méthode qui enegistrera une grille racine depuis la fenetre d'édition; 
