@@ -34,7 +34,6 @@ class Gui
 	@picross
 	@derniereTailleGrille
 	
-	
 	@picross = Picross.new
 	@derniereTailleGrille = @picross.derniereTailleDeGrille
 	
@@ -55,19 +54,32 @@ class Gui
 	
 	
 	def initialize(tailleGrille)
+		@picross = Picross.new
+		@picross.nouvelleGrilleDeTaille(tailleGrille)
 		@window = Window.new(" - Picross - ")
 		@window.signal_connect("destroy") { Gtk.main_quit }
 		@window.set_resizable(false)
 		vbox = VBox.new(false, 2)
 		
 		
+		#ça pas bon - utiliser le picross - mais pratique pour 'affichage en attendant
 		jouable = GrilleJouable.deTaille(tailleGrille)
 		
+		#nouvelleGrilleDeTaille
 	
 		#Partie haute de l"application
 		vbox.pack_start(hBoxHaut = HBox.new(false, 2))
 		
 		menuHaut = MenuPrincipal.creerMenuHaut(hBoxHaut)
+		
+		menuHaut.clickerSur("Nouveau")	{ nouveau = FenetreNouveauTaille.new }
+		menuHaut.clickerSur("Editer")	{ fenetreEditer = FenetreEditionTaille.new(@picross) }
+		menuHaut.clickerSur("Charger")	{ fenetreCharger = FenetreCharger.new }
+		menuHaut.clickerSur("Sauvegarder"){ fenetreSauvegarder = FenetreSauvegarder.new(@picross) }
+		menuHaut.clickerSur("Score")	{ fenetreScore = FenetreScore.new(nil) } #remplacer par une instance de score
+		menuHaut.clickerSur("Manuel")	{ fenetreManuel = FenetreManuel.new }
+		menuHaut.clickerSur("A Propos")	{ fenetreAPropos = FenetreAPropos.new}
+		
 		
 		#Partie basse de l"application
 		vbox.pack_start(hBoxBas = HBox.new(false, 2))
@@ -87,34 +99,8 @@ class Gui
 		# intégration à la GUI
 		boxTimer.pack_start(timer_label)
 		table.attach(boxTimer, 0, 1, 0, 1)
-
-
-
-		#pimg = PicrossImage.lire("src/image/lettreD.jpg")
-		
-
-		#picross.creerGrilleRacine(pimg.toPicross(tailleGrille))
-		
-		#jouable.tableColonne = Array.new(5){Array.new(4)}
-		
-=begin	for i in 0..jouable.tableColonne.length-1
-			for j in 0..jouable.tableColonne[0].length-1
-			jouable.tableColonne[i][j] = -1
-			end
-		end
-		
-		jouable.tableLigne = Array.new(4){Array.new(5)}
-		
-		for i in 0..jouable.tableLigne.length-1
-			for j in 0..jouable.tableLigne[0].length-1
-				jouable.tableLigne[i][j] = -1
-			end
-		end
-=end
 		
 		chiffreHaut = TableChiffre.creer(jouable.tableColonne)
-		
-			
 		table.attach(chiffreHaut.table, 1, 2, 0, 1)
 
 		chiffreBas = TableChiffre.creer(jouable.tableLigne)
@@ -126,14 +112,6 @@ class Gui
 		#Partie basse droite de l"application
 		vBoxBas.add(Frame.new.add(vBoxBasGauche = VBox.new(2)))
 		menuDroit = MenuAide.creerMenuDroit(vBoxBasGauche,"Aide - Faible", "Aide - Fort")
-		
-		menuHaut.clickerSur("Nouveau")	{ nouveau = FenetreNouveauTaille.new }
-		menuHaut.clickerSur("Editer")	{ fenetreEditer = FenetreEditionTaille.new(@picross) }
-		menuHaut.clickerSur("Charger")	{ fenetreCharger = FenetreCharger.new }
-		menuHaut.clickerSur("Sauvegarder"){ fenetreSauvegarder = FenetreSauvegarder.new(@picross) }
-		menuHaut.clickerSur("Score")	{ fenetreScore = FenetreScore.new(nil) } #remplacer par une instance de score
-		menuHaut.clickerSur("Manuel")	{ fenetreManuel = FenetreManuel.new }
-		menuHaut.clickerSur("A Propos")	{ fenetreAPropos = FenetreAPropos.new}
 		
 		#menuDroit.clickerSur("Aide - Faible"){aideFaible(p)}
 
