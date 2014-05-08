@@ -31,26 +31,23 @@ end
 class Gui
 	
 	@window
-	
+	@picross
 	@derniereTailleGrille
-        @picross = Picross.new
-        @derniereTailleGrille = @picross.derniereTailleDeGrille
-
-=begin
-	def Gui.lancerTailleDerniereGrille(titre)
-		puts "Derniere taille de la grille ",@derniereTailleGrille
-		new(titre, @derniereTailleGrille)
-	end
-
-	#A faire :  Différencier les deux constructeurs
-	#Soit on lance le constructeur avec la valeur de la derniere grille
-	#Soit on lance le constructeur avec la valeur définie par le joueur
 	
-	def Gui.lancerTailleChoisie(titre, tailleChoisie)
-		puts "Taille choisie : #{tailleChoisie}"
-		new(titre, tailleChoisie)
-	end
-=end
+	
+	@picross = Picross.new
+	@derniereTailleGrille = @picross.derniereTailleDeGrille
+	
+	# la gui crée un picross à son lancement
+	attr_reader :picross
+	
+	# window est la fenetre affichée
+	attr_reader :window
+	
+	# la taille de la derniere taille de grille
+	# pratique pour l'utilisateur; s'il jouait sur une grille
+	# de 20*20, le jeu chargera une grille de 20*20
+	attr_reader :derniereTailleGrille
 	
 	def Gui.lancer(tailleChoisie = @derniereTailleGrille)
 		new(tailleChoisie)
@@ -79,19 +76,15 @@ class Gui
 		vBoxBas.add(Frame.new.add(table = Table.new(4,4)))
 		
 		boxTimer = VBox.new(false, 2)
-		
 
-                # Gestion du chronomètre
-                timer_label = Label.new("")
+		# Gestion du chronomètre
+		timer_label = Label.new("")
 		timer = Chronometre.new(timer_label)
-                # arrêt/départ du chrono suivant le focus de la fenêtre par l'utilisateur
-                @window.signal_connect("focus_in_event") {
-                    timer.start()
-                }
-                @window.signal_connect("focus_out_event") {
-                    timer.stop() 
-                }
-                # intégration à la GUI
+		# arrêt/départ du chrono suivant le focus de la fenêtre par l'utilisateur
+		@window.signal_connect("focus_in_event") { timer.start }
+		@window.signal_connect("focus_out_event") { timer.stop }
+		
+		# intégration à la GUI
 		boxTimer.pack_start(timer_label)
 		table.attach(boxTimer, 0, 1, 0, 1)
 
@@ -134,35 +127,17 @@ class Gui
 		vBoxBas.add(Frame.new.add(vBoxBasGauche = VBox.new(2)))
 		menuDroit = MenuAide.creerMenuDroit(vBoxBasGauche,"Aide - Faible", "Aide - Fort")
 		
-		#Ecouteur signal pour le bouton "Nouveau"
-		menuHaut.listMenuBtns[0].signal_connect("clicked"){ nouveau = FenetreNouveauTaille.new}
-
-		#Ecouteur signal pour le bouton "Editer"
-		menuHaut.listMenuBtns[1].signal_connect("clicked"){
-			editer = FenetreEditionTaille.new(@picross) 
-			@window.destroy
-		}
-
-		#Ecouteur signal pour le bouton "Charger"
-		menuHaut.listMenuBtns[2].signal_connect("clicked"){ fenetreCharger = FenetreCharger.new }
-
-		#Ecouteur signal pour le bouton "Sauvegarder"
-		menuHaut.listMenuBtns[3].signal_connect("clicked"){ fenetreSauvegarder = FenetreSauvegarder.new(@picross) }
-
-		#Ecouteur signal pour le bouton "Score"
-		menuHaut.listMenuBtns[4].signal_connect("clicked"){ fenetreScore = FenetreScore.new(nil) } #remplacer par une instance de score
-
-		#evenement clique le bouton "Manuel"
-		menuHaut.listMenuBtns[5].signal_connect("clicked"){ fenetreManuel = FenetreManuel.new }
-
-		#evenement clique le bouton "A Propos"
-		menuHaut.listMenuBtns[6].signal_connect("clicked"){ fenetreAPropos = FenetreAPropos.new }
+		menuHaut.clickerSur("Nouveau")	{ nouveau = FenetreNouveauTaille.new }
+		menuHaut.clickerSur("Editer")	{ fenetreEditer = FenetreEditionTaille.new(@picross) }
+		menuHaut.clickerSur("Charger")	{ fenetreCharger = FenetreCharger.new }
+		menuHaut.clickerSur("Sauvegarder"){ fenetreSauvegarder = FenetreSauvegarder.new(@picross) }
+		menuHaut.clickerSur("Score")	{ fenetreScore = FenetreScore.new(nil) } #remplacer par une instance de score
+		menuHaut.clickerSur("Manuel")	{ fenetreManuel = FenetreManuel.new }
+		menuHaut.clickerSur("A Propos")	{ fenetreAPropos = FenetreAPropos.new}
 		
 		#menuDroit.clickerSur("Aide - Faible"){aideFaible(p)}
 
-		#menuDroit.clickerSur("Aide - Fort"){aideFort(p)}
-		
-
+		#menuDroit.clickerSur("Aide - Fort"){aideFort(p)}		
 
 		@window.add(vbox)
 		@window.show_all
