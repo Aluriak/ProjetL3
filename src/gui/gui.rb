@@ -80,20 +80,21 @@ class Gui
 		
 		boxTimer = VBox.new(false, 2)
 		
+
+                # Gestion du chronomètre
                 timer_label = Label.new("")
 		timer = Chronometre.new(timer_label)
+                # arrêt/départ du chrono suivant le focus de la fenêtre par l'utilisateur
                 @window.signal_connect("focus_in_event") {
                     timer.start()
                 }
                 @window.signal_connect("focus_out_event") {
                     timer.stop() 
                 }
-
+                # intégration à la GUI
 		boxTimer.pack_start(timer_label)
-
-		#Chronometre
-		
 		table.attach(boxTimer, 0, 1, 0, 1)
+
 
 
 		#pimg = PicrossImage.lire("src/image/lettreD.jpg")
