@@ -91,6 +91,33 @@ class TableNombre
   end
 
 
+  ## 
+  # Retourne la largeur de la table.
+  # Si c'est une table de type ligne, la largeur est variable et égale au nombre maximum de nombre contenu par les lignes
+  # Si c'est une table de type colonne, la largeur est égale à la taille de la grille
+  def largeur()
+    if @type == @@LIGNE then
+      return (@matriceNombre.max { |a,b| a.size <=> b.size }).size
+    else
+      return self.taille()
+    end
+  end
+
+
+  ## 
+  # Retourne la hauteur de la table.
+  # Si c'est une table de type ligne, la hauteur est égale à la taille de la grille
+  # Si c'est une table de type colonne, la hauteur est variable et égale au nombre maximum de nombre contenu par les colonnes
+  def hauteur()
+    if @type == @@COLONNE then
+      return (@matriceNombre.max { |a,b| a.size <=> b.size }).size
+    else
+      return self.taille()
+    end
+  end
+
+
+
   ##
   # Etudie la table d'Etat reçue, et renvois deux TableNombre décrivant cette table d'état.
   def TableNombre.creerDepuis(tableEtat) 
