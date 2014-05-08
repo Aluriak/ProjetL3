@@ -74,7 +74,6 @@ class Picross
 
     # Enregistrer la grille racine
     @gestionnaireDeSauvegarde.ajouterGrilleRacine(grilleRacine)
-    
   end
 
 
@@ -91,10 +90,13 @@ class Picross
   # Définit une nouvelle @grille jouable de la taille demandée pour self.
   def nouvelleGrilleDeTaille(taille)
     listGrlRacine = self.gestionnaireDeSauvegarde.grillesRacinesDeTaille(taille)
-    grille = listGrlRacine.first#TODO prendre une grille au hasard dans la liste.
-    # TODO: Si elle est vide, en créer une à la volée.
-    # Créer la grille jouable depuis la grille racine trouvée
+    if listGrlRacine.size == 0 then
+      grille = GrilleJouable.deTaille(taille) # création d'une grille à la volée.
+    else 
+      grille = listGrlRacine.choice # prendre une grille au hasard dans la liste.
+    end
     @grille = GrilleJouable.creerDepuis(grille)
+    return nil
   end
 
 
