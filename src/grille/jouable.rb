@@ -27,11 +27,9 @@ class GrilleJouable < GrilleRacine
 
 
   ##
-  def initialize(taille, nom = nil, matriceDesLignes = nil, matriceDesColonnes = nil)
-    super(taille, nom, matriceDesLignes, matriceDesColonnes)
-    @matriceDeJeu = Array.new(taille) do |ligne|
-      ligne = Array.new(taille) {Etat.Blanc}
-    end
+  def initialize(taille, nom = nil, tableLigne = nil, tableColonne = nil)
+    super(taille, nom, tableLigne, tableColonne)
+    @matriceDeJeu = Array.new(taille) { Array.new(taille) {Etat.Blanc} }
   end
 
 
@@ -45,9 +43,9 @@ class GrilleJouable < GrilleRacine
   # Sinon, elles sont remplacées par des matrices initialisées aléatoirement.
   # Le nom généré aléatoirement se base sur la taille et la date courante.
   def GrilleJouable.deTaille(taille, nom = nil, 
-  			    matriceDesLignes = nil, matriceDesColonnes = nil)
+  			    tableLigne = nil, tableColonne = nil)
     raise "Taille #{taille} non définie" if not Grille.tailles.include?(taille)
-    return new(taille, nom, matriceDesLignes, matriceDesColonnes)
+    return new(taille, nom, tableLigne, tableColonne)
   end
 
 
@@ -60,8 +58,8 @@ class GrilleJouable < GrilleRacine
     return GrilleJouable.new(grilleRacine.taille,
       grilleRacine.nom,
       # recopie profonde des matrices de facteurs
-      Marshal.load(Marshal.dump(grilleRacine.matriceDesLignes)),
-      Marshal.load(Marshal.dump(grilleRacine.matriceDesColonnes))
+      Marshal.load(Marshal.dump(grilleRacine.tableLigne)),
+      Marshal.load(Marshal.dump(grilleRacine.tableColonne))
     )
   end
   

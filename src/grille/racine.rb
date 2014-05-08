@@ -7,6 +7,7 @@
 # IMPORTS			#
 #################################
 require "date"
+load 'src/grille/tableNombre.rb'
 load "src/commun/commun.rb"
 
 
@@ -18,46 +19,35 @@ load "src/commun/commun.rb"
 
 # une GrilleRacine possède un nom et des facteurs de ligne/colonne.
 class GrilleRacine 
-  @matriceDesLignes
-  @matriceDesColonnes
+  @tableLigne
+  @tableColonne
   @nom
 
   # les entiers définissant les lignes
-  attr_accessor :matriceDesLignes
+  attr_accessor :tableLigne
   # les entiers définissant les colonnes
-  attr_accessor :matriceDesColonnes
+  attr_accessor :tableColonne
   # nom identifiant la grille
   attr_reader :nom
 
 
-  def initialize(taille, nom, matriceDesLignes, matriceDesColonnes)
-    # matriceDesLignes[3][4] accède au 5ème chiffre de la 4ème ligne
-    if matriceDesLignes == nil then 
-      @matriceDesLignes = Array.new(taille) { Array.new }
-      @matriceDesLignes.each do |lne|
-      	(1+rand((taille/2).to_i)).times do 
-      	  lne.push(rand(1)+1)
-	end
-      end
+  def initialize(taille, nom = nil, tableLigne = nil, tableColonne = nil)
+    # si les tables de colonne et de lignes ne sont pas renseignées
+    if tableLigne == nil or tableColonne == nil then
+      # Génération d'un picross aléatoire
+      # création d'une table d'état avec remplissage aléatoire
+      tableEtat = Array.new(taille) {Array.new(taille) {[Etat.Blanc, Etat.Noir, Etat.Drapeau].choice} }
+      # obtention des tables 
+      @tableLigne, @tableColonne = TableNombre.creerDepuis(tableEtat)
     else
-      @matriceDesLignes = matriceDesLignes
-    end
-
-    # matriceDesColonnes[0][10] accède au 11ème chiffre de la 1ère ligne
-    if matriceDesColonnes == nil then 
-      @matriceDesColonnes = Array.new(taille) { Array.new } 
-      @matriceDesColonnes.each do |col|
-      	(1+rand((taille/2).to_i)).times do 
-      	  col.push(rand(1)+1)
-	end
-      end
-    else
-      @matriceDesColonnes = matriceDesColonnes
+      # utilisation des tables reçues
+      @tableLigne, @tableColonne = tableLigne, tableColonne
     end
 
 
     # Nom
     if nom == nil then
+      # Génération du nom basé sur la date et la taille demandée.
       @nom =  self.taille.to_s + 'x' + self.taille.to_s 
       @nom += DateTime.now.strftime(format='_%d%b%Y_%H%M%S')
     else
@@ -76,9 +66,9 @@ class GrilleRacine
   # Sinon, elles sont remplacées par des matrices initialisées aléatoirement.
   # Le nom généré aléatoirement se base sur la taille et la date courante.
   def GrilleRacine.deTaille(taille, nom = nil, 
-  			    matriceDesLignes = nil, matriceDesColonnes = nil)
+  			    tableLigne = nil, tableColonne = nil)
     raise "Taille non définie" if not Grille.tailles.include?(taille)
-    return new(taille, nom, matriceDesLignes, matriceDesColonnes)
+    return new(taille, nom, tableLigne, tableColonne)
   end
 
 
@@ -86,19 +76,19 @@ class GrilleRacine
 
   # Retourne la taille de la grille
   def taille
-    return @matriceDesLignes.size
+    return @tableLigne.taille
   end
 
 
 
   # Marshal API : méthode de dump
   def marshal_dump
-    [matriceDesLignes, matriceDesColonnes]
+    [tableLigne, tableColonne]
   end
   
   # Marshal API : méthode de chargement
   def marshal_load(ary)
-    @matriceDesLignes, @matriceDesColonnes = ary
+    @tableLigne, @tableColonne = ary
   end
 
 

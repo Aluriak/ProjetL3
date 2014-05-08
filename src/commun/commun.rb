@@ -6,7 +6,6 @@
 #################################
 # IMPORTS			#
 #################################
-load 'src/commun/etats2facteurs.rb'
 
 
 #################################
@@ -33,7 +32,7 @@ CONSTANT_MAX_CHIFFRES 		= 2 			unless defined?	CONSTANT_MAX_CHIFFRES
 CONSTANT_MODE_DEBUG		= true			unless defined?	CONSTANT_MODE_DEBUG
 
 #################################
-# TAILLE			#
+# GRILE.TAILLE			#
 #################################
 # mainteneur : BOURNEUF
 
@@ -45,6 +44,20 @@ class Grille
   def Grille.tailles() return @@tailles end
 end
 
+
+
+
+#################################
+# ARRAY.CHOICE			#
+#################################
+#mainteneur : BOURNEUF
+class Array
+  ##
+  # Obtention d'un élément au hasard du table.
+  def choice
+    return shuffle.first
+  end
+end
 
 
 
