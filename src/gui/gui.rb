@@ -55,12 +55,13 @@ class Gui
 	
 	def initialize(tailleGrille)
 		@picross = Picross.new
-		@picross.nouvelleGrilleDeTaille(tailleGrille)
+		
+		# ligne problématique
+		#@picross.nouvelleGrilleDeTaille(tailleGrille)
 		@window = Window.new(" - Picross - ")
 		@window.signal_connect("destroy") { Gtk.main_quit }
 		@window.set_resizable(false)
 		vbox = VBox.new(false, 2)
-		
 		
 		#ça pas bon - utiliser le picross - mais pratique pour 'affichage en attendant
 		jouable = GrilleJouable.deTaille(tailleGrille)
