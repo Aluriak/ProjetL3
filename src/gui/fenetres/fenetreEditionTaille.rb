@@ -51,10 +51,9 @@ class FenetreEditionTaille
 		hBoxChargerImage.pack_start(boutonChargerImage = Button.new("Charger Image"))
 		boutonChargerImage.set_sensitive(false)
 		
-		rbVierge.signal_connect("clicked") { boutonChargerImage.set_sensitive(false) }		
-		rbPleine.signal_connect("clicked") { boutonChargerImage.set_sensitive(false) }
-		rbCharger.signal_connect("clicked"){ boutonChargerImage.set_sensitive(true)  }
-		
+		rbVierge.signal_connect("clicked") { boutonChargerImage.set_sensitive(false); entryPath.set_text("vierge")}		
+		rbPleine.signal_connect("clicked") { boutonChargerImage.set_sensitive(false); entryPath.set_text("pleine")}
+		rbCharger.signal_connect("clicked"){ boutonChargerImage.set_sensitive(true) ; entryPath.set_text("image?") }
 		
 		#Ecouteur boutton charger Image
 		boutonChargerImage.signal_connect("clicked"){
