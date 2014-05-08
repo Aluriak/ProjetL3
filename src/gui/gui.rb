@@ -11,8 +11,6 @@ load "src/gui/menuAide.rb"
 load "src/gui/menuPrincipal.rb"
 load "src/gui/tablechiffre.rb"
 load "src/gui/chronometre.rb"
-load "src/grille/jouable.rb"
-load "src/configuration/configuration.rb"
 load "src/picross/picross.rb"
 load "src/gui/fenetres/fenetreNouveauTaille.rb"
 load "src/gui/fenetres/fenetreEditionTaille.rb"
@@ -22,7 +20,6 @@ load "src/gui/fenetres/fenetreSauvegarde.rb"
 load "src/gui/fenetres/fenetreScore.rb"
 load "src/gui/fenetres/fenetreManuel.rb"
 load "src/gui/fenetres/fenetreAPropos.rb"
-#load "src/image/image.rb"
 
 class Array
 	def orientationHorizontale?
@@ -36,8 +33,8 @@ class Gui
 	@window
 	
 	@derniereTailleGrille
-	@picross = Picross.new
-	@derniereTailleGrille = @picross.derniereTailleDeGrille
+        @picross = Picross.new
+        @derniereTailleGrille = @picross.derniereTailleDeGrille
 
 =begin
 	def Gui.lancerTailleDerniereGrille(titre)
@@ -56,16 +53,11 @@ class Gui
 =end
 	
 	def Gui.lancer(tailleChoisie = @derniereTailleGrille)
-		#puts "Taille choisie : #{tailleChoisie}"
 		new(tailleChoisie)
 	end
 	
 	
 	def initialize(tailleGrille)
-		p @picross.class
-		@picross = Picross.new
-		#@tailleGrille = p.config.derniereTailleGrille
-		
 		@window = Window.new(" - Picross - ")
 		@window.signal_connect("destroy") { Gtk.main_quit }
 		@window.set_resizable(false)
@@ -104,29 +96,29 @@ class Gui
 
 		#picross.creerGrilleRacine(pimg.toPicross(tailleGrille))
 		
-		#jouable.matriceDesColonnes = Array.new(5){Array.new(4)}
+		#jouable.tableColonne = Array.new(5){Array.new(4)}
 		
-=begin	for i in 0..jouable.matriceDesColonnes.length-1
-			for j in 0..jouable.matriceDesColonnes[0].length-1
-			jouable.matriceDesColonnes[i][j] = -1
+=begin	for i in 0..jouable.tableColonne.length-1
+			for j in 0..jouable.tableColonne[0].length-1
+			jouable.tableColonne[i][j] = -1
 			end
 		end
 		
-		jouable.matriceDesLignes = Array.new(4){Array.new(5)}
+		jouable.tableLigne = Array.new(4){Array.new(5)}
 		
-		for i in 0..jouable.matriceDesLignes.length-1
-			for j in 0..jouable.matriceDesLignes[0].length-1
-				jouable.matriceDesLignes[i][j] = -1
+		for i in 0..jouable.tableLigne.length-1
+			for j in 0..jouable.tableLigne[0].length-1
+				jouable.tableLigne[i][j] = -1
 			end
 		end
 =end
 		
-		chiffreHaut = TableChiffre.creer(jouable.matriceDesColonnes)
+		chiffreHaut = TableChiffre.creer(jouable.tableColonne)
 		
 			
 		table.attach(chiffreHaut.table, 1, 2, 0, 1)
 
-		chiffreBas = TableChiffre.creer(jouable.matriceDesLignes)
+		chiffreBas = TableChiffre.creer(jouable.tableLigne)
 		table.attach(chiffreBas.table, 0, 1, 1, 2)
 
 		planche = Planche.creer(jouable)
