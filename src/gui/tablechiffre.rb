@@ -26,15 +26,8 @@ class TableChiffre
 	def initialize(matrice)	
 		
 		@matrice = matrice
-		
-		if matrice.orientationHorizontale?
-			@largeur = matrice[0].length	
-			@hauteur = matrice.length
-		else
-			@largeur = matrice.length	
-			@hauteur = matrice[0].length
-			
-		end
+                @largeur = matrice.largeur	
+                @hauteur = matrice.hauteur
 		
 		#@matrice = 5#matrice.size
 		@table = Table.new(@largeur, @hauteur) #à remplacer par matrice.largeur, materice.longueur
