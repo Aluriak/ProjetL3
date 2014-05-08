@@ -10,7 +10,8 @@ class FenetreSauvegarder
 	#pour ::
 	def initialize(picross)
 
-		#picross.
+		picross.sauverGrilleCommeGrilleJouable
+		
 		dialog = MessageDialog.new(
 			nil, 
 			Gtk::Dialog::DESTROY_WITH_PARENT,
