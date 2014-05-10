@@ -4,7 +4,7 @@
 #Ewen COUSIN
 
 require "RMagick"
-include Magick
+#include Magick
 
 load "src/commun/commun.rb"
 
@@ -46,7 +46,7 @@ class PicrossImage
 	end
 	
 	def initialize(input) 
-		@image = ImageList.new(input) 
+		@image = RMagick::ImageList.new(input) 
 	end
 	
 	#transforme une image en gamme de gris (photo noir et blanc classique)

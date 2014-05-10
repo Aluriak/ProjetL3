@@ -107,6 +107,8 @@ class Gui
 		chiffreBas = TableChiffre.creer(jouable.tableLigne)
 		table.attach(chiffreBas.table, 0, 1, 1, 2)
 
+		#il faudrait :
+		#planche = Planche.creer(picross)
 		planche = Planche.creer(jouable)
 		table.attach(planche.table, 1, 2, 1, 2)
 
