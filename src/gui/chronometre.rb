@@ -32,51 +32,51 @@ class Chronometre
     @dixieme = 0      
     @ref_label = ref_label
     @pause = true
-    majlabel()
+    majlabel
   end
 
   ##
   # Relance le chronomètre
-  def start()
-    if @pause then 
+  def start
+    if @pause 
       @pause = false
-      @chrono = Thread.new { self.run() }
+      @chrono = Thread.new { self.run }
     end
   end
 
   ##
   # Stoppe le chronomètre
-  def stop()
+  def stop
     if not @pause then 
       @pause = true
-      @chrono.join()
+      @chrono.join
     end
   end
 
   ##
   # Remet le chronomètre à zéro.
-  def raz()
+  def raz
         @sec = 0
         @dixieme = 0
-        majlabel()
+        majlabel
   end
 
   ##
   # Predicat vrai si chronomètre actuellement en pause.
-  def paused?()
+  def paused?
     return @pause
   end
 
 
   ##
   # Compte les secondes et met le label référencé à jour
-  def run()
+  def run
     # garder en mémoire les dixièmes de seconde permet de diminuer la perte de temps induite par la pause.
     while not @pause do 
       if @dixieme == 10 then
         @dixieme = 0
         @sec += 1
-        majlabel()
+        majlabel
       end
       @dixieme += 1
       sleep(0.1)
@@ -86,7 +86,7 @@ class Chronometre
 
   ##
   # Met à jour le texte du label.
-  def majlabel()
+  def majlabel
     s, m = @sec % 60, @sec / 60
     h = m / 60
     m = m % 60
