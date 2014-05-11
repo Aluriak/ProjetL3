@@ -7,6 +7,7 @@
 # IMPORTS			#
 #################################
 load "src/commun/commun.rb"
+load "src/scores/scores.rb"
  
 
 #################################
@@ -18,16 +19,19 @@ load "src/commun/commun.rb"
 # lors des modifications des attributs.
 class Configuration
   @derniereTailleGrille
+  @scores
 
   # taille de la dernière grille jouée
   attr_reader :derniereTailleGrille
+  # scores liés au picross
+  attr_reader :scores
 
 
 
   ##
   # Constructeur
-  def initialize(taille)
-    @derniereTailleGrille = taille
+  def initialize(taille, scores)
+    @derniereTailleGrille, @scores = taille, scores
   end
 
 
@@ -81,12 +85,12 @@ class Configuration
   ##
   # Marshal API : méthode de dump
   def marshal_dump
-    derniereTailleGrille
+    [@derniereTailleGrille, @scores]
   end
   
   # Marshal API : méthode de chargement
   def marshal_load(ary)
-    @derniereTailleGrille = ary
+    @derniereTailleGrille, @scores = ary
   end
 
 end
