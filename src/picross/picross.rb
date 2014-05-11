@@ -33,6 +33,8 @@ class Picross
     @config = Configuration.charger
     # Chargement d'une grille
     @gestionnaireDeSauvegarde = GestionnaireDeSauvegarde.new
+    @gestionnaireDeSauvegarde.chargerGrillesRacines
+    @gestionnaireDeSauvegarde.chargerGrillesJouables
   end
 
 
