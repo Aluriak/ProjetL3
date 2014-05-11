@@ -92,9 +92,6 @@ class GrilleRacine
   end
 
 
-
-  # Obligation de passer par le constructeur deTaille(1) pour créer une Grille
-  private_class_method :new
 end
 
 
