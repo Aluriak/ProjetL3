@@ -17,8 +17,6 @@ class MenuPrincipal
 
 	def initialize(box)
 
-		@listMenuBtns = []
-
 		#Chargement de l'icone pour le boutton score
 		iconeScore = Gtk::Image.new CONSTANT_FICHIER_GUI_IMAGE+"/score.png"
 
@@ -42,7 +40,6 @@ class MenuPrincipal
       	toolbar.insert(5, helptb)
       	toolbar.insert(6, abouttb)
 
-
       	newtb.set_label("Nouveau")
       	edittb.set_label("Editer")
       	opentb.set_label("Charger")
@@ -50,14 +47,8 @@ class MenuPrincipal
       	scoretb.set_label("Score")
       	helptb.set_label("Manuel")
       	abouttb.set_label("A Propos")
-
-      	@listMenuBtns << newtb
-      	@listMenuBtns << edittb
-      	@listMenuBtns << opentb
-      	@listMenuBtns << savetb
-      	@listMenuBtns << scoretb
-      	@listMenuBtns << helptb
-      	@listMenuBtns << abouttb
+		
+		@listMenuBtns = [newtb,edittb,opentb,savetb,scoretb,helptb,abouttb]
 
       	box.pack_start(toolbar)
 	end	
@@ -75,5 +66,6 @@ class MenuPrincipal
 		nomToMenu(nom).signal_connect("clicked") {bloc.call}
 	end
 
+	#nomToMenu n'est utilisée que pour clickerSur
 	private :nomToMenu
 end

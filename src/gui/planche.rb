@@ -66,12 +66,12 @@ class Planche
 		else
 			image.file = @tabImg[Etat.suivant(@tabImg.index(image.file))]
 		end
-		
-		#image.file = 
+		#normalement à la place de tout ça : 
+		#image.file = @tabImg[@picross.etatGrille(x,y)] en changeant le prototype 
+		#pour qu'il prenne les coordonnées, et non l'objet 'image'
 	end
 	
-	#pour l'edition seulement
-
+	#pour l'edition seulement(normalement inutile, si le picross est actualisé)
 	def toMatrice
 		matrice = Array.new(@jouable.taille) { Array.new(@jouable.taille) }
 		0.upto(jouable.taille - 1) { |y| 
@@ -98,7 +98,21 @@ class Planche
 				@table.attach(@event_box[x][y], x, x+1, y, y+1) 
               
 				#crée les évenements de click sur chaque cases
-				@event_box[x][y].signal_connect("button_press_event") { self.suivante(@image[x][y]) }
+				@event_box[x][y].signal_connect("button_press_event") { 
+					self.suivante(@image[x][y]) 
+					# normalement à la place :
+					# 1 MODIF DE L'ETAT DU PICROSS
+					# if modeEdition
+						#@picross.etatGrille(x,y) == Etat.Blanc ? 
+							#@picross.basculerEtat(x,y,Etat.Noir) : @picross.basculerEtat(x,y,Etat.Blanc)
+					#else												
+						#@picross.basculerEtat(x,y)												
+					#end
+					
+					#2 ACTUALISATION
+					#
+					
+				}
 			}
 		}
 		self.miseAJour
