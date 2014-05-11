@@ -75,7 +75,7 @@ class Gui
 		menuHaut.clickerSur("Editer")	{ fenetreEditer = FenetreEditionTaille.new(@picross) }
 		menuHaut.clickerSur("Charger")	{ fenetreCharger = FenetreCharger.new }
 		menuHaut.clickerSur("Sauvegarder"){ fenetreSauvegarder = FenetreSauvegarder.new(@picross) }
-		menuHaut.clickerSur("Score")	{ fenetreScore = FenetreScore.new(nil) } #remplacer par une instance de score
+		menuHaut.clickerSur("Score")	{ fenetreScore = FenetreScore.new(@windows, @picross.scores, @picross.grille.nom) } 
 		menuHaut.clickerSur("Manuel")	{ fenetreManuel = FenetreManuel.new }
 		menuHaut.clickerSur("A Propos")	{ fenetreAPropos = FenetreAPropos.new}
 		
