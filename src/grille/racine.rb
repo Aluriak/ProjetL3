@@ -83,12 +83,12 @@ class GrilleRacine
 
   # Marshal API : méthode de dump
   def marshal_dump
-    [tableLigne, tableColonne]
+    [@tableLigne, @tableColonne, @nom]
   end
   
   # Marshal API : méthode de chargement
   def marshal_load(ary)
-    @tableLigne, @tableColonne = ary
+    @tableLigne, @tableColonne, @nom = ary
   end
 
 
