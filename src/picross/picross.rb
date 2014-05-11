@@ -102,6 +102,24 @@ class Picross
 
 
 
+  ## 
+  # Renvois une instance de la classe Scores
+  def scores()
+    return @config.scores
+  end
+
+
+
+
+  ## 
+  # Effectue la sauvegarde des scores
+  def sauvegarderScores()
+    return @config.sauvegarder
+  end
+
+
+
+
 end # end class
 
 
