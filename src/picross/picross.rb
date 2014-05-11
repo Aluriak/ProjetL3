@@ -96,6 +96,7 @@ class Picross
   def sauverGrilleJouable(nom_sauvegarde)
     @gestionnaireDeSauvegarde.ajouterGrilleJouable(@grille)
     @gestionnaireDeSauvegarde.sauvegarderGrillesJouables
+    return nil
   end
 
 
