@@ -26,7 +26,7 @@ class Picross
   # Référence vers une instance de classe Configuration
   #attr_reader :config
   # Référence vers une instance de classe GrilleJouable
-  #attr_reader :grille
+  attr_reader :grille
   # Référence vers une instance de classe GestionnaireDeSauvegarde
   #attr_reader :gestionnaireDeSauvegarde
 
@@ -61,15 +61,15 @@ class Picross
   # Création d'une grille racine à partir de la table d'état passée en argument.
   # Aucun effet si la table n'est pas de la taille réglementaire.
   # Si aucun nom n'est spécifié, il sera généré aléatoirement
-  def creerGrilleRacine(matriceEtat, nom=nil) 
-    matriceFacteursColonne, matriceFacteursLigne = 
-      Grille.matriceEtats2facteurs(matriceEtat)
+  def creerGrilleRacine(tableEtat, nom=nil) 
+    tableColonne, tableLigne = 
+      TableNombre.creerDepuis(tableEtat)
 
     # Créer la grille racine
-    grilleRacine = GrilleRacine.deTaille(matriceEtat.size, 
+    grilleRacine = GrilleRacine.deTaille(tableEtat.size, 
 	nom,
-      	matriceFacteursLigne,
-	matriceFacteursColonne
+        tableColonne, 
+        tableLigne
     )
 
     # Enregistrer la grille racine
