@@ -93,8 +93,7 @@ class Picross
   ##
   # Sauvegarde la grille actuellement jouée dans une nouvelle sauvegarde.
   # Le nom de sauvegarde permet d'identifier la sauvegarde.
-  def sauverGrilleJouable(nom_sauvegarde = nil)
-    @grille.genererNom(nom_sauvegarde)
+  def sauverGrilleJouable(nom_sauvegarde)
     @gestionnaireDeSauvegarde.ajouterGrilleJouable(@grille)
     @gestionnaireDeSauvegarde.sauvegarderGrillesJouables
   end
