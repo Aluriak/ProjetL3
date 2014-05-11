@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
-# FILENAME
-# description of content
+# FENETRESCORE.RB
+# Définition de la fenêtre de scores affichant les scores pour une grille particulière.
 # BOURNEUF
 #
 
