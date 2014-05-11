@@ -90,13 +90,32 @@ class GrilleJouable < GrilleRacine
   # Prédicat sur l'état actuel du jeu.
   # :return: Vrai si la matrice de jeu correspond aux facteurs
   def terminee?()
-    # Etudie les matrices de facteurs attendues et celle générées depuis 
+    # Etudie les tables de nombre attendues et celle générées depuis 
     # la grille courante. Si elles sont identiques, la grille est considérée
-    # justement remplie.
-    matriceFacteursColonne, matriceFacteursLigne = 
-      Grille.matriceEtats2facteurs(matriceEtat)
-    #TODO: comparaison matrices de facteurs
-    return false
+    # comme justement remplie.
+    actuelleColonne, actuelleLigne = 
+      TableNombre.creerDepuis(@matriceDeJeu)
+    tables_identiques = true
+    # comparaison entre tables attendues et 
+    actuelleColonne.each do |col|
+      col.each do |row|
+        if actuelleColonne[col][row] != @tableColonne[col][row] then
+          tables_identiques = false
+          break
+        end
+      end
+    end
+    if tables_identiques then 
+      actuelleLigne.each do |col|
+        col.each do |row|
+          if actuelleLigne[row][col] != @tableLigne[row][col] then
+            tables_identiques = false
+            break
+          end
+        end
+      end
+    end
+    return tables_identiques
   end
 
 
