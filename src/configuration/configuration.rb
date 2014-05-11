@@ -20,18 +20,21 @@ load "src/scores/scores.rb"
 class Configuration
   @derniereTailleGrille
   @scores
+  @profils
 
   # taille de la dernière grille jouée
   attr_reader :derniereTailleGrille
   # scores liés au picross
   attr_reader :scores
+  # liste de nom de profils
+  attr_reader :profils
 
 
 
   ##
   # Constructeur
-  def initialize(taille, scores)
-    @derniereTailleGrille, @scores = taille, scores
+  def initialize(taille, scores, profils)
+    @derniereTailleGrille, @scores, @profils = taille, scores, profils
   end
 
 
@@ -82,15 +85,37 @@ class Configuration
 
 
 
+  ## 
+  # Retourne la liste de noms de profils
+  def profils()
+    return @profils
+  end
+
+
+
+
+  ##
+  # Ajoute le score demandé, et met à jour la liste des profils et des scores du profil.
+  def ajouterScoreALaGrille(grille_nom, score, profil_nom)
+    # ajout du score
+    @scores.ajouterScoreALaGrille(grille_nom, score, profil_nom)
+    # ajout du profil si nécessaire
+    @profils.push(profil_nom) if not @profils.include?(profil_nom)
+    # actualisation du profil
+    @scores.ajouterScoreAuProfil(grille_nom, score, profil_nom)
+  end
+
+
+
   ##
   # Marshal API : méthode de dump
   def marshal_dump
-    [@derniereTailleGrille, @scores]
+    [@derniereTailleGrille, @scores, @profils]
   end
   
   # Marshal API : méthode de chargement
   def marshal_load(ary)
-    @derniereTailleGrille, @scores = ary
+    @derniereTailleGrille, @scores, @profils = ary
   end
 
 end
