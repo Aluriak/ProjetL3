@@ -22,12 +22,8 @@ class Picross
   @grille
   @gestionnaireDeSauvegarde
 
-  # Référence vers une instance de classe Configuration
-  #attr_reader :config
   # Référence vers une instance de classe GrilleJouable
   attr_reader :grille
-  # Référence vers une instance de classe GestionnaireDeSauvegarde
-  #attr_reader :gestionnaireDeSauvegarde
 
 
 
