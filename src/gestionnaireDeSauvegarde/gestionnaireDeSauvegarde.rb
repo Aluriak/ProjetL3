@@ -31,37 +31,50 @@ class GestionnaireDeSauvegarde
 
 
 
-  def initialize()
-    @grillesRacines = nil
-    @grillesJouables= nil
+  def initialize(init_sans_matrice = false)
     @grillesRacinesModifiees = false
     @grillesJouablesModifiees = false
+    if init_sans_matrice then
+      @grillesRacines = []
+      @grillesJouables= []
+    else
+      @grillesRacines = nil
+      @grillesJouables= nil
+    end
   end
+
+
+
 
   ##
   # Ajoute une grille racine à la liste.
   def ajouterGrilleRacine(grille)
-    if @grillesRacines == nil then
-      self.chargerGrillesRacines
-    end
+    raise "Grilles racines non chargées" if @grillesRacines == nil
     @grillesRacinesModifiees = true
     @grillesRacines += [grille]
     return nil
   end
   
+
+
+
   ##
   # Charge les grilles racines en mémoire.
-  # Cette opération est opérée par les autres 
-  # méthodes si nécessaire avant d'effectuer leur traitement.
   def chargerGrillesRacines()
-    if @grillesRacines == nil then
-      @grillesRacines = Marshal.load(File.read(CONSTANT_FICHIER_DATA_RACINE))
+    @grillesRacinesModifiees = false
+    begin
+      File.open(CONSTANT_FICHIER_DATA_RACINE, "r") do |f|
+        @grillesRacines = Marshal.load(f)
+      end
+    rescue Errno::ENOENT
+      puts "ERREUR: GestionnaireDeSauvegarde: chargerGrillesRacines(): le fichier #{CONSTANT_FICHIER_DATA_JOUABLE} n'est pas accessible. "
+      puts "Aucun modèle de grille de sera chargé.\n"
+      @grillesRacines = []
     end
-    if @grillesRacines.size == 0 then
-      self.ajouterGrilleRacine(GrilleRacine.deTaille(5, cnf.idGrilleSuivant))
-    end
-    return nil
   end
+
+
+
 
   ##
   # Sauvegarde les grilles racines si une modification à été réalisée.
@@ -76,31 +89,34 @@ class GestionnaireDeSauvegarde
     return nil
   end
 
+
+
+
   ##
   # Retourne une liste contenant les grilles racines de taille reçue.
   def grillesRacinesDeTaille(taille)
     grilleRacineTemp = []
-    if @grillesRacines == nil then
-      self.chargerGrillesRacines
-    else
-      @grillesRacines.each do |grl|
-      	if grl.taille == taille then 
-      	  grilleRacineTemp += grl
-	end
+    raise "Grilles racines non chargées" if @grillesRacines == nil
+    @grillesRacines.each do |grl|
+      if grl.taille == taille then 
+        grilleRacineTemp.push(grl)
       end
     end
     return grilleRacineTemp
   end
 
 
+
+
 ##########################################################
+
+
+
 
   ##
   # Ajoute une grille jouable à la liste.
   def ajouterGrilleJouable(grille)
-    if @grillesJouables == nil then
-      self.chargerGrillesJouables
-    end
+    raise "Grilles jouables non chargées" if @grillesJouables == nil
     @grillesJouablesModifiees = true
     @grillesJouables += [grille]
     return nil
@@ -110,19 +126,16 @@ class GestionnaireDeSauvegarde
 
   ##
   # Charge les grilles jouables en mémoire.
-  # Cette opération est opérée par les autres 
-  # méthodes si nécessaire avant d'effectuer leur traitement.
   def chargerGrillesJouables()
-    if @grillesJouables == nil then
-      @grillesJouablesModifiees = false
-      begin
-      	File.open(CONSTANT_FICHIER_DATA_JOUABLE, "r") do |f|
-      	  @grillesJouables = Marshal.load(f)
-      	end
-      rescue Errno::ENOENT
-      	puts "ERREUR: GestionnaireDeSauvegarde: chargerGrillesJouables(): le fichier #{CONSTANT_FICHIER_DATA_JOUABLE} n'est pas accessible."
-      	@grillesJouables = []
+    @grillesJouablesModifiees = false
+    begin
+      File.open(CONSTANT_FICHIER_DATA_JOUABLE, "r") do |f|
+        @grillesJouables = Marshal.load(f)
       end
+    rescue Errno::ENOENT
+      puts "ERREUR: GestionnaireDeSauvegarde: chargerGrillesJouables(): le fichier #{CONSTANT_FICHIER_DATA_JOUABLE} n'est pas accessible. "
+      puts "Aucune sauvegarde utilisateur de sera chargée.\n"
+      @grillesJouables = []
     end
   end
 
@@ -146,13 +159,10 @@ class GestionnaireDeSauvegarde
   # Retourne une liste contenant les grilles jouables de taille reçue.
   def grillesJouablesDeTaille(taille)
     grillesJouablesTemp = []
-    if @grillesJouables == nil then
-      self.chargerGrillesJouables
-    else
-      @grillesJouables.each do |grl|
-      	if grl.taille == taille then 
-      	  grillesJouablesTemp += grl
-	end
+    raise "Grilles jouables non chargées" if @grillesJouables == nil
+    @grillesJouables.each do |grl|
+      if grl.taille == taille then 
+        grillesJouablesTemp += grl
       end
     end
     return grillesJouablesTemp
@@ -161,6 +171,7 @@ class GestionnaireDeSauvegarde
 
 
 
+  ##
   # Affichage de grillesRacines et grillesJouables
   def to_s
     str = @grillesRacines.to_s
@@ -168,6 +179,8 @@ class GestionnaireDeSauvegarde
     str += "\n"
     return str
   end
+
+
 
 
 end
