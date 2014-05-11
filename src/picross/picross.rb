@@ -120,6 +120,21 @@ class Picross
 
 
 
+  ## 
+  # Renvois la liste des nom de profils connus.
+  def profils() 
+    return @config.profils()
+  end
+
+
+
+  ##
+  # Ajoute le nom de profil donné à la liste des profils connus
+  def ajouterProfil(nom_profil)
+    @config.ajouterProfil(nom_profil)
+    @config.sauvegarder
+    return nil
+  end
 end # end class
 
 
