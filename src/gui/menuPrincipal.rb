@@ -69,3 +69,7 @@ class MenuPrincipal
 	#nomToMenu n'est utilisée que pour clickerSur
 	private :nomToMenu
 end
+
+
+
+
