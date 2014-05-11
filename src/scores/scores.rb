@@ -125,7 +125,7 @@ class Scores
   # Ajoute aux scores des grilles, un id grille et son score, 
   #  avec le nom du joueur l'ayant réalisé. 
   #  Si les scores déjà entrés sont meilleurs, le score donné ne sera pas ajouté.
-  def ajouterScoreAGrille(grille_nom, score, profil_nom)    
+  def ajouterScoreALaGrille(grille_nom, score, profil_nom)    
     # si la grille a déjà des scores
     if @scoreGrille.has_key?(grille_nom) then
       @scoreGrille[grille_nom].push([profil_nom, score])      # on ajoute
