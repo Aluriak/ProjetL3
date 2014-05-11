@@ -56,17 +56,15 @@ class Gui
 	def initialize(tailleGrille)
 		@picross = Picross.new
 		
-		# ligne problématique
-		#@picross.nouvelleGrilleDeTaille(tailleGrille)
+		@picross.nouvelleGrilleDeTaille(tailleGrille)
 		@window = Window.new(" - Picross - ")
 		@window.signal_connect("destroy") { Gtk.main_quit }
 		@window.set_resizable(false)
 		vbox = VBox.new(false, 2)
 		
-		#ça pas bon - utiliser le picross - mais pratique pour 'affichage en attendant
-		jouable = GrilleJouable.deTaille(tailleGrille)
 		
 		#nouvelleGrilleDeTaille
+                grille_jouable = @picross.grille
 	
 		#Partie haute de l"application
 		vbox.pack_start(hBoxHaut = HBox.new(false, 2))
@@ -101,13 +99,13 @@ class Gui
 		boxTimer.pack_start(timer_label)
 		table.attach(boxTimer, 0, 1, 0, 1)
 		
-		chiffreHaut = TableChiffre.creer(jouable.tableColonne)
+		chiffreHaut = TableChiffre.creer(grille_jouable.tableColonne)
 		table.attach(chiffreHaut.table, 1, 2, 0, 1)
 
-		chiffreBas = TableChiffre.creer(jouable.tableLigne)
+		chiffreBas = TableChiffre.creer(grille_jouable.tableLigne)
 		table.attach(chiffreBas.table, 0, 1, 1, 2)
 
-		planche = Planche.creer(jouable)
+		planche = Planche.creer(grille_jouable)
 		table.attach(planche.table, 1, 2, 1, 2)
 
 		#Partie basse droite de l"application
