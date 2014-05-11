@@ -35,6 +35,7 @@ class Picross
     @gestionnaireDeSauvegarde = GestionnaireDeSauvegarde.new
     @gestionnaireDeSauvegarde.chargerGrillesRacines
     @gestionnaireDeSauvegarde.chargerGrillesJouables
+    @grille = nil
   end
 
 
