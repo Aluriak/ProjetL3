@@ -1,10 +1,9 @@
 # -*- encoding: utf-8 -*-
 # SCORE.RB
-# définition de la classe SCORE
+# définition des classes Scores et Score
 # MARECHAL
  
 
-# NB : score, scoreS, peut-être mieux dans deux fichiers différents?
 #################################
 # IMPORTS #
 #################################
@@ -21,108 +20,173 @@ load "src/commun/commun.rb"
 # Un score contient le temps mis pour la résolution d'une grille, sa taille et le nombre d'aide utilisé.
 # Elle implemente Comparable pour pouvoir effectuer des comparaisons entre Score.
 class Score
-	
-	include Comparable
-	
-	@temps
-	@taille
-	@nbrAide
-	
-	#temps réalisé
-	attr_reader :temps
+  include Comparable
+  @temps
+  @taille
+  @nbrAide
+  @points
+  
+  #temps réalisé
+  attr_reader :temps
+  #taille de la grille réalisée
+  attr_reader :taille
+  #nombre d'appels à l'aide effectués
+  attr_reader :nbrAide
+  #points, calculés à partir du temps, de la taille et du nombre d'appel à l'aide
+  attr_reader :points
+  
 
-	#taille de la grille réalisée
-	attr_reader :taille
-	
-	#nombre d'appels à l'aide effectués
-	attr_reader :nbrAide
-	
-	private_class_method:new
-	
-	def Score.creer(taille, temps, aide)
-		new(taille, temps, aide)
-	end
-	
-	def initialize(taille, temps, aide)
-		@temps = temps
-		@taille = taille
-		@nbrAide = aide
-	end
-	
-	# Méthode de comparaison de score
-	# Nécessaire pour ordonner les listes et définir les meilleurs joueurs
-	# Comparaison sur le temps
-	def <=>(another)	
-		selfscore = @temps * @taille / @nbrAide	
-		othrscore = another.temps * another.taille / another.nbrAide	
-		selfscore <=> othrscore
-	end
+
+
+  private_class_method:new
+
+  def Score.creer(taille, temps, aide)
+    new(taille, temps, aide)
+  end
+  
+
+
+
+  def initialize(taille, temps, aide)
+    @temps = temps + 1
+    @taille = taille
+    @nbrAide = aide + 1
+    @points = (((@taille*100**2) / @nbrAide) / @temps).to_i
+  end
+  
+
+
+
+  # Méthode de comparaison de score
+  # Nécessaire pour ordonner les listes et définir les meilleurs joueurs
+  # Comparaison sur le temps
+  def <=>(another)  
+    another.points <=> self.points
+  end
+
+
+
+
+  ## 
+  # Affichage du score
+  def to_s()
+    if @nbrAide == 0 then
+      return "#{@temps} secondes sans appel à l'aide"
+    elsif @nbrAide == 1 then
+      return "#{@temps} secondes avec 1 unique appel à l'aide"
+    else
+      return "#{@temps} secondes avec #{@nbrAide} appels à l'aide"
+    end
+  end
 
 end #end class
 
 
 
-#La classe Score contient deux Hash permettant de stocker les scores.
-# Hashtable des grilles tel que idGrille => score (meilleur score sur la grille)
-# Hashtable des joueurs tel que nom du joueur => score (meilleur du joueur)
+
+
+
+#################################
+# SCORES                        #
+#################################
+# mainteneur : MARECHAL
+#La classe Scores référencie les meilleurs scores pour chaque grille, ainis que le meilleur score de chaque joueur.
 class Scores
+  @scoreGrille
+  @scoreProfil
+  
 
-	@scoreGrille
-	@scoreJoueur
-	
-	# hashtable des scores de grilles
-	attr_reader :scoreGrille
-	
-	# hashtable des scores de joueurs
-	attr_reader :scoreJoueur
-	
-	private_class_method :new
 
-	def Scores.creer()
-		new()
-	end
+  # hashtable nom de grille => liste des meilleurs scores de la forme [nom_profil, score]
+  attr_reader :scoreGrille
+  # hashtable nom de profil => meilleur score du profil
+  attr_reader :scoreProfil
+  
+
+
+
+  private_class_method :new
+
+  def Scores.creer(max_score_par_grille = 3)
+    return new(max_score_par_grille)
+  end
+  
+
+
+  def initialize(max_score_par_grille)
+    @max_score_par_grille = max_score_par_grille
+    @scoreGrille = Hash.new
+    @scoreProfil = Hash.new
+  end
+  
+
+
+
+  # Ajoute aux scores des grilles, un id grille et son score, 
+  #  avec le nom du joueur l'ayant réalisé. 
+  #  Si les scores déjà entrés sont meilleurs, le score donné ne sera pas ajouté.
+  def ajouterScoreAGrille(grille_nom, score, profil_nom)    
+    # si la grille a déjà des scores
+    if @scoreGrille.has_key?(grille_nom) then
+      @scoreGrille[grille_nom].push([profil_nom, score])      # on ajoute
+      @scoreGrille[grille_nom].sort! {|a,b| a[1] <=> b[1] }   # on trie
+      # et s'il y en a trop, on enlève le dernier
+      if @scoreGrille[grille_nom].size > @max_score_par_grille then
+        @scoreGrille[grille_nom].pop
+      end
+
+    # si pas de scores existant, on créé l'entrée
+    else
+      @scoreGrille[grille_nom] = [[profil_nom, score]]
+    end
+  end
+  
+
+
+
+  # Ajoute aux scores des profil, un nom de profil et son score, 
+  #  avec l'id de la grille réalisée. 
+  def ajouterScoreAuProfil(grille_nom, score, profil_nom)    
+    if @scoreProfil.has_key?(profil_nom) then
+      if score > @scoreProfil[profil_nom].first then
+        @scoreProfil[profil_nom] = [grille_nom, score]
+      end
+    else
+      @scoreProfil[profil_nom] = [grille_nom, score]
+    end
+  end
+  
+
+
+
+  # Retourne la liste [meilleur score sur la grille donnée, nom du joueur]
+  def scoresDeGrille(grille_nom)    
+    return @scoreGrille[grille_nom]
+  end
+  
+
+
+
+  # Retourne la liste [meilleur score du joueur donné, id de la grille]
+  def scoreDuProfil(profil_nom)    
+    return @scoreProfil[profil_nom]
+  end
+
+
+
+
+  ##
+  # Marshal API : méthode de dump
+  def marshal_dump
+    [@scoreGrille, @scoreProfil]
+  end
+  
+  # Marshal API : méthode de chargement
+  def marshal_load(ary)
+    @scoreGrille, @scoreProfil = ary
+  end
 	
-	def initialize
-		@scoreGrille = Hash.new
-		@scoreJoueur = Hash.new
-	end
-	
-	#Ajoute au hash des grilles, un id grille et son score, 
-	#  avec le nom du joueur l'ayant réalisé. 
-	#Si l'idGrille est déjà présent, met à jour le hash. 	
-	def ajouterScoresGrille(idGrille, score, nomJoueur)		
-		if @scoreGrille.has_key?(idGrille) then
-			if score > @scoreGrille[idGrille] then
-				@scoreGrille[idGrille] = [score, nomJoueur]
-			end
-		else
-			@scoreGrille[idGrille] = [score, nomJoueur]
-		end
-	end
-	
-	#Ajoute au hash des joueurs, un nom de joueur et son score, 
-	#  avec l'id de la grille réalisée. 
-	#Si le nomjoueur est déjà présent, met à jour le hash. 
-	def ajouterScoresJoueur(nomjoueur, score, idGrille)		
-		if @scoreJoueur.has_key?(nomjoueur) then
-			if score > @scoreJoueur[nomjoueur].first then
-				@scoreJoueur[nomjoueur] = [score, idGrille]
-			end
-		else
-			@scoreJoueur[nomjoueur] = [score, idGrille]
-		end
-	end
-	
-	# Retourne la liste [meilleur score sur la grille donnée, nom du joueur]
-	def getScoresGrille(idGrille)		
-		return @scoreGrille[idGrille]
-	end
-	
-	# Retourne la liste [meilleur score du joueur donné, id de la grille]
-	def getScoreJoueur(nomJoueur)		
-		return @scoreJoueur[nomJoueur]
-	end
-	
-	
+
+
 end #end class
 	
