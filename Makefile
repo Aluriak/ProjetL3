@@ -1,4 +1,4 @@
-run:
+run: default
 	ruby1.9.1 src/main.rb
 
 doc: doc_
