@@ -8,7 +8,7 @@
 #################################
 # IMPORTS                       #
 #################################
-load "Commun.rb"
+load "src/commun/commun.rb"
 
 
 

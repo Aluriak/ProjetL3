@@ -53,7 +53,10 @@ class Gui < Window
 	def Gui.lancer(tailleChoisie = @derniereTailleGrille)
 		new(tailleChoisie)
 	end
-	
+
+	def Gui.fermer
+		
+	end	
 	
 	def initialize(tailleGrille)
 		@picross = Picross.new

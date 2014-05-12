@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 require "gtk2"
 require "glib2"
 include Gtk
@@ -7,11 +9,12 @@ load "src/picross/picross.rb"
 class GrilleEditable
 
 	@tailleNouvelleMatrice
+	@picross
 
 	def initialize(taille, picross)
 
 		
-
+		@picross = picross
 		popupEdition = Window.new("Edition Grille")
 		popupEdition.set_resizable(false)
 		vbox = VBox.new(false, 2)
@@ -28,40 +31,36 @@ class GrilleEditable
 		jouable = GrilleJouable.deTaille(taille)
 		planche = Planche.creer(jouable,true)
 		
-		#p jouable
-		
 		table.attach(planche.table, 1, 2, 1, 2)
 		popupEdition.add(vbox)
 		popupEdition.show_all
 		
 		
 		boutonAnnuler.signal_connect("clicked"){
-			Gui.lancer
+			#Gui.lancer
 			popupEdition.destroy
 		}
 				
 		#Quand on appuie sur btnSauvegarder, on crée la matrice de jeu
 		boutonSauvegarder.signal_connect("clicked"){ 
-			#p jouable
-			#print "picross : ", picross.class, "\n"
-			picross.creerGrilleRacine(planche.toMatrice) 
-			p planche.toMatrice
+			print "grille jouable dans grilleEditable #{jouable.matriceDeJeu}\n" if CONSTANT_MODE_DEBUG
+			picross.creerGrilleRacine(jouable.matriceDeJeu) 
 
 			#Lance une fenetre qui demande un nom pour la grille editable a creer
-			popupNomGrilleEditee()
+			popupNomGrilleEditee
 			popupEdition.destroy
 		}
 	end
 
 ##
 # Function to open a dialog box displaying the message provided.
-def popupNomGrilleEditee()
+def popupNomGrilleEditee
   popupNomGrilleEditee = Window.new("Nom de la grille?")
 
   popupNomGrilleEditee.add(hb = HBox.new)
   buttonValider = Button.new("Valider")
   buttonValider.sensitive = false
-  textNom = Entry.new()
+  textNom = Entry.new
 
   hb.pack_start(textNom)
   hb.pack_start(buttonValider)
@@ -96,9 +95,9 @@ end
   def confirmerEnregistrement(nom_sauvegarde)
     dialog = MessageDialog.new(
       nil, 
-      Gtk::Dialog::DESTROY_WITH_PARENT | Gtk::Dialog::MODAL,
-      Gtk::MessageDialog::INFO,
-      Gtk::MessageDialog::BUTTONS_CLOSE,
+      Dialog::DESTROY_WITH_PARENT | Dialog::MODAL,
+      MessageDialog::INFO,
+      MessageDialog::BUTTONS_CLOSE,
       "Grille \n\""+nom_sauvegarde+"\"\nenregistree !"
     )
 
@@ -109,9 +108,9 @@ end
 def erreurEnregistrement
 	 dialog = MessageDialog.new(
       nil, 
-      Gtk::Dialog::DESTROY_WITH_PARENT | Gtk::Dialog::MODAL,
-      Gtk::MessageDialog::ERROR,
-      Gtk::MessageDialog::BUTTONS_CLOSE,
+      Dialog::DESTROY_WITH_PARENT | Dialog::MODAL,
+      MessageDialog::ERROR,
+      MessageDialog::BUTTONS_CLOSE,
       "Enregistrement de la grille impossible!"
     )
 
