@@ -44,7 +44,7 @@ class TableNombre
   def deColonne?() return @type == @@COLONNE end
 
 
-  def initialize(taille, type = TableNombre.DeLigne)
+  def initialize(taille, type)
     if TableNombre.DeLigne != type and TableNombre.DeColonne != type then
       raise "type de TableNombre doit être TableNombre.DeLigne ou TableNombre.DeColonne" 
     end
@@ -63,7 +63,7 @@ class TableNombre
     elsif @matriceNombre[index].size > (self.taille / 2) then
       raise "La ligne/colonne #{index} est pleine !"
     end
-    @matriceNombre[index].append(nombre)
+    @matriceNombre[index].push(nombre)
     return self
   end
 
@@ -129,13 +129,14 @@ class TableNombre
 
       tableEtat.size.times do |row|     # pour chacun des etat de la colonne
       	c = tableEtat[row][col]         # obtenir l'état de la case
+        raise "Etat invalide !" if not Etat.include?(c)
       	if c != Etat.Noir then          # si c'est pas du noir
 	  if nbNoirConsecutif > 0 then	# et qu'il y a eu un noir avant
-	    tableColonne.ajouterNombre(row, nbNoirConsecutif)
+	    tableColonne.ajouterNombre(col, nbNoirConsecutif)
       	    nbNoirConsecutif = 0        # insérer un entier dans la liste de la ligne actuelle
 	  end						
 	else
-      	  nbNoirConsecutif + 1          # si c'est pas blanc, c'est noir
+      	  nbNoirConsecutif += 1          # si c'est pas blanc, c'est noir
 	end
       end
       # si la dernière case était un noir, cela n'a pas été ajouté à la liste
@@ -154,13 +155,14 @@ class TableNombre
 
       tableEtat.size.times do |col|     # pour chacun des etats de la ligne
       	c = tableEtat[row][col]         # obtenir l'état de la case
+        raise "Etat invalide !" if not Etat.include?(c)
       	if c != Etat.Noir then          # si c'est pas du noir
 	  if nbNoirConsecutif > 0 then	# et qu'il y a eu un noir avant
 	    tableLigne.ajouterNombre(row, nbNoirConsecutif)
       	    nbNoirConsecutif = 0        # insérer un entier dans la liste de la ligne actuelle
 	  end						
 	else
-      	  nbNoirConsecutif + 1          # si c'est pas blanc, c'est noir
+      	  nbNoirConsecutif += 1          # si c'est pas blanc, c'est noir
 	end
       end
       # si la dernière case était un noir, cela n'a pas été ajouté à la liste
