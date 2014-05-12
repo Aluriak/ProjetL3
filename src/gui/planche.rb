@@ -12,7 +12,7 @@ class Planche
 	@jouable
 	@modeEdition
 
-	DEBUG = 0
+	DEBUG = false
 	
 	#la table est un conteneur d'images/event box
 	attr_reader :table
@@ -26,8 +26,11 @@ class Planche
 	#jouable d'image
 	attr_reader :image		
 	
+	# la grille jouable qui est en train d'etre jouée
 	attr_reader :jouable
 	
+	# si on est en mode édition, alors les etats sont soit blanc soit noir
+	# sinon, en mode normal(ou jeu), les états sont drapeau, blanc, ou noir
 	attr_reader :modeEdition
 	
 	#creation de planche
@@ -89,6 +92,8 @@ class Planche
 		@image = Array.new(jouable.taille) { Array.new(jouable.taille) }
 		@event_box = Array.new(jouable.taille) { Array.new(jouable.taille) }
 		
+		p @jouable
+		
 		0.upto(jouable.taille - 1) { |y| 
 			0.upto(jouable.taille - 1) { |x|                         
 				@image[x][y] = self.image(jouable.matriceDeJeu[x][y])
@@ -99,19 +104,22 @@ class Planche
               
 				#crée les évenements de click sur chaque cases
 				@event_box[x][y].signal_connect("button_press_event") { 
-					self.suivante(@image[x][y]) 
+					#self.suivante(@image[x][y]) 
 					# normalement à la place :
 					# 1 MODIF DE L'ETAT DU PICROSS
-					# if modeEdition
-						#@picross.etatGrille(x,y) == Etat.Blanc ? 
-							#@picross.basculerEtat(x,y,Etat.Noir) : @picross.basculerEtat(x,y,Etat.Blanc)
-					#else												
-						#@picross.basculerEtat(x,y)												
-					#end
+					 if modeEdition then
+						if @jouable.etat(x,y) == Etat.Blanc then
+							@jouable.basculer(x,y,Etat.Noir) 
+						else
+							@jouable.basculer(x,y,Etat.Blanc)
+						end
+					else												
+						@jouable.basculer(x,y)												
+					end
 					
 					#2 ACTUALISATION
 					#
-					
+					@image[x][y].file = @tabImg[@jouable.etat(x,y)]
 				}
 			}
 		}
