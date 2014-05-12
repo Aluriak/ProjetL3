@@ -14,7 +14,7 @@ load "src/grille/racine.rb"
 #################################
 # JOUABLE			#
 #################################
-# mainteneur : BOURNEUF/COUSIN
+# mainteneur : BOURNEUF
 
 # Une Grille Jouable est une grille Racine avec une matrice d'état.
 # de Picross modifiée par l'utilisateur.
@@ -83,10 +83,15 @@ class GrilleJouable < GrilleRacine
   end
 
 
+
+
+  ##
   # Renvoie l'état de la case située en (i, j)
   def etat(i, j)
 	return @matriceDeJeu[i][j]
   end
+
+
 
 
   ##
