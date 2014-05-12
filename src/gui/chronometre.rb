@@ -87,13 +87,21 @@ class Chronometre
   ##
   # Met à jour le texte du label.
   def majlabel
-    s, m = @sec % 60, @sec / 60
-    h = m / 60
-    m = m % 60
-    @ref_label.set_text("%02d:%02d:%02d" % [h, m, s])
+    @ref_label.set_text(self.to_s)
   end 
   private :majlabel
 
+
+
+
+  ##
+  # Affichage du temps en human-readable
+  def to_s
+    s, m = @sec % 60, @sec / 60
+    h = m / 60
+    m = m % 60
+    return ("%02d:%02d:%02d" % [h, m, s])
+  end
 end
 
 
