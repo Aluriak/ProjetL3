@@ -20,6 +20,7 @@ load "src/gui/fenetres/fenetreSauvegarde.rb"
 load "src/gui/fenetres/fenetreScore.rb"
 load "src/gui/fenetres/fenetreManuel.rb"
 load "src/gui/fenetres/fenetreAPropos.rb"
+load "src/Aide.rb"
 
 class Array
 	def orientationHorizontale?
@@ -68,6 +69,7 @@ class Gui
 	
 		#Partie haute de l"application
 		vbox.pack_start(hBoxHaut = HBox.new(false, 2))
+
 		
 		menuHaut = MenuPrincipal.creerMenuHaut(hBoxHaut)
 		
@@ -82,9 +84,11 @@ class Gui
 		
 		#Partie basse de l"application
 		vbox.pack_start(hBoxBas = HBox.new(false, 2))
+		vbox.add(Button.new("Verifier"))
 		hBoxBas.add(vBoxBas = HBox.new(false))
 		
 		vBoxBas.add(Frame.new.add(table = Table.new(4,4)))
+
 		
 		boxTimer = VBox.new(false, 2)
 
@@ -112,10 +116,8 @@ class Gui
 		vBoxBas.add(Frame.new.add(vBoxBasGauche = VBox.new(2)))
 		menuDroit = MenuAide.creerMenuDroit(vBoxBasGauche,"Aide - Faible", "Aide - Fort")
 		
-		#menuDroit.clickerSur("Aide - Faible"){aideFaible(p)}
-
-		#menuDroit.clickerSur("Aide - Fort"){aideFort(p)}		
-
+		#menuDroit.clickerSur("Aide - Faible"){AideDeNiveau1}
+		#menuDroit.clickerSur("Aide - Fort"){AideDeNiveau2}		
 		@window.add(vbox)
 		@window.show_all
 		
