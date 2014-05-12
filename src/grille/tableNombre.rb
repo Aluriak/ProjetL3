@@ -162,7 +162,7 @@ class TableNombre
       	    nbNoirConsecutif = 0        # insérer un entier dans la liste de la ligne actuelle
 	  end						
 	else
-      	  nbNoirConsecutif += 1          # si c'est pas blanc, c'est noir
+          nbNoirConsecutif += 1          # si c'est pas blanc, c'est noir
 	end
       end
       # si la dernière case était un noir, cela n'a pas été ajouté à la liste
@@ -174,10 +174,21 @@ class TableNombre
     end
 
     # RETOURNER LES DEUX TABLE DE NOMBRE
-    return tableColonne, tableLigne
+    return tableLigne, tableColonne
   end 
 
 
+
+
+  # Marshal API : méthode de dump
+  def marshal_dump
+    [@type, @matriceNombre]
+  end
+  
+  # Marshal API : méthode de chargement
+  def marshal_load(ary)
+    @type, @matriceNombre = ary
+  end
 
 
 end
