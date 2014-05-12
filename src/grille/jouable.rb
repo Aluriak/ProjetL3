@@ -104,23 +104,20 @@ class GrilleJouable < GrilleRacine
     actuelleColonne, actuelleLigne = 
       TableNombre.creerDepuis(@matriceDeJeu)
     tables_identiques = true
-    # comparaison entre tables attendues et 
-    actuelleColonne.each do |col|
-      col.each do |row|
-        if actuelleColonne[col][row] != @tableColonne[col][row] then
-          tables_identiques = false
-          break
-        end
-      end
+    # comparaison entre tables attendues et actuelles
+    actuelleColonne.largeur.times do |col_id|
+      nb_actuels = actuelleColonne.nombresDeLaColonne(col_id)
+      nb_attendu = @tableColonne.nombresDeLaColonne(col_id)
+      tables_identiques = nb_actuels == nb_attendu
+      puts nb_actuels
+      puts nb_attendu
+      puts nb_actuels == nb_attendu
     end
     if tables_identiques then 
-      actuelleLigne.each do |col|
-        col.each do |row|
-          if actuelleLigne[row][col] != @tableLigne[row][col] then
-            tables_identiques = false
-            break
-          end
-        end
+      actuelleLigne.hauteur.times do |row_id|
+        nb_actuels = actuelleColonne.nombresDeLaColonne(row_id)
+        nb_attendu = @tableColonne.nombresDeLaColonne(row_id)
+        tables_identiques = nb_actuels == nb_attendu
       end
     end
     return tables_identiques
