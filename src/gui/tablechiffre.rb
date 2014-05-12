@@ -46,7 +46,7 @@ class TableChiffre
 	
 	def setup(largeur, hauteur)
 			
-		@labels = Array.new(largeur,Array.new(hauteur))
+		@labels = Array.new(largeur) {Array.new(hauteur) }
 		
 		0.upto(hauteur - 1) { |y| 
 			0.upto(largeur - 1) { |x|
