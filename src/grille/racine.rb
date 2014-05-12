@@ -17,7 +17,7 @@ load "src/commun/commun.rb"
 #################################
 # mainteneur : BOURNEUF
 
-# une GrilleRacine possède un nom et des facteurs de ligne/colonne.
+# une GrilleRacine possède un nom et des tables de ligne/colonne.
 class GrilleRacine 
   @tableLigne
   @tableColonne
@@ -36,7 +36,7 @@ class GrilleRacine
     if tableLigne == nil or tableColonne == nil then
       # Génération d'un picross aléatoire
       # création d'une table d'état avec remplissage aléatoire
-      tableEtat = Array.new(taille) {Array.new(taille) {[Etat.Blanc, Etat.Noir, Etat.Drapeau].choice} }
+      tableEtat = Array.new(taille) {Array.new(taille) { [Etat.Blanc, Etat.Noir].choice} }
       # obtention des tables 
       @tableLigne, @tableColonne = TableNombre.creerDepuis(tableEtat)
     else
