@@ -17,7 +17,7 @@ load "src/grille/racine.rb"
 # mainteneur : BOURNEUF
 
 # Une Grille Jouable est une grille Racine avec une matrice d'état.
-# de Picross modifiée par l'utilisateur.
+# Un Picross modifiée par l'utilisateur.
 class GrilleJouable < GrilleRacine
   @matriceDeJeu
 
@@ -98,28 +98,35 @@ class GrilleJouable < GrilleRacine
   # Prédicat sur l'état actuel du jeu.
   # :return: Vrai si la matrice de jeu correspond aux facteurs
   def terminee?()
+    puts "BEGIN"
     # Etudie les tables de nombre attendues et celle générées depuis 
     # la grille courante. Si elles sont identiques, la grille est considérée
     # comme justement remplie.
-    actuelleColonne, actuelleLigne = 
-      TableNombre.creerDepuis(@matriceDeJeu)
+    actuelleLigne, actuelleColonne = TableNombre.creerDepuis(@matriceDeJeu)
     tables_identiques = true
     # comparaison entre tables attendues et actuelles
     actuelleColonne.largeur.times do |col_id|
       nb_actuels = actuelleColonne.nombresDeLaColonne(col_id)
       nb_attendu = @tableColonne.nombresDeLaColonne(col_id)
-      tables_identiques = nb_actuels == nb_attendu
-      puts nb_actuels
-      puts nb_attendu
-      puts nb_actuels == nb_attendu
+      #puts "col_id     : " + col_id.to_s 
+      #puts "col_actuels: " + nb_actuels.to_s
+      #puts "col_attendu: " + nb_attendu.to_s
+      tables_identiques = (nb_actuels == nb_attendu)
     end
+
+    puts "MIDDLE"
+
     if tables_identiques then 
       actuelleLigne.hauteur.times do |row_id|
-        nb_actuels = actuelleColonne.nombresDeLaColonne(row_id)
-        nb_attendu = @tableColonne.nombresDeLaColonne(row_id)
+        nb_actuels = actuelleLigne.nombresDeLaLigne(row_id)
+        nb_attendu = @tableLigne.nombresDeLaLigne(row_id)
+        #puts "row_id     : " + row_id.to_s 
+        #puts "row_actuels: " + nb_actuels.to_s
+        #puts "row_attendu: " + nb_attendu.to_s
         tables_identiques = nb_actuels == nb_attendu
       end
     end
+    puts "END WITH " + tables_identiques.to_s
     return tables_identiques
   end
 
