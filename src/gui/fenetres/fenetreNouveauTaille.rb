@@ -1,11 +1,13 @@
-			
 require "gtk2"
 require "glib2"
 include Gtk
 
-#Il a pas l'air d'aimer le load la, a voir
 #load "src/gui/gui.rb"
 
+
+# FenetreNouveauTaille est la fenetre qui s'ouvre lorsqu'on appuie sur "Nouveau".
+# Cela ouvre une fenetre où on peut choisir une nouvelle partie, selon sa taille, 
+# de 5x5 jusqu'à 25x25.
 class FenetreNouveauTaille
 
 	@tailleNouvelleMatrice
