@@ -7,7 +7,7 @@ require "glib2"
 include Gtk
 
 load "src/gui/planche.rb"
-load "src/gui/menuAide.rb"
+#load "src/gui/menuAide.rb"
 load "src/gui/menuPrincipal.rb"
 load "src/gui/tablechiffre.rb"
 load "src/gui/chronometre.rb"
@@ -20,7 +20,7 @@ load "src/gui/fenetres/fenetreSauvegarde.rb"
 load "src/gui/fenetres/fenetreScore.rb"
 load "src/gui/fenetres/fenetreManuel.rb"
 load "src/gui/fenetres/fenetreAPropos.rb"
-load "src/Aide.rb"
+#load "src/Aide.rb"
 
 class Array
 	def orientationHorizontale?
@@ -29,9 +29,9 @@ class Array
 	end
 end
 
-class Gui
+class Gui < Window
 	
-	@window
+	#@window
 	@picross
 	@derniereTailleGrille
 	
@@ -42,7 +42,7 @@ class Gui
 	attr_reader :picross
 	
 	# window est la fenetre affichée
-	attr_reader :window
+	#attr_reader :window
 	
 	# la taille de la derniere taille de grille
 	# pratique pour l'utilisateur; s'il jouait sur une grille
@@ -58,18 +58,16 @@ class Gui
 		@picross = Picross.new
 		
 		@picross.nouvelleGrilleDeTaille(tailleGrille)
-		@window = Window.new(" - Picross - ")
-		@window.signal_connect("destroy") { Gtk.main_quit }
-		@window.set_resizable(false)
+		super("Picross")
+		signal_connect("destroy") { Gtk.main_quit }
+		set_resizable(false)
+		
 		vbox = VBox.new(false, 2)
 		
-		
-		#nouvelleGrilleDeTaille
-                grille_jouable = @picross.grille
+		grille_jouable = @picross.grille
 	
 		#Partie haute de l"application
 		vbox.pack_start(hBoxHaut = HBox.new(false, 2))
-
 		
 		menuHaut = MenuPrincipal.creerMenuHaut(hBoxHaut)
 		
@@ -77,7 +75,7 @@ class Gui
 		menuHaut.clickerSur("Editer")	{ fenetreEditer = FenetreEditionTaille.new(@picross) }
 		menuHaut.clickerSur("Charger")	{ fenetreCharger = FenetreCharger.new }
 		menuHaut.clickerSur("Sauvegarder"){ fenetreSauvegarder = FenetreSauvegarde.new(@picross) }
-		menuHaut.clickerSur("Score")	{ fenetreScore = FenetreScore.new(@windows, @picross.scores, @picross.grille.nom) } 
+		menuHaut.clickerSur("Score")	{ fenetreScore = FenetreScore.new(self, @picross.scores, @picross.grille.nom) } 
 		menuHaut.clickerSur("Manuel")	{ fenetreManuel = FenetreManuel.new }
 		menuHaut.clickerSur("A Propos")	{ fenetreAPropos = FenetreAPropos.new}
 		
@@ -96,8 +94,8 @@ class Gui
 		timer_label = Label.new("")
 		timer = Chronometre.new(timer_label)
 		# arrêt/départ du chrono suivant le focus de la fenêtre par l'utilisateur
-		@window.signal_connect("focus_in_event") { timer.start }
-		@window.signal_connect("focus_out_event") { timer.stop }
+		signal_connect("focus_in_event") { timer.start }
+		signal_connect("focus_out_event") { timer.stop }
 		
 		# intégration à la GUI
 		boxTimer.pack_start(timer_label)
@@ -114,12 +112,12 @@ class Gui
 
 		#Partie basse droite de l"application
 		vBoxBas.add(Frame.new.add(vBoxBasGauche = VBox.new(2)))
-		menuDroit = MenuAide.creerMenuDroit(vBoxBasGauche,"Aide - Faible", "Aide - Fort")
+		#menuDroit = MenuAide.creerMenuDroit(vBoxBasGauche,"Aide - Faible", "Aide - Fort")
 		
 		#menuDroit.clickerSur("Aide - Faible"){AideDeNiveau1}
 		#menuDroit.clickerSur("Aide - Fort"){AideDeNiveau2}		
-		@window.add(vbox)
-		@window.show_all
+		add(vbox)
+		show_all
 		
 		Gtk.main
 	end
