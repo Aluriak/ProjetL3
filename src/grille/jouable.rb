@@ -26,7 +26,7 @@ class GrilleJouable < GrilleRacine
 
 
 
-  ##
+  #initialisation de la grille
   def initialize(taille, nom = nil, tableLigne = nil, tableColonne = nil)
     super(taille, nom, tableLigne, tableColonne)
     @matriceDeJeu = Array.new(taille) { Array.new(taille) {Etat.Blanc} }
