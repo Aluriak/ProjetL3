@@ -60,22 +60,24 @@ class TableNombre
   def ajouterNombre(index, nombre)
     if index < 0 or index > self.taille then
       raise "La ligne/colonne #{index} n'existe pas ! (table de taille #{self.taille})"
-    elsif @matriceNombre[index].size > (self.taille / 2) then
-      raise "La ligne/colonne #{index} est pleine !"
+    elsif @matriceNombre[index].size > (self.taille / 2 + 1) then
+      raise "La #{self.deLigne? ? "ligne":"colonne" } #{index} est pleine : #{@matriceNombre[index]} de taille max #{self.taille / 2 + 1}."
     end
     @matriceNombre[index].push(nombre)
+    puts "nombre #{nombre} ajoutés à la #{self.deLigne? ? "ligne":"colonne" } #{index}"
     return self
   end
 
 
 
   ##
-  # Retourne un tableau contenant les nombres de l'igne/colonne d'index reçu.
+  # Retourne un tableau contenant les nombres de ligne/colonne d'index reçu.
   # Lève une exception si l'index est invalide.
   def nombresDeLaLigne(index)
     if index < 0 or index > self.taille then
-      raise "La ligne/colonne #{index} n'existe pas ! (table de taille #{self.taille})"
+      raise "La #{self.deLigne? ? "ligne":"colonne" } #{index} n'existe pas ! (table de taille #{self.taille})"
     end
+    puts "La #{self.deLigne? ? "ligne":"colonne" } d'index #{index} est #{@matriceNombre[index]}"
     return @matriceNombre[index]
   end
 
@@ -84,11 +86,15 @@ class TableNombre
   alias_method :nombresDeLaColonne, :nombresDeLaLigne
 
 
+
+
   ##
   # Retourne la taille du picross décrit par cette table de nombre
   def taille()
     return @matriceNombre.size
   end
+
+
 
 
   ## 
@@ -102,6 +108,8 @@ class TableNombre
       return self.taille()
     end
   end
+
+
 
 
   ## 
@@ -118,66 +126,77 @@ class TableNombre
 
 
 
+
   ##
   # Etudie la table d'Etat reçue, et renvois deux TableNombre décrivant cette table d'état.
   def TableNombre.creerDepuis(tableEtat) 
+    raise "Taille #{tableEtat.size} invalide !" if not Grille.tailles.include?(tableEtat.size)
+
     # IMPLÉMENTER LISTE DES COLONNES
     tableColonne = TableNombre.new(tableEtat.size, TableNombre.DeColonne)
 
-    tableEtat.size.times do |col|       # pour chacune des colonnes
-      nbNoirConsecutif = 0              # compteur de noir
+    0.upto(tableEtat.size-1) do |col|   # pour chacune des colonnes
+      nbNoirConsecutifs = 0             # compteur de noir (consécutifs)
 
-      tableEtat.size.times do |row|     # pour chacun des etat de la colonne
+      0.upto(tableEtat.size-1) do |row| # pour chacun des etat de la colonne
       	c = tableEtat[row][col]         # obtenir l'état de la case
+        #print "(%i;%i:%s), " % [ row, col, c == Etat.Noir ? "Noire": "Blanc"]
         raise "Etat invalide !" if not Etat.include?(c)
       	if c != Etat.Noir then          # si c'est pas du noir
-	  if nbNoirConsecutif > 0 then	# et qu'il y a eu un noir avant
-	    tableColonne.ajouterNombre(col, nbNoirConsecutif)
-      	    nbNoirConsecutif = 0        # insérer un entier dans la liste de la ligne actuelle
-	  end						
+	  if nbNoirConsecutifs > 0 then	# et qu'il y a eu un noir avant
+	    tableColonne.ajouterNombre(col, nbNoirConsecutifs)
+      	    nbNoirConsecutifs = 0       # insérer un entier dans la liste de la ligne actuelle
+	  end
 	else
-      	  nbNoirConsecutif += 1          # si c'est pas blanc, c'est noir
+      	  nbNoirConsecutifs += 1        # si c'est pas blanc, c'est noir
+          if col == tableEtat.size-1 then   # si des noirs n'ont pas encore été ajoutés en fin de colonne
+            tableColonne.ajouterNombre(col, nbNoirConsecutifs)
+            nbNoirConsecutifs = 0 
+          end
 	end
       end
-      # si la dernière case était un noir, cela n'a pas été ajouté à la liste
-      # on intègre donc le nombre de dernières cases noires
-      if nbNoirConsecutif > 0 then			
-        tableColonne.ajouterNombre(tableColonne.taille-1, nbNoirConsecutif)
-      	nbNoirConsecutif = 0 
-      end						
+      print "\n"
     end
 
     # IMPLÉMENTER LISTE DES LIGNES
     tableLigne = TableNombre.new(tableEtat.size, TableNombre.DeLigne)
 
-    tableEtat.size.times do |row|       # pour chacune des lignes
-      nbNoirConsecutif = 0              # compteur de noir
+    0.upto(tableEtat.size-1) do |row|   # pour chacune des lignes
+      nbNoirConsecutifs = 0             # compteur de noir (consécutifs)
 
-      tableEtat.size.times do |col|     # pour chacun des etats de la ligne
-      	c = tableEtat[row][col]         # obtenir l'état de la case
+      0.upto(tableEtat.size-1) do |col| # pour chacun des etats de la ligne
+        c = tableEtat[row][col]         # obtenir l'état de la case
         raise "Etat invalide !" if not Etat.include?(c)
-      	if c != Etat.Noir then          # si c'est pas du noir
-	  if nbNoirConsecutif > 0 then	# et qu'il y a eu un noir avant
-	    tableLigne.ajouterNombre(row, nbNoirConsecutif)
-      	    nbNoirConsecutif = 0        # insérer un entier dans la liste de la ligne actuelle
-	  end						
-	else
-          nbNoirConsecutif += 1          # si c'est pas blanc, c'est noir
-	end
+        if c != Etat.Noir then          # si c'est pas du noir
+          if nbNoirConsecutifs > 0 then	# et qu'il y a eu un noir avant
+            tableLigne.ajouterNombre(row, nbNoirConsecutifs)
+            nbNoirConsecutifs = 0       # insérer un entier dans la liste de la ligne actuelle
+          end
+        else
+          nbNoirConsecutifs += 1        # si c'est pas blanc, c'est noir
+          if row == tableEtat.size-1 then   # si des noirs n'ont pas encore été ajoutés en fin de ligne
+            tableLigne.ajouterNombre(row, nbNoirConsecutifs)
+            nbNoirConsecutifs = 0 
+          end
+        end
       end
-      # si la dernière case était un noir, cela n'a pas été ajouté à la liste
-      # on intègre donc le nombre de dernières cases noires
-      if nbNoirConsecutif > 0 then			
-        tableLigne.ajouterNombre(tableLigne.taille-1, nbNoirConsecutif)
-      	nbNoirConsecutif = 0 
-      end						
     end
+
 
     # RETOURNER LES DEUX TABLE DE NOMBRE
     return tableLigne, tableColonne
   end 
 
 
+
+  def to_s
+    s = ""
+    0.upto(self.taille) do |id|
+      nombres = self.nombresDeLaLigne(id)
+      s += nombres.to_s + "\n"
+    end
+    return s
+  end
 
 
   # Marshal API : méthode de dump
