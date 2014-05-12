@@ -37,7 +37,7 @@ class GrilleEditable
 		
 		
 		boutonAnnuler.signal_connect("clicked"){
-			Gui.lancer
+			#Gui.lancer
 			popupEdition.destroy
 		}
 				
