@@ -1,8 +1,21 @@
-#Encoding: UTF-8
-#class GrillePicross
+# -*- encoding: utf-8 -*-
+# AIDE.RB
+# implémentation des aides au picross.
+# LEGALL
 #
 
+
+#################################
+# IMPORTS                       #
+#################################
 load "src/commun/commun.rb"
+
+
+
+#################################
+# AIDE                          #
+#################################
+# mainteneur : LEGALL
 
 class Aide
 
@@ -369,3 +382,7 @@ class Aide
 	end
   end
 end
+
+
+
+

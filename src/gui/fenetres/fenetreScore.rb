@@ -21,35 +21,36 @@ include Gtk
 # mainteneur : BOURNEUF
 class FenetreScore < Window
 
-  def initialize(parent, scores_globaux, nom_grille)
-	super("Scores")
+  def initialize(parent, scores_grille, nom_grille)
+    super("Scores")
     signal_connect("destroy") { destroy }
+    scores_grille = [["Pas de meilleur score", "Jouez pour être le premier !"]] if scores_grille == nil
 
     # Obtention de tous les scores
-    grille_scores = scores_globaux.scoresDeGrille(nom_grille)
-	table = Table.new(grille_scores.size,2)
-	
-	table.attach(Label.new.set_markup("<b>#{nom_grille}</b>"), 0, 2, 0, 1)
-	
-	# nb : la ligne 0 est dédiée au nom de la grille, 
-	# c'est pour cela qu'on commence à la ligne 1
-	ligne=1
-	
-    grille_scores.each{ |score|
-		profil_nom, profil_score = score
-		
-		table.attach(Frame.new.add(Label.new(profil_nom)), 0, 1, ligne, ligne+1)
-		table.attach(Frame.new.add(Label.new(profil_score.to_s)), 1, 2, ligne, ligne+1)
-
-		ligne += 1
-	}               
+    table = Table.new(scores_grille.size,2)
     
-	add(Frame.new.add(table))
+    table.attach(Label.new.set_markup("<b>#{nom_grille}</b>"), 0, 2, 0, 1)
+    
+    # nb : la ligne 0 est dédiée au nom de la grille, 
+    # c'est pour cela qu'on commence à la ligne 1
+    ligne=1
+	
+    # remplissage de la grille de scores
+    scores_grille.each { |score|
+      profil_nom, profil_score = score
+      
+      table.attach(Frame.new.add(Label.new(profil_nom)), 0, 1, ligne, ligne+1)
+      table.attach(Frame.new.add(Label.new(profil_score.to_s)), 1, 2, ligne, ligne+1)
+
+      ligne += 1
+    }               
+    
+    add(Frame.new.add(table))
     set_modal(true)            # this window block interactions with 
     set_transient_for(parent)  # parent window.
-	set_resizable(true)
-	set_default_size(300,40+grille_scores.size*30)
-	show_all
+    set_resizable(true)
+    set_default_size(300,40+scores_grille.size*30)
+    show_all
   end
 
 end
