@@ -60,11 +60,10 @@ class Planche
 				@event_box[x][y].signal_connect("button_press_event") { 
 					# si on est en mode edition -> noir/blanc
 					if modeEdition then
-						if @jouable.etat(x,y) == Etat.Blanc then
-							@jouable.basculer(x,y,Etat.Noir) 
-						else
-							@jouable.basculer(x,y,Etat.Blanc)
-						end
+						@jouable.basculer(x,y) 
+                                                if @jouable.etat(x,y) == Etat.Drapeau then
+                                                  @jouable.basculer(x,y) 
+                                                end
 					# sinon mode normal -> noir/blanc/drapeau
 					else												
 						@jouable.basculer(x,y)												
