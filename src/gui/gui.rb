@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 #FAIT : jouable --> planche
 #revoir : reprendre main de nico
 #A FAIRE : @colonneChiffre, @ligneChiffre --> tablechiffre
@@ -78,17 +79,7 @@ class Gui < Window
 		menuHaut.clickerSur("Score")	{ fenetreScore = FenetreScore.new(self, @picross.scores.scoresDeGrille(@picross.grille.nom), @picross.grille.nom) } 
 		menuHaut.clickerSur("Manuel")	{ fenetreManuel = FenetreManuel.new }
 		menuHaut.clickerSur("A Propos")	{ fenetreAPropos = FenetreAPropos.new}
-		
-		
-		#Partie basse de l"application
-		vbox.pack_start(hBoxBas = HBox.new(false, 2))
-		vbox.add(Button.new("Verifier"))
-		hBoxBas.add(vBoxBas = HBox.new(false))
-		
-		vBoxBas.add(Frame.new.add(table = Table.new(4,4)))
 
-		
-		boxTimer = VBox.new(false, 2)
 
 		# Gestion du chronomètre
 		timer_label = Label.new("")
@@ -98,8 +89,41 @@ class Gui < Window
 		signal_connect("focus_out_event") { timer.stop }
 		
 		# intégration à la GUI
+		boxTimer = VBox.new(false, 2)
 		boxTimer.pack_start(timer_label)
+		
+		
+		#Partie basse de l"application
+		vbox.pack_start(hBoxBas = HBox.new(false, 2))
+                bouton_verifier = Button.new("Verifier")
+		vbox.add(bouton_verifier)
+                hBoxBas.add(vBoxBas = HBox.new(false))
+                vBoxBas.add(Frame.new.add(table = Table.new(4,4)))
 		table.attach(boxTimer, 0, 1, 0, 1)
+
+                bouton_verifier.signal_connect("clicked") { 
+                  if @picross.grille.terminee? then
+                    message = "Picross terminé en #{timer.to_s} secondes !"
+                  else 
+                    message = "Proposition fausse !"
+                  end
+                  dialog = MessageDialog.new(
+                    nil, 
+                    Dialog::DESTROY_WITH_PARENT | Dialog::MODAL,
+                    MessageDialog::INFO,
+                    MessageDialog::BUTTONS_CLOSE,
+                    message
+                  )
+
+                  dialog.run
+                  dialog.destroy
+                }
+                  
+
+
+
+
+		
 		
 		chiffreHaut = TableChiffre.creer(grille_jouable.tableColonne)
 		table.attach(chiffreHaut.table, 1, 2, 0, 1)
