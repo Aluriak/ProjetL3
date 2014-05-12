@@ -14,7 +14,7 @@ load "src/grille/racine.rb"
 #################################
 # JOUABLE			#
 #################################
-# mainteneur : BOURNEUF
+# mainteneur : BOURNEUF/COUSIN
 
 # Une Grille Jouable est une grille Racine avec une matrice d'état.
 # de Picross modifiée par l'utilisateur.
@@ -72,8 +72,8 @@ class GrilleJouable < GrilleRacine
   # Lève des exceptions en cas d'état ou de coordonées non valides
   def basculer(i, j, etat = nil)
     # Assertion
-    raise "Etat non valide" if not (Etat.include?(etat) and etat != nil)
-    raise "Coordonnée non valide" if not (i.between?(0, @matriceDeJeu.size) and j.between?(0, @matriceDeJeu.size))
+    #raise "Etat #{etat} non valide" if not (Etat.include?(etat) and etat != nil)
+	raise "Coordonnées(#{x},#{y}) non valide" if not (i.between?(0, @matriceDeJeu.size) and j.between?(0, @matriceDeJeu.size))
     # Bascule
     if etat == nil then
       @matriceDeJeu[i][j] = Etat.suivant(@matriceDeJeu[i][j])
@@ -83,7 +83,10 @@ class GrilleJouable < GrilleRacine
   end
 
 
-
+  # Renvoie l'état de la case située en (i, j)
+  def etat(i, j)
+	return @matriceDeJeu[i][j]
+  end
 
 
   ##
