@@ -53,7 +53,7 @@ class TableChiffre
 				
 				#ce qu'il faudrait avoir
 				#@labels[x][y] = Label.new.set_text(matrice[x][y])
-				@labels[x][y] = Label.new(@matrice[x][y].to_s)
+				@labels[x][y] = Label.new(@matrice.nombresDeLaLigne(x)[y].to_s)
 				
 				#les 1+n éléments indiquent la position du widget
 				@table.attach(@labels[x][y], x, x+1, y, y+1) 
