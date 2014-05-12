@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 #FAIT : jouable --> planche
 #revoir : reprendre main de nico
 #A FAIRE : @colonneChiffre, @ligneChiffre --> tablechiffre
@@ -52,7 +53,10 @@ class Gui < Window
 	def Gui.lancer(tailleChoisie = @derniereTailleGrille)
 		new(tailleChoisie)
 	end
-	
+
+	def Gui.fermer
+		
+	end	
 	
 	def initialize(tailleGrille)
 		@picross = Picross.new
