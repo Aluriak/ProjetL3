@@ -31,7 +31,7 @@ class FenetreSauvegarde < Gtk::Window
   ## 
   # prend une instance de class Picross en paramètre
   def initialize(picross)
-    super("Sauvergader la partie en cours")
+    super("Sauvegarder la partie en cours")
     self.signal_connect("destroy") { self.destroy }
     set_resizable(true)
     @picross = picross
