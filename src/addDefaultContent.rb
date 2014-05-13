@@ -25,11 +25,11 @@ cnf.derniereTailleGrille=5
 nom_grille = "Mon premier picross"
 
 tableLigne = TableNombre.new(5, TableNombre.DeLigne)
-  tableLigne.ajouterNombre(0, 1)
+  tableLigne.ajouterNombre(0, 2)
   tableLigne.ajouterNombre(1, 5)
   tableLigne.ajouterNombre(2, 1)
   tableLigne.ajouterNombre(3, 2)
-  tableLigne.ajouterNombre(4, 2)
+  tableLigne.ajouterNombre(4, 1)
 tableColonne = TableNombre.new(5, TableNombre.DeColonne)
   tableColonne.ajouterNombre(0, 1)
   tableColonne.ajouterNombre(1, 2)
