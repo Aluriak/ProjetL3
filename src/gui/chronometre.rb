@@ -27,6 +27,9 @@ class Chronometre
   @dixieme
 
 
+  # nombre de seconde écoulée depuis la dernière remise à zéro
+  attr_reader :sec
+
   def initialize(ref_label)
     @sec = 0
     @dixieme = 0      
