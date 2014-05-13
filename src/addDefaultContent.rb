@@ -22,17 +22,21 @@ cnf = Configuration.new(5, Scores.creer(), [])
 cnf.derniereTailleGrille=5
 
 # create grille racine and add it to gds
-nom_grille = "Mon premier picross"
+nom_grille = "Space Invaders"
 
 tableLigne = TableNombre.new(5, TableNombre.DeLigne)
   tableLigne.ajouterNombre(0, 1)
-  tableLigne.ajouterNombre(1, 5)
+  tableLigne.ajouterNombre(0, 1)
+  tableLigne.ajouterNombre(1, 3)
   tableLigne.ajouterNombre(2, 1)
-  tableLigne.ajouterNombre(3, 2)
-  tableLigne.ajouterNombre(4, 2)
+  tableLigne.ajouterNombre(2, 1)
+  tableLigne.ajouterNombre(2, 1)
+  tableLigne.ajouterNombre(3, 5)
 tableColonne = TableNombre.new(5, TableNombre.DeColonne)
   tableColonne.ajouterNombre(0, 1)
-  tableColonne.ajouterNombre(1, 2)
+  tableColonne.ajouterNombre(0, 2)
+  tableColonne.ajouterNombre(1, 1)
+  tableColonne.ajouterNombre(1, 1)
   tableColonne.ajouterNombre(2, 3)
   tableColonne.ajouterNombre(3, 1)
   tableColonne.ajouterNombre(3, 1)
