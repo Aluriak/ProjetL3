@@ -1,14 +1,14 @@
+# CENTRE DU PROGRAMME GUI.RB
+# EWEN COUSIN/NICOLAS BOURDIN
+
 # -*- encoding: utf-8 -*-
-#FAIT : jouable --> planche
-#revoir : reprendre main de nico
-#A FAIRE : @colonneChiffre, @ligneChiffre --> tablechiffre
 
 require "gtk2"
 require "glib2"
 include Gtk
 
 load "src/gui/planche.rb"
-#load "src/gui/menuAide.rb"
+load "src/gui/menuAide.rb"
 load "src/gui/menuPrincipal.rb"
 load "src/gui/tablechiffre.rb"
 load "src/gui/chronometre.rb"
@@ -60,12 +60,10 @@ class Gui < Window
 	
 	def initialize(tailleGrille)
 		@picross = Picross.new
-		
 		@picross.nouvelleGrilleDeTaille(tailleGrille)
 		super("Picross")
 		signal_connect("destroy") { Gtk.main_quit }
 		set_resizable(false)
-		
 		vbox = VBox.new(false, 2)
 		
 		grille_jouable = @picross.grille
@@ -75,7 +73,7 @@ class Gui < Window
 		
 		menuHaut = MenuPrincipal.creerMenuHaut(hBoxHaut)
 		
-		menuHaut.clickerSur("Nouveau")	{ nouveau = FenetreNouveauTaille.new }
+		menuHaut.clickerSur("Nouveau")	{ nouveau = FenetreNouveauTaille.new(self) }
 		menuHaut.clickerSur("Editer")	{ fenetreEditer = FenetreEditionTaille.new(@picross) }
 		menuHaut.clickerSur("Charger")	{ fenetreCharger = FenetreCharger.new }
 		menuHaut.clickerSur("Sauvegarder"){ fenetreSauvegarder = FenetreSauvegarde.new(@picross) }
@@ -98,63 +96,58 @@ class Gui < Window
 		
 		#Partie basse de l"application
 		vbox.pack_start(hBoxBas = HBox.new(false, 2))
-                bouton_verifier = Button.new("Verifier")
+		bouton_verifier = Button.new("Verifier")
 		vbox.add(bouton_verifier)
-                hBoxBas.add(vBoxBas = HBox.new(false))
-                vBoxBas.add(Frame.new.add(table = Table.new(4,4)))
+		hBoxBas.add(vBoxBas = HBox.new(false))
+		vBoxBas.add(Frame.new.add(table = Table.new(4,4)))
 		table.attach(boxTimer, 0, 1, 0, 1)
 
-                bouton_verifier.signal_connect("clicked") { 
-                  if @picross.grille.terminee? then
-                    message = "Picross terminé en #{timer.to_s} secondes !"
-                  else 
-                    message = "Proposition fausse !"
-                  end
-                  dialog = MessageDialog.new(
-                    nil, 
-                    Dialog::DESTROY_WITH_PARENT | Dialog::MODAL,
-                    MessageDialog::INFO,
-                    MessageDialog::BUTTONS_CLOSE,
-                    message
-                  )
-
-                  dialog.run
-                  dialog.destroy
-                }
-                  
-
-
-
-
+		bouton_verifier.signal_connect("clicked") { 
+			if @picross.grille.terminee? then
+				message = "Picross termine en #{timer.to_s} secondes !"
+			else 
+				message = "Proposition fausse !"
+			end
 		
+			dialog = MessageDialog.new(
+			nil, 
+			Dialog::DESTROY_WITH_PARENT | Dialog::MODAL,
+			MessageDialog::INFO,
+			MessageDialog::BUTTONS_CLOSE,
+			message
+			)
+
+			dialog.run
+			dialog.destroy
+		}
+
+		# table de ligne
+		labelsNombreLigne = Table.new(grille_jouable.tableLigne.largeur, grille_jouable.tableLigne.hauteur)
+		# pour chaque ligne
+		grille_jouable.tableLigne.hauteur.times { |row|
+			nombres = grille_jouable.tableLigne.nombresDeLaLigne(row)
+			# pour chaque nombre de la ligne
+			nombres.size.times { |col|
+				nombre = nombres[col].to_s
+				labelsNombreLigne.attach(Label.new(nombre), col, col+1, row, row+1) 
+			}
+		}
 		
-                # AFFICHAGE DES NOMBRES DES LIGNES
-                labelsNombreLigne = Table.new(grille_jouable.tableLigne.largeur, grille_jouable.tableLigne.hauteur)
-                # pour chaque ligne
-                grille_jouable.tableLigne.hauteur.times do |row|
-                  nombres = grille_jouable.tableLigne.nombresDeLaLigne(row)
-                  # pour chaque nombre de la ligne
-                  nombres.size.times do |col|
-                    nombre = nombres[col].to_s
-                    labelsNombreLigne.attach(Label.new(nombre), col, col+1, row, row+1) 
-                  end
-                end
-                # intégration à la GUI
 		table.attach(labelsNombreLigne, 0, 1, 1, 2)
 		
 		
-                # AFFICHAGE DES NOMBRES DES COLONNES
-                labelsNombreColonne = Table.new(grille_jouable.tableColonne.largeur, grille_jouable.tableColonne.hauteur)
-                # pour chaque colonne
-                grille_jouable.tableColonne.largeur.times do |col|
-                  nombres = grille_jouable.tableColonne.nombresDeLaColonne(col)
-                  # pour chaque nombre de la colonne
-                  nombres.size.times do |row|
-                    nombre = nombres[row].to_s
-                    labelsNombreColonne.attach(Label.new(nombre), col, col+1, row, row+1) 
-                  end
-                end
-                # intégration à la GUI
+		# table de colonne
+		labelsNombreColonne = Table.new(grille_jouable.tableColonne.largeur, grille_jouable.tableColonne.hauteur)
+		# pour chaque colonne
+		grille_jouable.tableColonne.largeur.times do |col|
+			nombres = grille_jouable.tableColonne.nombresDeLaColonne(col)
+			# pour chaque nombre de la colonne
+			nombres.size.times do |row|
+			nombre = nombres[row].to_s
+			labelsNombreColonne.attach(Label.new(nombre), col, col+1, row, row+1) 
+			end
+		end
+		
 		table.attach(labelsNombreColonne, 1, 2, 0, 1)
 
                 # AFFICHAGE DE LA PLANCHE
@@ -163,7 +156,7 @@ class Gui < Window
 
 		#Partie basse droite de l"application
 		vBoxBas.add(Frame.new.add(vBoxBasGauche = VBox.new(2)))
-		#menuDroit = MenuAide.creerMenuDroit(vBoxBasGauche,"Aide - Faible", "Aide - Fort")
+		menuDroit = MenuAide.creerMenuDroit(vBoxBasGauche,"Aide - Faible", "Aide - Fort")
 		
 		#menuDroit.clickerSur("Aide - Faible"){AideDeNiveau1}
 		#menuDroit.clickerSur("Aide - Fort"){AideDeNiveau2}		
