@@ -54,7 +54,7 @@ class Planche
 				@image[x][y] = self.image(jouable.matriceDeJeu[x][y])
 				@event_box[x][y] = EventBox.new.add(@image[x][y])  
 				
-				@table.attach(@event_box[x][y], x, x+1, y, y+1) 
+				@table.attach(@event_box[x][y], y, y+1, x, x+1) 
               
 				#crée les évenements de click sur chaque cases
 				@event_box[x][y].signal_connect("button_press_event") { 
