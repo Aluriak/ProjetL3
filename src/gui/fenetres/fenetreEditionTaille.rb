@@ -97,6 +97,20 @@ class FenetreEditionTaille
 
 			fenetreEditer.destroy
 
+		# coquille logique dans fenetreEditionTaille
+		# qui conduit à une coquille dans grilleEditable:
+		# Il faudrait créer un nouveau picross, ou tout du moins une grille jouable dans grilleEditable
+		# Ou alors, la créer à l'avance dans FenetreEditionTaille(ici) et l'envoyer à grilleEditable
+		# Comme ça, en envoie simplement soit un table vierge(etats blancs), soit noires, 
+		# soit une table représentant une image importée.
+		if @chemin == "vierge"
+				# rien
+			elsif @chemin == "pleine"
+				#picross.grille.toutNoircir
+			else
+				picross.grille
+			end
+			
 			grilleEditable = GrilleEditable.new(@tailleNouvelleMatrice, picross)
 		}
 		boutonFermer.signal_connect("clicked"){ fenetreEditer.destroy }

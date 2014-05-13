@@ -12,7 +12,6 @@ class GrilleEditable
 	@picross
 
 	def initialize(taille, picross)
-
 		
 		@picross = picross
 		popupEdition = Window.new("Edition Grille")
@@ -28,6 +27,7 @@ class GrilleEditable
 		hBoxBas.pack_start(boutonSauvegarder = Button.new(Stock::OK))
 		hBoxBas.pack_start(boutonAnnuler = Button.new(Stock::CANCEL))
 		
+		# devrait être dans fenetreEditionTaille, et on récupère une grille jouable toute faite(vierge, noir, ou imagée)
 		jouable = GrilleJouable.deTaille(taille)
 		planche = Planche.creer(jouable,true)
 		
@@ -35,11 +35,7 @@ class GrilleEditable
 		popupEdition.add(vbox)
 		popupEdition.show_all
 		
-		
-		boutonAnnuler.signal_connect("clicked"){
-			#Gui.lancer
-			popupEdition.destroy
-		}
+		boutonAnnuler.signal_connect("clicked"){ popupEdition.destroy }
 				
 		#Quand on appuie sur btnSauvegarder, on crée la matrice de jeu
 		boutonSauvegarder.signal_connect("clicked"){ 
@@ -65,22 +61,20 @@ def popupNomGrilleEditee
   hb.pack_start(textNom)
   hb.pack_start(buttonValider)
 
+  # bloque le bouton, s'il n'y a rien dans la zone de texte
   textNom.signal_connect("insert_text") {
-  	if textNom.text != "" then
-    	buttonValider.sensitive = true
-    else
-      buttonValider.sensitive = false
-    end
+	  buttonValider.sensitive = textNom.text.empty? ? false : true
   }
 
 
   buttonValider.signal_connect("clicked"){
   	#Si la sauvegarder de la grille éditée est un succes on le dit à l'utilisateur
-  	if 
+  	#PROBLEME rien apres le if!!
+	  #if 
   		confirmerEnregistrement(textNom.text)
-  	else
-  		erreurEnregistrement
-  	end
+  	#else
+  		#erreurEnregistrement
+  	#end
   }
   buttonValider.signal_connect("clicked"){popupNomGrilleEditee.destroy}
 
