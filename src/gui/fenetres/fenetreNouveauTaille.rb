@@ -14,7 +14,7 @@ class FenetreNouveauTaille
 
 	@tailleNouvelleMatrice
 
-	def initialize
+	def initialize(ancienneFenetre)
 
 		#Creation d'une 2eme fenetre pour choisir la taille de la grille
 		popupTailleGrille = Window.new("Nouvelle Grille")
@@ -54,6 +54,7 @@ class FenetreNouveauTaille
 			print "Lancement de la nouvelle grille de taille : ", @tailleNouvelleMatrice, "\n"
 
 			popupTailleGrille.destroy
+			ancienneFenetre.destroy
 			Gui.lancer(@tailleNouvelleMatrice)
 		}
 
