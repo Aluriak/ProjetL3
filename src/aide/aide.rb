@@ -302,11 +302,12 @@ class Aide
 
     if(i == 0)
 		@TabAideDispo[i] = "Il n'y a aucune aide dispo"
-		print @TabAideDispo[0]
+		#print @TabAideDispo[0]
 	else
 		r = rand(0..i-1)
-		print @TabAideDispo[r]
+		#print @TabAideDispo[r]
 	end
+  return @TabAideDispo
     
   end
   
@@ -375,11 +376,12 @@ class Aide
     
     if(i == 0)
 		@TabAideDispo[i] = "Il n'y a aucune aide dispo"
-		print @TabAideDispo[0]
+		#print @TabAideDispo[0]
 	else
 		r = rand(0..i-1)
-		print @TabAideDispo[r]
+		#print @TabAideDispo[r]
 	end
+    return @TabAideDispo
   end
 end
 
