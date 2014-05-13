@@ -111,7 +111,7 @@ class GrilleJouable < GrilleRacine
       #puts "col_id     : " + col_id.to_s 
       #puts "col_actuels: " + nb_actuels.to_s
       #puts "col_attendu: " + nb_attendu.to_s
-      tables_identiques = (nb_actuels == nb_attendu)
+      tables_identiques = (tables_identiques and (nb_actuels == nb_attendu))
     end
 
     puts "MIDDLE"
@@ -123,7 +123,7 @@ class GrilleJouable < GrilleRacine
         #puts "row_id     : " + row_id.to_s 
         #puts "row_actuels: " + nb_actuels.to_s
         #puts "row_attendu: " + nb_attendu.to_s
-        tables_identiques = nb_actuels == nb_attendu
+        tables_identiques = (tables_identiques and nb_actuels == nb_attendu)
       end
     end
     puts "END WITH " + tables_identiques.to_s
