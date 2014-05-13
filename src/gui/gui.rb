@@ -1,7 +1,7 @@
+# -*- encoding: utf-8 -*-
 # CENTRE DU PROGRAMME GUI.RB
 # EWEN COUSIN/NICOLAS BOURDIN
 
-# -*- encoding: utf-8 -*-
 
 require "gtk2"
 require "glib2"
