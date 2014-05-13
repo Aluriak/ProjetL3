@@ -149,7 +149,7 @@ class TableNombre
 	  end
 	else
       	  nbNoirConsecutifs += 1        # si c'est pas blanc, c'est noir
-          if col == tableEtat.size-1 then   # si des noirs n'ont pas encore été ajoutés en fin de colonne
+          if row == tableEtat.size-1 then   # si des noirs n'ont pas encore été ajoutés en fin de colonne
             tableColonne.ajouterNombre(col, nbNoirConsecutifs)
             nbNoirConsecutifs = 0 
           end
@@ -174,7 +174,7 @@ class TableNombre
           end
         else
           nbNoirConsecutifs += 1        # si c'est pas blanc, c'est noir
-          if row == tableEtat.size-1 then   # si des noirs n'ont pas encore été ajoutés en fin de ligne
+          if col == tableEtat.size-1 then   # si des noirs n'ont pas encore été ajoutés en fin de ligne
             tableLigne.ajouterNombre(row, nbNoirConsecutifs)
             nbNoirConsecutifs = 0 
           end
