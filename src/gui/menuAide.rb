@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 
 include Gtk
 
@@ -50,3 +51,7 @@ class MenuAide
 	
 
 end
+
+
+
+
