@@ -21,7 +21,7 @@ load "src/gui/fenetres/fenetreSauvegarde.rb"
 load "src/gui/fenetres/fenetreScore.rb"
 load "src/gui/fenetres/fenetreManuel.rb"
 load "src/gui/fenetres/fenetreAPropos.rb"
-#load "src/Aide.rb"
+load "src/aide/aideWrap.rb"
 
 class Array
 	def orientationHorizontale?
