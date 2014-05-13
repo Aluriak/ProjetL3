@@ -91,7 +91,7 @@ class Gui < Window
 		
 		# intégration à la GUI
 		boxTimer = VBox.new(false, 2)
-		boxTimer.pack_start(timer_label)
+		boxTimer.pack_start(Frame.new.add(timer_label))
 		
 		
 		#Partie basse de l"application

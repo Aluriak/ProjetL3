@@ -61,9 +61,9 @@ class Planche
 					# si on est en mode edition -> noir/blanc
 					if modeEdition then
 						@jouable.basculer(x,y) 
-                                                if @jouable.etat(x,y) == Etat.Drapeau then
-                                                  @jouable.basculer(x,y) 
-                                                end
+						if @jouable.etat(x,y) == Etat.Drapeau then
+							@jouable.basculer(x,y) 
+						end
 					# sinon mode normal -> noir/blanc/drapeau
 					else												
 						@jouable.basculer(x,y)												
