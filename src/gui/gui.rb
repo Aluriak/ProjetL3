@@ -66,7 +66,7 @@ class Gui < Window
 		signal_connect("destroy") { Gtk.main_quit }
 		set_resizable(false)
 		vbox = VBox.new(false, 2)
-                add_events(Gdk::Event::BUTTON_PRESS_MASK)
+    add_events(Gdk::Event::BUTTON_PRESS_MASK)
 		
 		grille_jouable = @picross.grille
 	
@@ -98,8 +98,11 @@ class Gui < Window
 		
 		#Partie basse de l"application
 		vbox.pack_start(hBoxBas = HBox.new(false, 2))
+
+		labelAide = Label.new("Pas d'aide possible")
 		bouton_verifier = Button.new("Verifier")
-		vbox.add(bouton_verifier)
+		vbox.pack_start(labelAide)
+		vbox.pack_start(bouton_verifier)
 		hBoxBas.add(vBoxBas = HBox.new(false))
 		vBoxBas.add(Frame.new.add(table = Table.new(4,4)))
 		table.attach(boxTimer, 0, 1, 0, 1)
@@ -170,15 +173,15 @@ class Gui < Window
     vBoxBasGauche.pack_start(bouton_aide2_txt)
 
     bouton_aide1_txt.signal_connect("clicked"){
-      aide = AideWrap.deNiveau1Sur(@picross.grille)
+      aide = AideWrap.deNiveau1Sur(@picross.grille.matriceDeJeu)
       @nbAppelAide += 1  
-      print aide # TODO: afficher l'aide proprement
+      labelAide.set_text(aide) # TODO: afficher l'aide proprement
 		}
      
     bouton_aide2_txt.signal_connect("clicked"){
-      aide = AideWrap.deNiveau2Sur(@picross.grille)
+      aide = AideWrap.deNiveau2Sur(@picross.grille.matriceDeJeu)
       @nbAppelAide += 2  
-      print aide # TODO: afficher l'aide proprement
+      labelAide.set_text(aide) # TODO: afficher l'aide proprement
     }
               
     add(vbox)
