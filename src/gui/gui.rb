@@ -20,6 +20,7 @@ load "src/gui/fenetres/fenetreSauvegarde.rb"
 load "src/gui/fenetres/fenetreScore.rb"
 load "src/gui/fenetres/fenetreManuel.rb"
 load "src/gui/fenetres/fenetreAPropos.rb"
+load "src/gui/fenetres/fenetreFinJeu.rb"
 load "src/aide/aideWrap.rb"
 
 class Array
@@ -110,27 +111,8 @@ class Gui < Window
 		table.attach(boxTimer, 0, 1, 0, 1)
 
 		bouton_verifier.signal_connect("clicked") { 
-			if @picross.grille.terminee? then
-				message = "Picross termine en #{timer.to_s} secondes !"
-                                # picross terminé !
-                                # On arrête le timer, on enregistre le score,...
-                                #TODO: obtenir le nom de profil de l'utilisateur
-                                timer.stop
-                                @picross.scores.ajouterScoreALaGrille(@picross.grille.nom, Score.creer(@picross.grille.taille, timer.sec, @nbAppelAide), "Anne Onyme")
-			else 
-				message = "Proposition fausse !"
-			end
-		
-			dialog = MessageDialog.new(
-			nil, 
-			Dialog::DESTROY_WITH_PARENT | Dialog::MODAL,
-			MessageDialog::INFO,
-			MessageDialog::BUTTONS_CLOSE,
-			message
-			)
-
-			dialog.run
-			dialog.destroy
+                        fenetre_fin_jeu = FenetreFinJeu.new(@picross, timer.sec, @nbAppelAide)
+			fenetre_fin_jeu.show_all
 		}
 
 		# table de ligne
