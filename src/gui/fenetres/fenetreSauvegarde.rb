@@ -12,6 +12,7 @@ require "gtk2"
 require "glib2"
 require "date"
 include Gtk
+load "src/gui/confirmerNouveauProfil.rb"
 
 
 
@@ -78,31 +79,18 @@ class FenetreSauvegarde < Window
     @bouton_valider.signal_connect("clicked") {
       nom_profil = @combo_profils.active_text
       nom_savgrd = @entry_nom.text()
-      operation_choisie = Dialog::RESPONSE_OK
+      validation = true
 
       # vérification de création de profil
       if not @picross.profils.include?(nom_profil) then
-        dialog = Dialog.new(
-          "Création de profil", 
-          self,
-          Dialog::DESTROY_WITH_PARENT | Dialog::MODAL,
-          [Stock::OK, Dialog::RESPONSE_OK], 
-          [Stock::CANCEL, Dialog::RESPONSE_CANCEL]
-        )
-        dialog.vbox.add(Label.new("Créer le profil " + nom_profil + " ?"))
-        dialog.signal_connect("response") { |fenetre, id_rep| operation_choisie = id_rep }
-        dialog.show_all
-        dialog.run
-        dialog.destroy
+        validation = ConfirmerNouveauProfil.show(nom_profil)
       end
 
       # sauvegarde
-      if operation_choisie == Dialog::RESPONSE_OK then
+      if validation then
         picross.sauverGrilleJouable(nom_savgrd)
         self.confirmerSauvegarde(nom_savgrd)
         self.destroy
-      else
-		#eventuellement à faire
       end
     }
     @bouton_annuler.signal_connect("clicked") { self.destroy }
