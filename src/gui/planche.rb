@@ -34,7 +34,7 @@ class Planche
 	attr_reader :modeEdition
 	
 	#creation de planche
-	def Planche.creer(jouable, modeEdition = false, texture = "softrouge")
+	def Planche.creer(jouable, modeEdition = false, texture = "gras")
 		new(jouable, modeEdition, texture)
 	end
 	
