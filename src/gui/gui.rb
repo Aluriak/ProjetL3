@@ -60,7 +60,7 @@ class Gui < Window
 	end	
 	
 	def initialize(tailleGrille)
-    @nbAppelAide = 0
+                @nbAppelAide = 0
 		@picross = Picross.new
 		@picross.nouvelleGrilleDeTaille(tailleGrille)
 		super("Picross")
