@@ -17,7 +17,7 @@ class FenetreEditionTaille
 	@tailleNouvelleMatrice
 	@chemin	#texte qui est soit "vierge" soit le chemin de l'image (soit "pleine" +tard)
 	
-	def initialize(picross)
+	def initialize
 
 		@chemin = "vierge"
 		
