@@ -44,6 +44,7 @@ class Planche
 		@tabImg.map!{|img| dossier + img}
 		@jouable = jouable
 		@table = Table.new(jouable.taille,jouable.taille)
+                @table.add_events(Gdk::Event::BUTTON_PRESS_MASK)
 		@modeEdition = modeEdition
 		#self.setup(jouable)
 		@image = Array.new(jouable.taille) { Array.new(jouable.taille) }
@@ -57,7 +58,7 @@ class Planche
 				@table.attach(@event_box[x][y], y, y+1, x, x+1) 
               
 				#crée les évenements de click sur chaque cases
-				@event_box[x][y].signal_connect("button_press_event") { 
+				@event_box[x][y].signal_connect("button_press_event") { |widget, event|
 					# si on est en mode edition -> noir/blanc
 					if modeEdition then
 						@jouable.basculer(x,y) 
@@ -65,8 +66,19 @@ class Planche
 							@jouable.basculer(x,y) 
 						end
 					# sinon mode normal -> noir/blanc/drapeau
-					else												
-						@jouable.basculer(x,y)												
+					else
+                                                clic_gauche = (event.button == 1)
+						#@jouable.basculer(x,y)												
+                                                if @jouable.etat(x,y) == Etat.Noir then
+                                                  @jouable.basculer(x,y, Etat.Blanc)   if clic_gauche
+                                                  @jouable.basculer(x,y, Etat.Drapeau) if not clic_gauche
+                                                elsif @jouable.etat(x,y) == Etat.Blanc then
+                                                  @jouable.basculer(x,y, Etat.Noir)    if clic_gauche
+                                                  @jouable.basculer(x,y, Etat.Drapeau) if not clic_gauche
+                                                else
+                                                  @jouable.basculer(x,y, Etat.Noir)  if clic_gauche
+                                                  @jouable.basculer(x,y, Etat.Blanc) if not clic_gauche
+                                                end
 					end
 					actualiser(x,y)                                  
 				}
