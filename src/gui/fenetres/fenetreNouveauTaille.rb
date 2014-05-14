@@ -59,6 +59,7 @@ class FenetreNouveauTaille
 		}
 
 		popupTailleGrille.add(Frame.new.add(vb))
+		popupTailleGrille.set_window_position :center
 		popupTailleGrille.show_all	
 	end
 end

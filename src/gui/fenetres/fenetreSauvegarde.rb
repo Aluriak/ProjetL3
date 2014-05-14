@@ -64,6 +64,7 @@ class FenetreSauvegarde < Window
     box_window.pack_start(box_grille, true, true)
     box_window.pack_start(box_bouton, true, true)
     self.add(box_window)
+    self.set_window_position :center
     self.show_all
 
     # connects

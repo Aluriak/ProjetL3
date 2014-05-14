@@ -1,7 +1,7 @@
+# -*- encoding: utf-8 -*-
 # CENTRE DU PROGRAMME GUI.RB
 # EWEN COUSIN/NICOLAS BOURDIN
 
-# -*- encoding: utf-8 -*-
 
 require "gtk2"
 require "glib2"
@@ -35,6 +35,7 @@ class Gui < Window
 	#@window
 	@picross
 	@derniereTailleGrille
+        @nbAppelAide
 	
 	@picross = Picross.new
 	@derniereTailleGrille = @picross.derniereTailleDeGrille
@@ -105,6 +106,11 @@ class Gui < Window
 		bouton_verifier.signal_connect("clicked") { 
 			if @picross.grille.terminee? then
 				message = "Picross termine en #{timer.to_s} secondes !"
+                                # picross terminé !
+                                # On arrête le timer, on enregistre le score,...
+                                #TODO: obtenir le nom de profil de l'utilisateur
+                                @timer.stop
+                                @picross.scores.ajouterScoreALaGrille(@picross.grille.nom, Score.new(@picross.grille.taille, @timer.sec, @nbAppelAide), "Anne Onyme")
 			else 
 				message = "Proposition fausse !"
 			end
@@ -156,10 +162,25 @@ class Gui < Window
 
 		#Partie basse droite de l"application
 		vBoxBas.add(Frame.new.add(vBoxBasGauche = VBox.new(2)))
-		menuDroit = MenuAide.creerMenuDroit(vBoxBasGauche,"Aide - Faible", "Aide - Fort")
+                bouton_aide1_txt = "Aiguillez-moi !"
+                bouton_aide2_txt = "Que dois-je faire ?"
+		menuDroit = MenuAide.creerMenuDroit(vBoxBasGauche,bouton_aide1_txt, bouton_aide2_txt)
 		
+<<<<<<< HEAD
 		#menuDroit.listHelpBtns[0].signal_connect("clicked"){}
 		#menuDroit.clickerSur("Aide - Fort"){}		
+=======
+                menuDroit.clickerSur(bouton_aide1_txt) {
+                  aide = AideWrap.deDeNiveau1(@picross.grille)
+                  @nbAppelAide += 1  
+                  print aide # TODO: afficher l'aide proprement
+                }
+                menuDroit.clickerSur(bouton_aide2_txt) {
+                  aide = AideWrap.deDeNiveau2(@picross.grille)
+                  @nbAppelAide += 2  
+                  print aide # TODO: afficher l'aide proprement
+                }
+>>>>>>> cebc6c474b32f667d05bea377aec58ca79afeda4
 		add(vbox)
 		set_window_position :center
 		show_all

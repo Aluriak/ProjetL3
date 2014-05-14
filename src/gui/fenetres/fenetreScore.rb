@@ -50,6 +50,7 @@ class FenetreScore < Window
     set_transient_for(parent)  # parent window.
     set_resizable(true)
     set_default_size(300,40+scores_grille.size*30)
+    set_window_position :center
     show_all
   end
 

@@ -22,7 +22,7 @@ class FenetreEditionTaille
 		@chemin = "vierge"
 		
 		fenetreEditer = Window.new("Editer")
-		fenetreEditer.set_resizable(false)
+		fenetreEditer.set_resizable(true)
 
 		vBoxPrincipal = VBox.new(false, 3)
 		vBoxPrincipal.pack_start(hBoxHaut 	= HBox.new(false, 2))
@@ -31,9 +31,7 @@ class FenetreEditionTaille
 		
 		hBoxHaut.pack_start(Frame.new("Taille").add(vBoxTaille = VBox.new(false, 2)))
 		
-		hBoxMilieu.pack_start(entryPath = Entry.new)
-		entryPath.set_text(@chemin)
-		entryPath.set_editable(false)
+		
 		
 		vBoxTaille.pack_start(rb5 	= RadioButton.new("5 x 5"))
 		vBoxTaille.pack_start(rb10 	= RadioButton.new(rb5, "10 x 10"))
@@ -51,9 +49,15 @@ class FenetreEditionTaille
 		hBoxChargerImage.pack_start(boutonChargerImage = Button.new("Charger Image"))
 		boutonChargerImage.set_sensitive(false)
 		
-		rbVierge.signal_connect("clicked") { boutonChargerImage.set_sensitive(false); entryPath.set_text("vierge")}		
-		rbPleine.signal_connect("clicked") { boutonChargerImage.set_sensitive(false); entryPath.set_text("pleine")}
-		rbCharger.signal_connect("clicked"){ boutonChargerImage.set_sensitive(true) ; entryPath.set_text("image?") }
+		hBoxMilieu.pack_start(entryPath = Entry.new)
+		entryPath.set_text("image?")
+		entryPath.set_editable(false)
+		rbCharger.set_active(true)
+
+
+		rbVierge.signal_connect("clicked") { boutonChargerImage.set_sensitive(false); entryPath.set_text("vierge"); entryPath.set_visible(false)}		
+		rbPleine.signal_connect("clicked") { boutonChargerImage.set_sensitive(false); entryPath.set_text("pleine"); entryPath.set_visible(false)}
+		rbCharger.signal_connect("clicked"){ boutonChargerImage.set_sensitive(true) ; entryPath.set_text("image?"); entryPath.set_visible(true) }
 		
 		#Ecouteur boutton charger Image
 		boutonChargerImage.signal_connect("clicked"){
@@ -116,6 +120,7 @@ class FenetreEditionTaille
 		boutonFermer.signal_connect("clicked"){ fenetreEditer.destroy }
 
 		fenetreEditer.add(vBoxPrincipal)
+		fenetreEditer.set_window_position :center
 		fenetreEditer.show_all
 	end
 end

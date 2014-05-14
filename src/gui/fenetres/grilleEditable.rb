@@ -38,6 +38,7 @@ class GrilleEditable
 		
 		table.attach(planche.table, 1, 2, 1, 2)
 		popupEdition.add(vbox)
+		popupEdition.set_window_position :center
 		popupEdition.show_all
 		
 		boutonAnnuler.signal_connect("clicked"){ popupEdition.destroy }

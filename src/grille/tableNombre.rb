@@ -64,7 +64,7 @@ class TableNombre
       raise "La #{self.deLigne? ? "ligne":"colonne" } #{index} est pleine : #{@matriceNombre[index]} de taille max #{self.taille / 2 + 1}."
     end
     @matriceNombre[index].push(nombre)
-    puts "nombre #{nombre} ajoutés à la #{self.deLigne? ? "ligne":"colonne" } #{index}"
+    #puts "nombre #{nombre} ajoutés à la #{self.deLigne? ? "ligne":"colonne" } #{index}"
     return self
   end
 
@@ -77,7 +77,7 @@ class TableNombre
     if index < 0 or index > self.taille then
       raise "La #{self.deLigne? ? "ligne":"colonne" } #{index} n'existe pas ! (table de taille #{self.taille})"
     end
-    puts "La #{self.deLigne? ? "ligne":"colonne" } d'index #{index} est #{@matriceNombre[index]}"
+    #puts "La #{self.deLigne? ? "ligne":"colonne" } d'index #{index} est #{@matriceNombre[index]}"
     return @matriceNombre[index]
   end
 
