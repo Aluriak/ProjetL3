@@ -48,10 +48,10 @@ class Score
 
 
   def initialize(taille, temps, aide)
-    @temps = temps + 1
+    @temps = temps 
     @taille = taille
-    @nbrAide = aide + 1
-    @points = (((@taille*100**2) / @nbrAide) / @temps).to_i
+    @nbrAide = aide 
+    @points = (((@taille*100**2) / (@nbrAide+1)) / (1+@temps)).to_i
   end
   
 
