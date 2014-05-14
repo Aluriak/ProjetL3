@@ -88,6 +88,7 @@ class FenetreSauvegarde < Window
 
       # sauvegarde
       if validation then
+        picross.ajouterProfil(nom_profil)
         picross.sauverGrilleJouable(nom_savgrd)
         self.confirmerSauvegarde(nom_savgrd)
         self.destroy
