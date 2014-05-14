@@ -99,7 +99,7 @@ class Gui < Window
 		#Partie basse de l"application
 		vbox.pack_start(hBoxBas = HBox.new(false, 2))
 
-		labelAide = Label.new("Pas d'aide possible")
+		labelAide = Label.new()
 		bouton_verifier = Button.new("Verifier")
 		vbox.pack_start(labelAide)
 		vbox.pack_start(bouton_verifier)
@@ -148,7 +148,7 @@ class Gui < Window
 		#Partie basse droite de l"application
 		vBoxBas.add(Frame.new.add(vBoxBasGauche = VBox.new(2)))
     bouton_aide1_txt = Button.new("Aiguillez-moi !")
-    bouton_aide2_txt = Button.new("Que dois-je faire")
+    bouton_aide2_txt = Button.new("Que dois-je faire?")
 
     vBoxBasGauche.pack_start(bouton_aide1_txt)
     vBoxBasGauche.pack_start(bouton_aide2_txt)
