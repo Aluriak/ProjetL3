@@ -166,23 +166,23 @@ class Gui < Window
 
 		#Partie basse droite de l"application
 		vBoxBas.add(Frame.new.add(vBoxBasGauche = VBox.new(2)))
-    bouton_aide1_txt = Button.new("Aiguillez-moi !")
-    bouton_aide2_txt = Button.new("Que dois-je faire?")
+                bouton_aide1_txt = Button.new("Aiguillez-moi !")
+                bouton_aide2_txt = Button.new("Que dois-je faire?")
 
-    vBoxBasGauche.pack_start(bouton_aide1_txt)
-    vBoxBasGauche.pack_start(bouton_aide2_txt)
+                vBoxBasGauche.pack_start(bouton_aide1_txt)
+                vBoxBasGauche.pack_start(bouton_aide2_txt)
 
-    bouton_aide1_txt.signal_connect("clicked"){
-      aide = AideWrap.deNiveau1Sur(@picross.grille.matriceDeJeu)
-      @nbAppelAide += 1  
-      labelAide.set_text(aide) # TODO: afficher l'aide proprement
-		}
-     
-    bouton_aide2_txt.signal_connect("clicked"){
-      aide = AideWrap.deNiveau2Sur(@picross.grille.matriceDeJeu)
-      @nbAppelAide += 2  
-      labelAide.set_text(aide) # TODO: afficher l'aide proprement
-    }
+                bouton_aide1_txt.signal_connect("clicked"){
+                  aide = AideWrap.deNiveau1Sur(@picross.grille.matriceDeJeu)
+                  @nbAppelAide += 1  
+                  labelAide.set_text(aide) 
+                            }
+                 
+                bouton_aide2_txt.signal_connect("clicked"){
+                  aide = AideWrap.deNiveau2Sur(@picross.grille.matriceDeJeu)
+                  @nbAppelAide += 2  
+                  labelAide.set_text(aide) 
+                }
               
     add(vbox)
     set_window_position(:center)
