@@ -33,12 +33,12 @@ class GrilleEditable
 		hBoxBas.pack_start(boutonAnnuler = Button.new(Stock::CANCEL))
 		
 		# devrait être dans fenetreEditionTaille, et on récupère une grille jouable toute faite(vierge, noir, ou imagée)
-		jouable = GrilleJouable.deTaille(taille)
+		jouable = GrilleJouable.creerDepuisTableEtat(grilleDetat)
 		planche = Planche.creer(jouable,true)
 		
 		table.attach(planche.table, 1, 2, 1, 2)
 		popupEdition.add(vbox)
-		popupEdition.set_window_position :center
+		popupEdition.set_window_position(:center)
 		popupEdition.show_all
 		
 		boutonAnnuler.signal_connect("clicked"){ popupEdition.destroy }
