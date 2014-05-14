@@ -8,11 +8,11 @@
 #################################
 # IMPORTS			#
 #################################
+load "src/gui/confirmerNouveauProfil.rb"
 require "gtk2"
 require "glib2"
 require "date"
 include Gtk
-load "src/gui/confirmerNouveauProfil.rb"
 
 
 
