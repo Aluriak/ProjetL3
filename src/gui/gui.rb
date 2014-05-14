@@ -169,13 +169,13 @@ class Gui < Window
     vBoxBasGauche.pack_start(bouton_aide2_txt)
 
     bouton_aide1_txt.signal_connect("clicked"){
-      aide = AideWrap.deDeNiveau1(@picross.grille)
+      aide = AideWrap.deNiveau1Sur(@picross.grille)
       @nbAppelAide += 1  
       print aide # TODO: afficher l'aide proprement
 		}
      
     bouton_aide2_txt.signal_connect("clicked"){
-      aide = AideWrap.deDeNiveau2(@picross.grille)
+      aide = AideWrap.deNiveau2Sur(@picross.grille)
       @nbAppelAide += 2  
       print aide # TODO: afficher l'aide proprement
     }
