@@ -66,6 +66,7 @@ class Gui < Window
 		signal_connect("destroy") { Gtk.main_quit }
 		set_resizable(false)
 		vbox = VBox.new(false, 2)
+                add_events(Gdk::Event::BUTTON_PRESS_MASK)
 		
 		grille_jouable = @picross.grille
 	
