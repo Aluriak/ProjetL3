@@ -98,7 +98,7 @@ class GrilleJouable < GrilleRacine
   # Prédicat sur l'état actuel du jeu.
   # :return: Vrai si la matrice de jeu correspond aux facteurs
   def terminee?()
-    puts "BEGIN"
+    #puts "BEGIN"
     # Etudie les tables de nombre attendues et celle générées depuis 
     # la grille courante. Si elles sont identiques, la grille est considérée
     # comme justement remplie.
@@ -114,7 +114,7 @@ class GrilleJouable < GrilleRacine
       tables_identiques = (tables_identiques and (nb_actuels == nb_attendu))
     end
 
-    puts "MIDDLE"
+    #puts "MIDDLE"
 
     if tables_identiques then 
       actuelleLigne.hauteur.times do |row_id|
@@ -126,7 +126,7 @@ class GrilleJouable < GrilleRacine
         tables_identiques = (tables_identiques and nb_actuels == nb_attendu)
       end
     end
-    puts "END WITH " + tables_identiques.to_s
+    #puts "END WITH " + tables_identiques.to_s
     return tables_identiques
   end
 
