@@ -69,7 +69,8 @@ class GrilleJouable < GrilleRacine
   ##
   # Retourne une grille jouable créé à partir de la table d'état reçue.
   def GrilleJouable.creerDepuisTableEtat(table)
-    return GrilleJouable.creerDepuis(GrilleRacine.deTaille(table.size))
+    tableL, tableC = TableNombre.creerDepuis(table)
+    return GrilleJouable.creerDepuis(GrilleRacine.deTaille(table.size, nil, tableL, tableC))
   end
 
 
