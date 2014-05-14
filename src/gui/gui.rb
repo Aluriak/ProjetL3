@@ -34,7 +34,7 @@ class Gui < Window
 	#@window
 	@picross
 	@derniereTailleGrille
-        @nbAppelAide
+        @nbAppelAide = 0
 	
 	@picross = Picross.new
 	@derniereTailleGrille = @picross.derniereTailleDeGrille
@@ -59,6 +59,7 @@ class Gui < Window
 	end	
 	
 	def initialize(tailleGrille)
+                @nbAppelAide = 0
 		@picross = Picross.new
 		@picross.nouvelleGrilleDeTaille(tailleGrille)
 		super("Picross")
@@ -108,8 +109,8 @@ class Gui < Window
                                 # picross terminé !
                                 # On arrête le timer, on enregistre le score,...
                                 #TODO: obtenir le nom de profil de l'utilisateur
-                                @timer.stop
-                                @picross.scores.ajouterScoreALaGrille(@picross.grille.nom, Score.new(@picross.grille.taille, @timer.sec, @nbAppelAide), "Anne Onyme")
+                                timer.stop
+                                @picross.scores.ajouterScoreALaGrille(@picross.grille.nom, Score.creer(@picross.grille.taille, timer.sec, @nbAppelAide), "Anne Onyme")
 			else 
 				message = "Proposition fausse !"
 			end
