@@ -34,7 +34,7 @@ class AideWrap
   ##
   # [STATIC] Aide de niveau 1, consistant en un conseil vague sur une ligne ou une colonne
   def AideWrap.deNiveau1Sur(grille) 
-    aides_dispo = Aide.creer(grille).aidedeniveau1 # obtention des chaines d'aide possible
+    aides_dispo = Aide.creer(grille).aideDeNiveau1 # obtention des chaines d'aide possible
     return aides_dispo.choice # on en retourne une au hasard
   end
 
@@ -43,8 +43,8 @@ class AideWrap
 
   ##
   # [STATIC] Aide de niveau 2, consistant en un conseil précis et clair sur un point précis de la grille.
-  def deNiveau2Sur(grille) 
-    aides_dispo = Aide.creer(grille).aidedeniveau2 # obtention des chaines d'aide possible
+  def AideWrap.deNiveau2Sur(grille) 
+    aides_dispo = Aide.creer(grille).aideDeNiveau2 # obtention des chaines d'aide possible
     return aides_dispo.choice # on en retourne une au hasard
   end
 
