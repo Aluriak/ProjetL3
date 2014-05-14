@@ -32,8 +32,8 @@ class FenetreSauvegarde < Window
   def initialize(picross)
     super("Sauvergader la partie en cours")
     signal_connect("destroy") { destroy }
-	set_default_size(100,300)
-	set_resizable(false)
+    set_default_size(100,300)
+    set_resizable(false)
     @picross = picross
   
     # ComboBox des profils: création et insertion de chacun des profils existants
