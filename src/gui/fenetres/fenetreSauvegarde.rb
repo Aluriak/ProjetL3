@@ -83,7 +83,7 @@ class FenetreSauvegarde < Window
 
       # vérification de création de profil
       if not @picross.profils.include?(nom_profil) then
-        validation = ConfirmerNouveauProfil.show(nom_profil)
+        validation = ConfirmerNouveauProfil.show(self, nom_profil)
       end
 
       # sauvegarde
