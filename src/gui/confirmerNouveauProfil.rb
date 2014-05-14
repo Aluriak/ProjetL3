@@ -10,6 +10,7 @@
 #################################
 require "gtk2"
 require "glib2"
+include Gtk
 
 
 
@@ -30,21 +31,24 @@ class ConfirmerNouveauProfil
     operation_choisie = Dialog::RESPONSE_OK
 
     # vérification de création de profil
-    if not picross.profils.include?(nom_profil) then
-      dialog = Dialog.new(
-        "Création de profil", 
-        self,
-        Dialog::DESTROY_WITH_PARENT | Dialog::MODAL,
-        [Stock::OK, Dialog::RESPONSE_OK], 
-        [Stock::CANCEL, Dialog::RESPONSE_CANCEL]
-      )
-      dialog.vbox.add(Label.new("Créer le profil " + nom_profil + " ?"))
-      dialog.signal_connect("response") { |fenetre, id_rep| operation_choisie = id_rep }
-      dialog.show_all
-      dialog.run
-      dialog.destroy
-    end
+    dialog = Dialog.new(
+      "Création de profil", 
+      self,
+      Dialog::DESTROY_WITH_PARENT | Dialog::MODAL,
+      [Stock::OK, Dialog::RESPONSE_OK], 
+      [Stock::CANCEL, Dialog::RESPONSE_CANCEL]
+    )
+    dialog.vbox.add(Label.new("Créer le profil " + nom_profil + " ?"))
+    dialog.signal_connect("response") { |fenetre, id_rep| operation_choisie = id_rep }
+    dialog.show_all
+    dialog.run
+    dialog.destroy
 
-    return operation_choisie == Dialog::RESPONSE_OK 
+    return (operation_choisie == Dialog::RESPONSE_OK)
+  end
 end
+
+
+
+
 
