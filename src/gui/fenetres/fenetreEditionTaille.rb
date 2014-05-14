@@ -101,7 +101,6 @@ class FenetreEditionTaille
 		
 		boutonOK.signal_connect("clicked"){
 				
-			print "premiere action dans boutonOK, chemin=#{@chemin}\n"
 			if (rb5.active?)
 				@tailleGrille = 5
 			elsif (rb10.active?)
@@ -143,7 +142,7 @@ class FenetreEditionTaille
 			end
 		
 			p grilleDetat
-			#grilleEditable = GrilleEditable.new(grilleDetat)
+			grilleEditable = GrilleEditable.new(grilleDetat)
 		
 		}#fin de clic du boutonOK
 		
