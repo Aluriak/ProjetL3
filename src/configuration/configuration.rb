@@ -108,7 +108,7 @@ class Configuration
     # ajout du score
     @scores.ajouterScoreALaGrille(grille_nom, score, profil_nom)
     # ajout du profil si nécessaire
-    @profils.push(profil_nom) if not @profils.include?(profil_nom)
+    self.ajouterProfil(profil_nom)
     # actualisation du profil
     @scores.ajouterScoreAuProfil(grille_nom, score, profil_nom)
   end
