@@ -107,9 +107,28 @@ class Gui < Window
 		vBoxBas.add(Frame.new.add(table = Table.new(4,4)))
 		table.attach(boxTimer, 0, 1, 0, 1)
 
+
+                # VERIFICATION DE FIN DU JEU
 		bouton_verifier.signal_connect("clicked") { 
+                      if @picross.grille.terminee? then
                         fenetre_fin_jeu = FenetreFinJeu.new(@picross, timer.sec, @nbAppelAide)
 			fenetre_fin_jeu.show_all
+                        fenetre_fin_jeu.signal_connect("destroy") {
+                          # on démarre une nouvelle grille !
+                          @picross.nouvelleGrilleDeTaille(@picross.grille.taille)
+                          timer.raz
+                        }
+                      else 
+                        dialog = MessageDialog.new(self, 
+                          Dialog::DESTROY_WITH_PARENT | Dialog::MODAL,
+                          MessageDialog::INFO,
+                          MessageDialog::BUTTONS_CLOSE,
+                          "Cette proposition est fausse"
+                        )
+                        dialog.show_all
+                        dialog.run
+                        dialog.destroy
+                      end
 		}
 
 		# table de ligne
