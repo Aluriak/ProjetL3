@@ -50,9 +50,8 @@ class FenetreEditionTaille
 		boutonChargerImage.set_sensitive(false)
 		
 		hBoxMilieu.pack_start(entryPath = Entry.new)
-		entryPath.set_text("image?")
-		entryPath.set_editable(false)
-		rbCharger.set_active(true)
+		
+	
 
 
 		rbVierge.signal_connect("clicked") { boutonChargerImage.set_sensitive(false); entryPath.set_text("vierge"); entryPath.set_visible(false)}		
@@ -122,5 +121,7 @@ class FenetreEditionTaille
 		fenetreEditer.add(vBoxPrincipal)
 		fenetreEditer.set_window_position :center
 		fenetreEditer.show_all
+
+		entryPath.set_visible(false)
 	end
 end
