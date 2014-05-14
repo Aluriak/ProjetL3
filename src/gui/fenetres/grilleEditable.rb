@@ -11,9 +11,9 @@ class GrilleEditable
 	@tailleNouvelleMatrice
 	@picross
 
-	def initialize(taille, picross)
+	def initialize(grilleDetat)
 		
-		@picross = picross
+		@picross = Picross.new
 		popupEdition = Window.new("Edition Grille")
 		popupEdition.set_resizable(false)
 		vbox = VBox.new(false, 3)
