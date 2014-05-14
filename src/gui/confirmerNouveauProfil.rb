@@ -27,13 +27,13 @@ class ConfirmerNouveauProfil
   ## 
   # prend une instance de classe Picross en paramètre.
   # Retourne vrai si l'utilisateur souhaite créer le profil
-  def ConfirmerNouveauProfil.show(nom_profil)
+  def ConfirmerNouveauProfil.show(parent, nom_profil)
     operation_choisie = Dialog::RESPONSE_OK
 
     # vérification de création de profil
     dialog = Dialog.new(
       "Création de profil", 
-      self,
+      parent,
       Dialog::DESTROY_WITH_PARENT | Dialog::MODAL,
       [Stock::OK, Dialog::RESPONSE_OK], 
       [Stock::CANCEL, Dialog::RESPONSE_CANCEL]
