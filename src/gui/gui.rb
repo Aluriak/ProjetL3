@@ -131,7 +131,7 @@ class Gui < Window
                       end
 		}
 
-		# table de ligne
+		# TABLE DE LIGNE
 		labelsNombreLigne = Table.new(grille_jouable.tableLigne.largeur, grille_jouable.tableLigne.hauteur)
 		# pour chaque ligne
 		grille_jouable.tableLigne.hauteur.times { |row|
@@ -141,12 +141,16 @@ class Gui < Window
 				nombre = nombres[col].to_s
 				labelsNombreLigne.attach(Label.new(nombre), col, col+1, row, row+1) 
 			}
+                        if nombres.size == 0 then
+                          # aucun label n'a été affiché. Il faut combler le vide.
+                          labelsNombreLigne.attach(Label.new(""), 0, 1, row, row+1) 
+                        end
 		}
 		
 		table.attach(labelsNombreLigne, 0, 1, 1, 2)
 		
 		
-		# table de colonne
+		# TABLE DE COLONNE
 		labelsNombreColonne = Table.new(grille_jouable.tableColonne.largeur, grille_jouable.tableColonne.hauteur)
 		# pour chaque colonne
 		grille_jouable.tableColonne.largeur.times do |col|
@@ -156,6 +160,10 @@ class Gui < Window
 			nombre = nombres[row].to_s
 			labelsNombreColonne.attach(Label.new(nombre), col, col+1, row, row+1) 
 			end
+                        if nombres.size == 0 then
+                          # aucun label n'a été affiché. Il faut combler le vide.
+                          labelsNombreColonne.attach(Label.new(""), 0, 1, row, row+1) 
+                        end
 		end
 		
 		table.attach(labelsNombreColonne, 1, 2, 0, 1)
