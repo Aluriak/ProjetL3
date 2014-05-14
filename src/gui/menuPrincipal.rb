@@ -18,7 +18,7 @@ class MenuPrincipal
 	def initialize(box)
 
 		#Chargement de l'icone pour le boutton score
-		iconeScore = Gtk::Image.new CONSTANT_FICHIER_GUI_IMAGE+"/score.png"
+		iconeScore = Gtk::Image.new CONSTANT_FICHIER_GUI_IMAGE+"score.png"
 
 		toolbar = Toolbar.new
 		toolbar.set_toolbar_style(Toolbar::Style::ICONS)
