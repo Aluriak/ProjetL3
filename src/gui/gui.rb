@@ -162,25 +162,31 @@ class Gui < Window
 
 		#Partie basse droite de l"application
 		vBoxBas.add(Frame.new.add(vBoxBasGauche = VBox.new(2)))
-                bouton_aide1_txt = "Aiguillez-moi !"
-                bouton_aide2_txt = "Que dois-je faire ?"
-		menuDroit = MenuAide.creerMenuDroit(vBoxBasGauche,bouton_aide1_txt, bouton_aide2_txt)
+    bouton_aide1_txt = Button.new("Aiguillez-moi !")
+    bouton_aide2_txt = Button.new("Que dois-je faire")
+
+    vBoxBasGauche.pack_start(bouton_aide1_txt)
+    vBoxBasGauche.pack_start(bouton_aide2_txt)
+
+		#menuDroit = MenuAide.creerMenuDroit(vBoxBasGauche,bouton_aide1_txt, bouton_aide2_txt)
 		
-<<<<<<< HEAD
+#<<<<<<< HEAD
 		#menuDroit.listHelpBtns[0].signal_connect("clicked"){}
 		#menuDroit.clickerSur("Aide - Fort"){}		
-=======
-                menuDroit.clickerSur(bouton_aide1_txt) {
-                  aide = AideWrap.deDeNiveau1(@picross.grille)
-                  @nbAppelAide += 1  
-                  print aide # TODO: afficher l'aide proprement
-                }
-                menuDroit.clickerSur(bouton_aide2_txt) {
-                  aide = AideWrap.deDeNiveau2(@picross.grille)
-                  @nbAppelAide += 2  
-                  print aide # TODO: afficher l'aide proprement
-                }
->>>>>>> cebc6c474b32f667d05bea377aec58ca79afeda4
+#=======
+		bouton_aide1_txt.signal_connect("clicked"){
+			aide = AideWrap.deDeNiveau1(@picross.grille)
+      @nbAppelAide += 1  
+      print aide # TODO: afficher l'aide proprement
+		}
+     
+     	bouton_aide2_txt.signal_connect("clicked"){
+     		aide = AideWrap.deDeNiveau2(@picross.grille)
+        @nbAppelAide += 2  
+        print aide # TODO: afficher l'aide proprement
+     	}
+              
+#>>>>>>> cebc6c474b32f667d05bea377aec58ca79afeda4
 		add(vbox)
 		set_window_position :center
 		show_all
