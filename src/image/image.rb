@@ -46,13 +46,13 @@ class PicrossImage
 	end
 	
 	def initialize(input) 
-		@image = RMagick::ImageList.new(input) 
+		@image = Magick::ImageList.new(input) 
 	end
 	
 	#transforme une image en gamme de gris (photo noir et blanc classique)
 	#pas nécessaire pour le picross
 	def greyScale! 
-		return @image = @image.quantize(256, GRAYColorspace) 
+		return @image = @image.quantize(256, Magick::GRAYColorspace) 
 	end
 	
 	#teste si l'image est en gamme de gris
@@ -62,7 +62,7 @@ class PicrossImage
 	
 	# transforme une image en pixels qui sont soit noir soit blanc
 	def monochrome! 
-		return @image = @image.quantize(2, GRAYColorspace) 
+		return @image = @image.quantize(2, Magick::GRAYColorspace) 
 	end
 	
 	def enregistrer(output) 
@@ -100,7 +100,7 @@ class PicrossImage
 			0.upto(taille - 1){|x|
 				#le blanc dans une image correspond à 0, ça ne varie pas
 				#le noir dans une image peut correspondre à 255, 65535, etc.., selon la taille d'une couleur
-				@matrice[x][y] = (@image.pixel_color(x,y).red == 0 ? Etat.Blanc(): Etat.Noir())
+				@matrice[x][y] = (@image.pixel_color(x,y).red == 0 ? Etat.Blanc: Etat.Noir)
 			}
 		}
 		return matrice

@@ -66,7 +66,10 @@ class Gui < Window
 		signal_connect("destroy") { Gtk.main_quit }
 		set_resizable(false)
 		vbox = VBox.new(false, 2)
-                add_events(Gdk::Event::BUTTON_PRESS_MASK)
+<<<<<<< HEAD
+    add_events(Gdk::Event::BUTTON_PRESS_MASK)
+=======
+>>>>>>> d424f1dd40f572fddd4a7c5e4f6b3797ebe7ebae
 		
 		grille_jouable = @picross.grille
 	
@@ -76,7 +79,7 @@ class Gui < Window
 		menuHaut = MenuPrincipal.creerMenuHaut(hBoxHaut)
 		
 		menuHaut.clickerSur("Nouveau")	{ nouveau = FenetreNouveauTaille.new(self) }
-		menuHaut.clickerSur("Editer")	{ fenetreEditer = FenetreEditionTaille.new(@picross) }
+		menuHaut.clickerSur("Editer")	{ print "fenetreEditer\n"; fenetreEditer = FenetreEditionTaille.new }
 		menuHaut.clickerSur("Charger")	{ fenetreCharger = FenetreCharger.new(@picross)}
 		menuHaut.clickerSur("Sauvegarder"){ fenetreSauvegarder = FenetreSauvegarde.new(@picross) }
 		menuHaut.clickerSur("Score")	{ fenetreScore = FenetreScore.new(self, @picross.scores.scoresDeGrille(@picross.grille.nom), @picross.grille.nom) } 
@@ -95,11 +98,13 @@ class Gui < Window
 		boxTimer = VBox.new(false, 2)
 		boxTimer.pack_start(Frame.new.add(timer_label))
 		
-		
 		#Partie basse de l"application
 		vbox.pack_start(hBoxBas = HBox.new(false, 2))
+
+		labelAide = Label.new("Pas d'aide possible")
 		bouton_verifier = Button.new("Verifier")
-		vbox.add(bouton_verifier)
+		vbox.pack_start(labelAide)
+		vbox.pack_start(bouton_verifier)
 		hBoxBas.add(vBoxBas = HBox.new(false))
 		vBoxBas.add(Frame.new.add(table = Table.new(4,4)))
 		table.attach(boxTimer, 0, 1, 0, 1)
@@ -170,19 +175,19 @@ class Gui < Window
     vBoxBasGauche.pack_start(bouton_aide2_txt)
 
     bouton_aide1_txt.signal_connect("clicked"){
-      aide = AideWrap.deDeNiveau1(@picross.grille)
+      aide = AideWrap.deNiveau1Sur(@picross.grille.matriceDeJeu)
       @nbAppelAide += 1  
-      print aide # TODO: afficher l'aide proprement
+      labelAide.set_text(aide) # TODO: afficher l'aide proprement
 		}
      
     bouton_aide2_txt.signal_connect("clicked"){
-      aide = AideWrap.deDeNiveau2(@picross.grille)
+      aide = AideWrap.deNiveau2Sur(@picross.grille.matriceDeJeu)
       @nbAppelAide += 2  
-      print aide # TODO: afficher l'aide proprement
+      labelAide.set_text(aide) # TODO: afficher l'aide proprement
     }
               
     add(vbox)
-    set_window_position :center
+    set_window_position(:center)
     show_all
     
     Gtk.main

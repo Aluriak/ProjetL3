@@ -43,14 +43,14 @@ class Aide
   
   
   
-  def Aide.Creer(uneGrille)
+  def Aide.creer(uneGrille)
     new(uneGrille)
   end
   
   def initialize(uneGrille)
     @GrillePicross = uneGrille
     @Largeur = @GrillePicross.length
-    @Longueur = @GrillePicross[0].length
+    @Longueur = @GrillePicross.length
  
     @LargeurTabL = (@Largeur / 2) + (@Largeur % 2)
     @LongueurTabC = (@Longueur / 2) + (@Longueur % 2)
@@ -240,7 +240,7 @@ class Aide
   
   #Définition des aides possible à partir de la matrice TabLignes
 
-  def AideDeNiveau1
+  def aideDeNiveau1
     i = 0
     0.upto(@Longueur-1){|o|
       somme = 0
@@ -249,24 +249,24 @@ class Aide
           if(somme == @Largeur)
             val = o + 1
             #print "Oui, regardez à la ligne " + val.to_s() + ", vous pouvez colorier toutes les cases !! :) \n"
-            @TabAideDispo[i] = "Oui, regardez à la ligne " + val.to_s() + ", vous pouvez colorier toutes les cases !! :)"
+            @TabAideDispo[i] = "Regardez à la ligne " + val.to_s() + ",\nVous pouvez colorier toutes les cases !! :)"
             i += 1
           elsif(somme == @Largeur - 1)
             val = o + 1
             #print "Oui, regardez à la ligne " + val.to_s() + " ... FACILE non ? :) \n"
-            @TabAideDispo[i] = "Oui, regardez à la ligne " + val.to_s() + " ... FACILE non ? :)"
+            @TabAideDispo[i] = "Regardez à la ligne " + val.to_s() + "\nFACILE non ? :)"
             i += 1
           elsif(@TabLignes[o][p] > @Largeur / 2)
             val = o + 1
             #print "Oui, regardez à la ligne " + val.to_s() + ", la case du milieu est forcement coloriée !! :) \n"
-            @TabAideDispo[i] = "Oui, regardez à la ligne " + val.to_s() + ", la case du milieu est forcement coloriée !! :)"
+            @TabAideDispo[i] = "Regardez à la ligne " + val.to_s() + ",\nLa case du milieu est forcement coloriée !! :)"
             i += 1
           end
       }
        if(somme == 0) 
          val = o + 1
          #print"Oui, regardez à la ligne " + val.to_s() + " ... HYPER simple :) \n"
-         @TabAideDispo[i] = "Oui, regardez à la ligne " + val.to_s() + " ... HYPER simple :)"
+         @TabAideDispo[i] = "Regardez à la ligne " + val.to_s() + "\nHYPER simple :)"
          i += 1
        end
     }
@@ -278,30 +278,30 @@ class Aide
           if(somme == @Longueur)
             val = o + 1
             #print "Oui, regardez à la colonne " + val.to_s() + ", vous pouvez colorier toutes les cases !! :) \n"
-            @TabAideDispo[i] = "Oui, regardez à la colonne " + val.to_s() + ", vous pouvez colorier toutes les cases !!"
+            @TabAideDispo[i] = "Regardez à la colonne " + val.to_s() + ",\nVous pouvez colorier toutes les cases !!"
             i += 1
           elsif(somme == @Longueur - 1)
             val = o + 1
             #print "Oui, regardez à la colonne "+ val.to_s() + " \n"
-            @TabAideDispo[i] = "Oui, regardez à la colonne "+ val.to_s() + ", vous pouvez colorier toutes les cases sauf une !!"
+            @TabAideDispo[i] = "Regardez à la colonne "+ val.to_s() + ",\nVous pouvez colorier toutes les cases sauf une !!"
             i += 1
           elsif(@TabColonnes[p][o] > @Longueur / 2)
             val = o + 1
             #print "Oui, regardez à la colonne " + val.to_s() + ", la case du milieu est forcement coloriée !! :) \n"
-            @TabAideDispo[i] = "Oui, regardez à la colonne " + val.to_s() + ", la case du milieu est forcement coloriée !!"
+            @TabAideDispo[i] = "Regardez à la colonne " + val.to_s() + ",\nLa case du milieu est forcement coloriée !!"
             i += 1
           end
       }
        if(somme == 0) 
          val = o + 1
          #print"Oui, regardez à la colonne " + val.to_s() + " ... HYPER simple :) \n"
-         @TabAideDispo[i] = "Oui, regardez à la colonne " + val.to_s() + ", aucune case n'est coloriée !!"
+         @TabAideDispo[i] = "Regardez à la colonne " + val.to_s() + ",\nAucune case n'est coloriée !!"
          i += 1
        end
     }
 
     if(i == 0)
-		@TabAideDispo[i] = "Il n'y a aucune aide dispo"
+		@TabAideDispo[i] = "Il n'y a aucune aide dispo\n"
 		#print @TabAideDispo[0]
 	else
 		r = rand(0..i-1)
@@ -311,7 +311,7 @@ class Aide
     
   end
   
-  def AideDeNiveau2
+  def aideDeNiveau2
 
   i = 0
     0.upto(@Longueur-1){|o|
@@ -322,17 +322,17 @@ class Aide
           if(somme == @Largeur)
             val = o + 1
             #print "Vous pouvez appliquer la technique "Le baton de feu" sur la ligne " + val.to_s() + "\n"
-            @TabAideDispo[i] = "Vous pouvez appliquer la technique 'Le baton de feu' sur la ligne " + val.to_s()
+            @TabAideDispo[i] = "Vous pouvez appliquer la technique \n'Le baton de feu' sur la ligne " + val.to_s()
             i += 1
           elsif(somme == @Largeur - 1)
             val = o + 1
             #print "Vous pouvez appliquer la technique 'La cave à vin' la ligne " + val.to_s() + "\n"
-            @TabAideDispo[i] = "Vous pouvez appliquer la technique 'La cave à vin' sur la ligne " + val.to_s()
+            @TabAideDispo[i] = "Vous pouvez appliquer la technique \n'La cave à vin' sur la ligne " + val.to_s()
             i += 1
           elsif(@TabLignes[o][p] > @Largeur / 2)
             val = o + 1
             #print "Vous pouvez appliquer la technique "L'ilot bleu" sur la ligne " + val.to_s() + "\n"
-            @TabAideDispo[i] = "Vous pouvez appliquer la technique 'L'ilot bleu' sur la ligne " + val.to_s()
+            @TabAideDispo[i] = "Vous pouvez appliquer la technique \n'L'ilot bleu' sur la ligne " + val.to_s()
             i += 1
           end
       }
@@ -340,7 +340,7 @@ class Aide
        if(somme == 0) 
          val = o + 1
          #print"Vous pouvez appliquer la technique "Le desert aride" sur la ligne " + val.to_s() + "\n"
-         @TabAideDispo[i] = "Vous pouvez appliquer la technique 'Le desert aride' sur la ligne " + val.to_s()
+         @TabAideDispo[i] = "Vous pouvez appliquer la technique \n'Le desert aride' sur la ligne " + val.to_s()
          i += 1
        end
     }
@@ -352,30 +352,30 @@ class Aide
           if(somme == @Longueur)
             val = o + 1
             #print "Vous pouvez appliquer la technique "Le baton de feu" sur la colonnne " + val.to_s() + "\n"
-            @TabAideDispo[i] = "Vous pouvez appliquer la technique 'Le baton de feu' sur la colonne " + val.to_s()
+            @TabAideDispo[i] = "Vous pouvez appliquer la technique \n'Le baton de feu' sur la colonne " + val.to_s() 
             i += 1
           elsif(somme == @Longueur - 1)
             val = o + 1
             #print "Vous pouvez appliquer la technique 'La cave à vin' sur la colonnne " + val.to_s() + "\n"
-            @TabAideDispo[i] = "Vous pouvez appliquer la technique 'La cave à vin' sur la colonne " + val.to_s()
+            @TabAideDispo[i] = "Vous pouvez appliquer la technique \n'La cave à vin' sur la colonne " + val.to_s()
             i += 1
           elsif(@TabColonnes[p][o] > @Longueur / 2)
             val = o + 1
             #print "Vous pouvez appliquer la technique "L'ilot bleu" sur la colonnne " + val.to_s() + "\n"
-            @TabAideDispo[i] = "Vous pouvez appliquer la technique 'L'ilot bleu' sur la colonne " + val.to_s()
+            @TabAideDispo[i] = "Vous pouvez appliquer la technique \n'L'ilot bleu' sur la colonne " + val.to_s()
             i += 1
           end
       }
        if(somme == 0) 
          val = o + 1
          #print "Vous pouvez appliquer la technique "Le desert aride" sur la colonnne " + val.to_s() + "\n"
-         @TabAideDispo[i] = "Vous pouvez appliquer la technique 'Le desert aride' sur la colonne " + val.to_s()
+         @TabAideDispo[i] = "Vous pouvez appliquer la technique \n'Le desert aride' sur la colonne " + val.to_s()
          i += 1
        end
     }
     
     if(i == 0)
-		@TabAideDispo[i] = "Il n'y a aucune aide dispo"
+		@TabAideDispo[i] = "Il n'y a aucune aide dispo\n"
 		#print @TabAideDispo[0]
 	else
 		r = rand(0..i-1)
