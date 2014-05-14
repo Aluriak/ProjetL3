@@ -94,7 +94,7 @@ end #end class
 class Scores
   @scoreGrille
   @scoreProfil
-  
+  @max_score_par_grille
 
 
   # hashtable nom de grille => liste des meilleurs scores de la forme [nom_profil, score]
@@ -178,12 +178,12 @@ class Scores
   ##
   # Marshal API : méthode de dump
   def marshal_dump
-    [@scoreGrille, @scoreProfil]
+    [@scoreGrille, @scoreProfil, @max_score_par_grille]
   end
   
   # Marshal API : méthode de chargement
   def marshal_load(ary)
-    @scoreGrille, @scoreProfil = ary
+    @scoreGrille, @scoreProfil, @max_score_par_grille = ary
   end
 	
 
