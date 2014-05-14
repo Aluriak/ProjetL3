@@ -12,23 +12,30 @@ class FenetreCharger
 	def initialize(picross)
 		window = Window.new("Charger une partie")
 		window.add(vb = VBox.new)
+
 		
     cbParties = ComboBox.new
     cbParties.signal_connect "changed" do |w, e|
     	on_changed w, e, label
-		end
+	end
 
 		
 
     #picross.gestionnaireDeSauvegarde.each { |nom| @combo_profils.append_text(nom) }
     buttonValider = Button.new("Valider")
-    labelTaille = Label.new("Taille de la grille")
+    labelTaille = Label.new("Taille de la grille : ")
     cbTailles = ComboBox.new
+    labelNom = Label.new("Nom de la grille : ")
     cbTailles.set_active(0)
 
-    vb.pack_start(labelTaille)
-    vb.pack_start(cbTailles)
-    vb.pack_start(cbParties)
+    vb.pack_start(hb1 = HBox.new)
+
+    hb1.pack_start(labelTaille)
+    hb1.pack_start(cbTailles)
+
+    vb.pack_start(hb2 = HBox.new)
+    hb2.pack_start(labelNom)
+    hb2.pack_start(cbParties)
     vb.pack_start(buttonValider)
 
     if(cbTailles.active == 0)
@@ -37,7 +44,7 @@ class FenetreCharger
     	tailleFiltre = 10
     elsif(cbTailles.active == 2)
     	tailleFiltre = 15
-	elsif(cbTailles.active == 3)
+	  elsif(cbTailles.active == 3)
     	tailleFiltre = 20    		
     end
     
