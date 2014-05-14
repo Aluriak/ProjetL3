@@ -51,7 +51,7 @@ class GestionnaireDeSauvegarde
   def ajouterGrilleRacine(grille)
     raise "Grilles racines non chargées" if @grillesRacines == nil
     @grillesRacinesModifiees = true
-    @grillesRacines += [grille]
+    @grillesRacines.push(grille)
     return nil
   end
   
@@ -67,7 +67,7 @@ class GestionnaireDeSauvegarde
         @grillesRacines = Marshal.load(f)
       end
     rescue Errno::ENOENT
-      puts "ERREUR: GestionnaireDeSauvegarde: chargerGrillesRacines(): le fichier #{CONSTANT_FICHIER_DATA_JOUABLE} n'est pas accessible. "
+      puts "ERREUR: GestionnaireDeSauvegarde: chargerGrillesRacines(): le fichier #{CONSTANT_FICHIER_DATA_RACINE} n'est pas accessible. "
       puts "Aucun modèle de grille de sera chargé.\n"
       @grillesRacines = []
     end
@@ -80,11 +80,9 @@ class GestionnaireDeSauvegarde
   # Sauvegarde les grilles racines si une modification à été réalisée.
   # Cela écrase la sauvegarde précédente.
   def sauvegarderGrillesRacines()
-    if @grillesRacinesModifiees == true then
-      @grillesRacinesModifiees = false
-      File.open(CONSTANT_FICHIER_DATA_RACINE, 'w') do |f|
-       f.puts Marshal.dump(@grillesRacines)
-      end
+    @grillesRacinesModifiees = false
+    File.open(CONSTANT_FICHIER_DATA_RACINE, 'w') do |f|
+     f.puts Marshal.dump(@grillesRacines)
     end
     return nil
   end
@@ -118,7 +116,7 @@ class GestionnaireDeSauvegarde
   def ajouterGrilleJouable(grille)
     raise "Grilles jouables non chargées" if @grillesJouables == nil
     @grillesJouablesModifiees = true
-    @grillesJouables += [grille]
+    @grillesJouables.push(grille)
     return nil
   end
   
@@ -141,17 +139,17 @@ class GestionnaireDeSauvegarde
 
 
 
+
   ##
   # Sauvegarde les grilles jouables si une modification à été réalisée.
   # Cela écrase la sauvegarde précédente.
   def sauvegarderGrillesJouables()
-    if @grillesJouablesModifiees == true then
-      @grillesJouablesModifiees = false
-      File.open(CONSTANT_FICHIER_DATA_JOUABLE, 'w') do |f|
-       f.puts Marshal.dump(@grillesJouables)
-      end
+    @grillesJouablesModifiees = false
+    File.open(CONSTANT_FICHIER_DATA_JOUABLE, 'w') do |f|
+     f.puts Marshal.dump(@grillesJouables)
     end
   end
+
 
 
 
@@ -162,7 +160,7 @@ class GestionnaireDeSauvegarde
     raise "Grilles jouables non chargées" if @grillesJouables == nil
     @grillesJouables.each do |grl|
       if grl.taille == taille then 
-        grillesJouablesTemp += grl
+        grillesJouablesTemp.push(grl)
       end
     end
     return grillesJouablesTemp
