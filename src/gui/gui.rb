@@ -8,7 +8,6 @@ require "glib2"
 include Gtk
 
 load "src/gui/planche.rb"
-load "src/gui/menuAide.rb"
 load "src/gui/menuPrincipal.rb"
 load "src/gui/tablechiffre.rb"
 load "src/gui/chronometre.rb"
@@ -180,11 +179,11 @@ class Gui < Window
       print aide # TODO: afficher l'aide proprement
 		}
      
-     	bouton_aide2_txt.signal_connect("clicked"){
-     		aide = AideWrap.deDeNiveau2(@picross.grille)
-        @nbAppelAide += 2  
-        print aide # TODO: afficher l'aide proprement
-     	}
+    bouton_aide2_txt.signal_connect("clicked"){
+    	aide = AideWrap.deDeNiveau2(@picross.grille)
+      @nbAppelAide += 2  
+      print aide # TODO: afficher l'aide proprement
+    }
               
 #>>>>>>> cebc6c474b32f667d05bea377aec58ca79afeda4
 		add(vbox)
