@@ -158,9 +158,10 @@ class Gui < Window
 		vBoxBas.add(Frame.new.add(vBoxBasGauche = VBox.new(2)))
 		menuDroit = MenuAide.creerMenuDroit(vBoxBasGauche,"Aide - Faible", "Aide - Fort")
 		
-		#menuDroit.clickerSur("Aide - Faible"){AideDeNiveau1}
-		#menuDroit.clickerSur("Aide - Fort"){AideDeNiveau2}		
+		#menuDroit.listHelpBtns[0].signal_connect("clicked"){}
+		#menuDroit.clickerSur("Aide - Fort"){}		
 		add(vbox)
+		set_window_position :center
 		show_all
 		
 		Gtk.main
