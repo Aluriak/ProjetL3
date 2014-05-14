@@ -4,7 +4,7 @@ require "glib2"
 include Gtk
 
 load "src/gui/fenetres/grilleEditable.rb"
-#load "src/image/image.rb" # cause des problèmes(conflits) entre Gtk::Image et RMagick::Image, à voir comment changer ça
+load "src/image/image.rb" # cause des problèmes(conflits) entre Gtk::Image et RMagick::Image, à voir comment changer ça
 
 #		
 #				FENETRE EDITION TAILLE
@@ -14,10 +14,12 @@ load "src/gui/fenetres/grilleEditable.rb"
 #
 class FenetreEditionTaille
 
-	@tailleNouvelleMatrice
+	@tailleGrille
 	@chemin	#texte qui est soit "vierge" soit le chemin de l'image (soit "pleine" +tard)
 	
 	def initialize
+		
+		p "pas beug\n"
 
 		@chemin = "vierge"
 		
@@ -54,9 +56,22 @@ class FenetreEditionTaille
 	
 
 
-		rbVierge.signal_connect("clicked") { boutonChargerImage.set_sensitive(false); entryPath.set_text("vierge"); entryPath.set_visible(false)}		
-		rbPleine.signal_connect("clicked") { boutonChargerImage.set_sensitive(false); entryPath.set_text("pleine"); entryPath.set_visible(false)}
-		rbCharger.signal_connect("clicked"){ boutonChargerImage.set_sensitive(true) ; entryPath.set_text("image?"); entryPath.set_visible(true) }
+		rbVierge.signal_connect("clicked") { 
+			boutonChargerImage.set_sensitive(false)
+			entryPath.set_visible(false)
+			@chemin = "vierge"
+		}		
+		
+		rbPleine.signal_connect("clicked") { 
+			boutonChargerImage.set_sensitive(false)
+			@chemin = "pleine"
+			entryPath.set_visible(false)
+		}
+		rbCharger.signal_connect("clicked"){ 
+			boutonChargerImage.set_sensitive(true)
+			entryPath.set_visible(true) 
+			@chemin = "image?"
+		}
 		
 		#Ecouteur boutton charger Image
 		boutonChargerImage.signal_connect("clicked"){
@@ -86,44 +101,50 @@ class FenetreEditionTaille
 		
 		boutonOK.signal_connect("clicked"){
 				
+			print "premiere action dans boutonOK, chemin=#{@chemin}\n"
 			if (rb5.active?)
-				@tailleNouvelleMatrice = 5
+				@tailleGrille = 5
 			elsif (rb10.active?)
-				@tailleNouvelleMatrice = 10
+				@tailleGrille = 10
 			elsif (rb15.active?)
-				@tailleNouvelleMatrice = 15
+				@tailleGrille = 15
 			elsif (rb20.active?)
-				@tailleNouvelleMatrice = 20
+				@tailleGrille = 20
 			elsif (rb25.active?)
-				@tailleNouvelleMatrice = 25
+				@tailleGrille = 25
 			end
 
 			fenetreEditer.destroy
 
-			# coquille logique dans fenetreEditionTaille
-			# qui conduit à une coquille dans grilleEditable:
-			# Il faudrait créer un nouveau picross, ou tout du moins une grille jouable dans grilleEditable
-			# Ou alors, la créer à l'avance dans FenetreEditionTaille(ici) et l'envoyer à grilleEditable
-			# Comme ça, en envoie simplement soit un table vierge(etats blancs), soit noires, 
-			# soit une table représentant une image importée.
+			grilleDetat =  Array.new(@tailleGrille) { Array.new(@tailleGrille)}
+		
 			if @chemin == "vierge"
-				grilleDetat =  Array.new(@tailleNouvelleMatrice) {
-					Array.new(@tailleNouvelleMatrice) {
-						Etat.Blanc
+				0.upto(@tailleGrille-1) { |x| 
+					0.upto(@tailleGrille-1) { |y|
+						grilleDetat[x][y] = Etat.Blanc
 					}
 				}
+				
 			elsif @chemin == "pleine"
-				grilleDetat =  Array.new(@tailleNouvelleMatrice) {
-					Array.new(@tailleNouvelleMatrice) {
-						Etat.Noir
+				0.upto(@tailleGrille-1) { |x| 
+					0.upto(@tailleGrille-1) { |y|
+						grilleDetat[x][y] = Etat.Noir
 					}
 				}
+
 			else
-				image = PicrossImage.lire(folder+"/lettreD.jpg")
-				grilleDetat = image.toPicross(@tailleNouvelleMatrice)
+				# nota : c'est possible que l'image soit toute blanche
+				# même si l'image d'origine n'est pas un carré blanc
+				# c'est juste qu'avec la compression, ça tranforme en tout en blanc
+				# pour vérifier que ça marche bien, tester sur une 25x25
+				image = PicrossImage.lire(@chemin)
+				grilleDetat = image.toPicross(@tailleGrille)
+				#print "imagePicross:#{image.afficherMatrice}\n"
 			end
 		
-			grilleEditable = GrilleEditable.new(grilleDetat)
+			p grilleDetat
+			#grilleEditable = GrilleEditable.new(grilleDetat)
+		
 		}#fin de clic du boutonOK
 		
 		
