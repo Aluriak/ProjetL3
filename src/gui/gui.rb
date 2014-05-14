@@ -66,7 +66,10 @@ class Gui < Window
 		signal_connect("destroy") { Gtk.main_quit }
 		set_resizable(false)
 		vbox = VBox.new(false, 2)
+<<<<<<< HEAD
     add_events(Gdk::Event::BUTTON_PRESS_MASK)
+=======
+>>>>>>> d424f1dd40f572fddd4a7c5e4f6b3797ebe7ebae
 		
 		grille_jouable = @picross.grille
 	
@@ -76,7 +79,7 @@ class Gui < Window
 		menuHaut = MenuPrincipal.creerMenuHaut(hBoxHaut)
 		
 		menuHaut.clickerSur("Nouveau")	{ nouveau = FenetreNouveauTaille.new(self) }
-		menuHaut.clickerSur("Editer")	{ fenetreEditer = FenetreEditionTaille.new(@picross) }
+		menuHaut.clickerSur("Editer")	{ print "fenetreEditer\n"; fenetreEditer = FenetreEditionTaille.new }
 		menuHaut.clickerSur("Charger")	{ fenetreCharger = FenetreCharger.new(@picross)}
 		menuHaut.clickerSur("Sauvegarder"){ fenetreSauvegarder = FenetreSauvegarde.new(@picross) }
 		menuHaut.clickerSur("Score")	{ fenetreScore = FenetreScore.new(self, @picross.scores.scoresDeGrille(@picross.grille.nom), @picross.grille.nom) } 
@@ -94,7 +97,6 @@ class Gui < Window
 		# intégration à la GUI
 		boxTimer = VBox.new(false, 2)
 		boxTimer.pack_start(Frame.new.add(timer_label))
-		
 		
 		#Partie basse de l"application
 		vbox.pack_start(hBoxBas = HBox.new(false, 2))
@@ -185,7 +187,7 @@ class Gui < Window
     }
               
     add(vbox)
-    set_window_position :center
+    set_window_position(:center)
     show_all
     
     Gtk.main
