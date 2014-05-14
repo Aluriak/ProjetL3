@@ -59,17 +59,14 @@ class Gui < Window
 	end	
 	
 	def initialize(tailleGrille)
-                @nbAppelAide = 0
+    @nbAppelAide = 0
 		@picross = Picross.new
 		@picross.nouvelleGrilleDeTaille(tailleGrille)
 		super("Picross")
 		signal_connect("destroy") { Gtk.main_quit }
 		set_resizable(false)
 		vbox = VBox.new(false, 2)
-<<<<<<< HEAD
     add_events(Gdk::Event::BUTTON_PRESS_MASK)
-=======
->>>>>>> d424f1dd40f572fddd4a7c5e4f6b3797ebe7ebae
 		
 		grille_jouable = @picross.grille
 	
