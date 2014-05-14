@@ -66,6 +66,16 @@ class GrilleJouable < GrilleRacine
 
 
 
+  ##
+  # Retourne une grille jouable créé à partir de la table d'état reçue.
+  def GrilleJouable.creerDepuisTableEtat(table)
+    return GrilleJouable.creerDepuis(GrilleRacine.deTaille(table.size))
+  end
+
+
+
+
+
   # Bascule l'état de la case située en (i, j) vers l'état donné.
   # Si l'état est nil ou laissé par défaut, l'état de la case passera 'au suivant' 
   # (voir ordonnancement de la classe Etat)
