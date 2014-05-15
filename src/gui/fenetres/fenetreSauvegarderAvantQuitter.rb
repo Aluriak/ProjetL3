@@ -55,8 +55,8 @@ class FenetreSauvegarderAvantQuitter
     }
 
     btnSauvegarder.signal_connect("clicked"){
-    	FenetreSauvegarde.new(picross, timer)
-    	#parent.destroy
+    	fenetreSauvegarde = FenetreSauvegarde.new(picross, timer)
+    	fenetreSauvegarde.signal_connect("destroy"){parent.destroy}
     }
 
     dialog.signal_connect("destroy"){dialog.destroy}
