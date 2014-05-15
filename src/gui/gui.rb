@@ -143,7 +143,7 @@ class Gui < Window
 			nombres = grille_jouable.tableLigne.nombresDeLaLigne(row)
 			# pour chaque nombre de la ligne
 			nombres.size.times { |col|
-				nombre = nombres[col].to_s
+				nombre = nombres[col].to_s + " "
 				labelsNombreLigne.attach(Label.new(nombre), col, col+1, row, row+1) 
 			}
                         if nombres.size == 0 then
