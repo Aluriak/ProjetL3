@@ -120,7 +120,7 @@ class Gui < Window
 			fenetre_fin_jeu.show_all
                         fenetre_fin_jeu.signal_connect("destroy") {
                           # on démarre une nouvelle grille !
-                          @picross.nouvelleGrilleDeTaille(@picross.grille.taille)
+                          @picross.nouvelleGrilleJouableDeTaille(@picross.grille.taille)
                           timer.raz
                         }
                       else 
@@ -174,7 +174,7 @@ class Gui < Window
 		table.attach(labelsNombreColonne, 1, 2, 0, 1)
 
                 # AFFICHAGE DE LA PLANCHE
-		planche = Planche.creer(grille_jouable)
+		planche = Planche.creer(grille_jouable.matriceDeJeu)
 		table.attach(planche.table, 1, 2, 1, 2)
 
 		#Partie basse droite de l"application
