@@ -8,7 +8,9 @@
 #################################
 # IMPORTS			#
 #################################
-load "src/gui/confirmerNouveauProfil.rb"
+load "src/gestionnaireDeSauvegarde/gestionnaireDeSauvegarde.rb"
+load "src/picross/picross.rb"
+
 require "gtk2"
 require "glib2"
 require "date"
@@ -56,35 +58,16 @@ class FenetrePreference < Window
 		
 		# connects
 		@combo_profils.signal_connect("changed") { |last|
-		                                           self.maj_entry_nom if last != @combo_profils.active_text 
-		                                         }
+			self.maj_entry_nom if last != @combo_profils.active_text 
+		}
 		@entry_nom.signal_connect("insert_text") { |last|
-		                                           self.maj_button
-		                                         }
+			self.maj_button
+		}
 		@bouton_valider.signal_connect("clicked") {
+			
 			nom_profil = @combo_profils.active_text
-		nom_savgrd = @entry_nom.text
-		validation = true
-		
-		# vérification de création de profil
-		#if not @picross.profils.include?(nom_profil) then
-		#validation = ConfirmerNouveauProfil.show(self, nom_profil)
-		#end
-		
-		# sauvegarde
-		#if validation and nom_savgrd != "" then
-		#picross.ajouterProfil(nom_profil)
-		#if picross.sauverGrilleJouable(nom_savgrd, temps_ecoule) then
-		#self.confirmerSauvegarde(nom_savgrd)
-		#self.destroy
-		#else
-		#if self.ecraserSauvegarde?(nom_savgrd) then
-		#picross.sauverGrilleJouable(nom_savgrd, temps_ecoule, true) # force_sauvegarde true
-		#self.confirmerSauvegarde(nom_savgrd)
-		#self.destroy
-		#end
-		#end
-		#end
+			nom_savgrd = @entry_nom.text
+			validation = true
 		}
 		@bouton_annuler.signal_connect("clicked") { self.destroy }
 		
@@ -110,7 +93,7 @@ class FenetrePreference < Window
 	##
 	# Met à jour les boutons de la fenêtre.
 	def maj_button
-		if @combo_profils.active_text != nil and @entry_nom.text != "" then
+		if @combo_profils.active_text != nil and not @entry_nom.text.empty? then
 			@bouton_valider.sensitive = true
 		else
 			@bouton_valider.sensitive = false

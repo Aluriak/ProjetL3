@@ -14,6 +14,7 @@ class FenetreCharger < Window
 		super("Charger une partie")
 		add(vb = VBox.new)
 		set_default_size(240, 60)
+		set_resizable(false)
 		set_window_position(:center)
 		
 
