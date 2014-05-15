@@ -112,12 +112,30 @@ class GestionnaireDeSauvegarde
 
 
   ##
-  # Ajoute une grille jouable à la liste.
-  def ajouterGrilleJouable(grille)
+  # Ajoute une grille jouable à la liste. Si force_sauvegarde est vrai, 
+  # la grille ayant le même nom de sauvegarde sera remplacée.
+  # Retourne true si la grille a été ajoutée, false si la grille,
+  # existant déjà, n'a pas été ajoutée.
+  def ajouterGrilleJouable(grille, force_sauvegarde = false)
     raise "Grilles jouables non chargées" if @grillesJouables == nil
-    @grillesJouablesModifiees = true
+    # trouver la grille de même nom de sauvegarde
+    @grillesJouables.each do |g|
+      if g.nom_de_sauvegarde == grille.nom_de_sauvegarde then
+        if force_sauvegarde then
+          g = grille 
+          grille = nil
+          @grillesJouablesModifiees = true
+          return true
+        else
+          return false
+        end
+      end
+    end
+
+    # si aucune sauvegarde n'a été trouvée
     @grillesJouables.push(grille)
-    return nil
+    @grillesJouablesModifiees = true
+    return true
   end
   
 
