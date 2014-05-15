@@ -32,7 +32,7 @@ class GrilleJouable < GrilleRacine
 
 
   #initialisation de la grille
-  def initialize(taille, nom = nil, tableLigne = nil, tableColonne = nil, nom_de_sauvegarde = nil, temps_ecoule = nil)
+  def initialize(taille, nom = nil, tableLigne = nil, tableColonne = nil, nom_de_sauvegarde = nil, temps_ecoule = 0)
     super(taille, nom, tableLigne, tableColonne)
     @nom_de_sauvegarde = nom_de_sauvegarde
     @temps_ecoule = temps_ecoule
@@ -51,7 +51,7 @@ class GrilleJouable < GrilleRacine
   # Le nom généré aléatoirement se base sur la taille et la date courante.
   def GrilleJouable.deTaille(taille, nom = nil, 
   	                      tableLigne = nil, tableColonne = nil, 
-                              nom_de_sauvegarde = nil, temps_ecoule = nil)
+                              nom_de_sauvegarde = nil, temps_ecoule = 0)
     raise "Taille #{taille} non définie" if not Grille.tailles.include?(taille)
     return new(taille, nom, tableLigne, tableColonne, nom_de_sauvegarde, temps_ecoule)
   end
