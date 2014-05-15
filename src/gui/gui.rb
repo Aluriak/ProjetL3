@@ -28,6 +28,7 @@ load "src/gui/fenetres/fenetreScore.rb"
 load "src/gui/fenetres/fenetreManuel.rb"
 load "src/gui/fenetres/fenetreAPropos.rb"
 load "src/gui/fenetres/fenetreFinJeu.rb"
+load "src/gui/fenetres/fenetreSauvegarderAvantQuitter.rb"
 
 
 class Array
@@ -42,7 +43,7 @@ class Gui < Window
 	#@window
 	@picross
 	@derniereTailleGrille
-        @nbAppelAide = 0
+  @nbAppelAide = 0
 	
 	# la gui crée un picross à son lancement
 	attr_reader :picross
@@ -56,6 +57,10 @@ class Gui < Window
 		new(tailleChoisie, nomGrille)
 	end
 	
+
+	
+
+
 	def initialize(tailleGrille, nomGrille)
 		@nbAppelAide = 0
 		@picross = Picross.new
@@ -65,17 +70,29 @@ class Gui < Window
 			@picross.nouvelleGrilleJouableDeTaille(tailleGrille)
 		end
 		super("Picross")
-		signal_connect("destroy") { Gtk.main_quit }
-		set_resizable(false)
-		vbox = VBox.new(false, 2)
-                add_events(Gdk::Event::BUTTON_PRESS_MASK)
-		
-		grille_jouable = @picross.grille
-
 
 		# GESTION DU CHRONOMÈTRE
 		timer_label = Label.new("")
 		timer = Chronometre.new(timer_label, @picross.grille.temps_ecoule)
+		
+
+
+		signal_connect('delete_event'){
+			
+
+
+			FenetreSauvegarderAvantQuitter.new(@picross, timer)
+
+		}
+
+
+		set_resizable(false)
+		vbox = VBox.new(false, 2)
+    add_events(Gdk::Event::BUTTON_PRESS_MASK)
+		
+		grille_jouable = @picross.grille
+
+
 		# arrêt/départ du chrono suivant le focus de la fenêtre par l'utilisateur
 		signal_connect("focus_in_event") { timer.start }
 		signal_connect("focus_out_event") { timer.stop }
