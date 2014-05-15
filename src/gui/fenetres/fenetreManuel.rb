@@ -10,11 +10,12 @@ include Gtk
 
 class FenetreManuel
 
+	
+
 	def initialize
-		about = AboutDialog.new
-		about.set_website("http://fr.wikipedia.org/wiki/Picross")
-		about.run
-		about.destroy
+
+		fichier_pdf = "report/ManuelAidePicross.pdf"
+		system("evince "+ fichier_pdf)
 	end
 
 end
