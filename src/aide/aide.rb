@@ -140,7 +140,7 @@ class Aide
       elsif(val_max > @Hauteur / 2)
         @TabAideDispo.push("Regardez à la colonne " + num_colonne.to_s() + ",\nLa case du milieu est forcement coloriée !!")
       elsif(nombres > @Hauteur / 2)
-        @TabAideDispo.push("Regardez à la ligne" + num_ligne.to_s()+",\nVous pouvez colorier la premiere case !!")
+        @TabAideDispo.push("Regardez à la ligne" + num_colonne.to_s()+",\nVous pouvez colorier la premiere case !!")
       end
     }
 
