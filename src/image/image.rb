@@ -100,7 +100,9 @@ class PicrossImage
 			0.upto(taille - 1){|x|
 				#le blanc dans une image correspond à 0, ça ne varie pas
 				#le noir dans une image peut correspondre à 255, 65535, etc.., selon la taille d'une couleur
-				@matrice[x][y] = (@image.pixel_color(x,y).red == 0 ? Etat.Blanc: Etat.Noir)
+		                       
+				#MODIF visiblement 0 c'est le noir
+				@matrice[x][y] = (@image.pixel_color(x,y).red == 0 ? Etat.Noir: Etat.Blanc)
 			}
 		}
 		return matrice
