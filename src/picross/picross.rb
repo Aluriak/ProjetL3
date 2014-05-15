@@ -144,7 +144,15 @@ class Picross
   end
 
 
-
+  ##
+  # Supprime la grille jouable de nom et taille donnée.
+  # N'effectue aucun traitement si aucune grille n'est trouvée.
+  def supprimerGrilleJouableNommee(nom_de_sauvegarde, taille)
+    raise "Taille non définie" if not Grille.tailles.include?(taille)
+    @gestionnaireDeSauvegarde.supprimerGrilleJouable(nom_de_sauvegarde, taille)
+    @gestionnaireDeSauvegarde.sauvegarderGrillesJouables
+    return nil
+  end
 
   ## 
   # Renvois une instance de la classe Scores
