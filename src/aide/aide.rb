@@ -15,7 +15,7 @@ load "src/commun/commun.rb"
 #################################
 # AIDE                          #
 #################################
-# mainteneur : LEGALL
+# mainteneur : LE GALL
 
 class Aide
 
@@ -52,13 +52,16 @@ class Aide
     @Largeur = @GrillePicross.length
     @Longueur = @GrillePicross.length
  
-    @LargeurTabL = (@Largeur / 2) + (@Largeur % 2)
-    @LongueurTabC = (@Longueur / 2) + (@Longueur % 2)
+    #@LargeurTabL = (@Largeur / 2) + (@Largeur % 2)
+    #@LongueurTabC = (@Longueur / 2) + (@Longueur % 2)
     
-    @TabLignes = Array.new(@Longueur){Array.new(@LargeurTabL)}
-    @TabColonnes = Array.new(@LongueurTabC){Array.new(@Largeur)}
+    @TabLigne = uneGrille.tabLigne
+    #Array.new(@Longueur){Array.new(@LargeurTabL)}
+    @TabColonne = uneGrille.tabColonne
+    #Array.new(@LongueurTabC){Array.new(@Largeur)}
     @TabAideDispo = Array.new()
-
+    
+=begin
     #Initialize toutes les cases à 0 (indicatif!!)  
     0.upto(@Longueur -1){|o|
       0.upto(@LargeurTabL -1){|p|
@@ -193,7 +196,7 @@ class Aide
           end
         end
     }
-    
+=end 
   end
 
   def VoirMatrices
@@ -202,9 +205,9 @@ class Aide
 
     print "\n"
     print "Matrices des colonnes : \n"
-    0.upto(@LongueurTabC-1){|o|
+    0.upto(@Longueur-1){|o|
       0.upto(@Largeur-1){|p|
-         print @TabColonnes[o][p]
+         print @TabColonne[o][p]
       }
        print "\n"
     }
@@ -212,8 +215,8 @@ class Aide
     print "\n"
     print "Matrices des Lignes : \n"
     0.upto(@Longueur -1){|o|
-      0.upto(@LargeurTabL -1){|p|
-         print @TabLignes[o][p]
+      0.upto(@Largeur -1){|p|
+         print @TabLigne[o][p]
       }
       print "\n"
     }
@@ -231,11 +234,11 @@ class Aide
   end
   
   def getTabLignes
-    return @TabLignes
+    return @TabLigne
   end
   
   def getTabColonnes
-    return @TabColonnes
+    return @TabColonne
   end
   
   #Définition des aides possible à partir de la matrice TabLignes
@@ -244,8 +247,8 @@ class Aide
     i = 0
     0.upto(@Longueur-1){|o|
       somme = 0
-      0.upto(@LargeurTabL - 1){|p|
-        somme += @TabLignes[o][p] 
+      0.upto(@Largeur - 1){|p|
+        somme += @TabLigne[o][p] 
           if(somme == @Largeur)
             val = o + 1
             #print "Oui, regardez à la ligne " + val.to_s() + ", vous pouvez colorier toutes les cases !! :) \n"
@@ -256,7 +259,7 @@ class Aide
             #print "Oui, regardez à la ligne " + val.to_s() + " ... FACILE non ? :) \n"
             @TabAideDispo[i] = "Regardez à la ligne " + val.to_s() + "\nFACILE non ? :)"
             i += 1
-          elsif(@TabLignes[o][p] > @Largeur / 2)
+          elsif(@TabLigne[o][p] > @Largeur / 2)
             val = o + 1
             #print "Oui, regardez à la ligne " + val.to_s() + ", la case du milieu est forcement coloriée !! :) \n"
             @TabAideDispo[i] = "Regardez à la ligne " + val.to_s() + ",\nLa case du milieu est forcement coloriée !! :)"
@@ -273,8 +276,8 @@ class Aide
 
 	 0.upto(@Largeur-1){|o|
       somme = 0
-      0.upto(@LongueurTabC - 1){|p|
-        somme += @TabColonnes[p][o] 
+      0.upto(@Longueur - 1){|p|
+        somme += @TabColonne[p][o] 
           if(somme == @Longueur)
             val = o + 1
             #print "Oui, regardez à la colonne " + val.to_s() + ", vous pouvez colorier toutes les cases !! :) \n"
@@ -285,7 +288,7 @@ class Aide
             #print "Oui, regardez à la colonne "+ val.to_s() + " \n"
             @TabAideDispo[i] = "Regardez à la colonne "+ val.to_s() + ",\nVous pouvez colorier toutes les cases sauf une !!"
             i += 1
-          elsif(@TabColonnes[p][o] > @Longueur / 2)
+          elsif(@TabColonne[p][o] > @Longueur / 2)
             val = o + 1
             #print "Oui, regardez à la colonne " + val.to_s() + ", la case du milieu est forcement coloriée !! :) \n"
             @TabAideDispo[i] = "Regardez à la colonne " + val.to_s() + ",\nLa case du milieu est forcement coloriée !!"
@@ -317,7 +320,7 @@ class Aide
     0.upto(@Longueur-1){|o|
       somme = 0
       0.upto(@LargeurTabL - 1){|p|
-        somme += @TabLignes[o][p]
+        somme += @TabLigne[o][p]
         
           if(somme == @Largeur)
             val = o + 1
@@ -329,7 +332,7 @@ class Aide
             #print "Vous pouvez appliquer la technique 'La cave à vin' la ligne " + val.to_s() + "\n"
             @TabAideDispo[i] = "Vous pouvez appliquer la technique \n'La cave à vin' sur la ligne " + val.to_s()
             i += 1
-          elsif(@TabLignes[o][p] > @Largeur / 2)
+          elsif(@TabLigne[o][p] > @Largeur / 2)
             val = o + 1
             #print "Vous pouvez appliquer la technique "L'ilot bleu" sur la ligne " + val.to_s() + "\n"
             @TabAideDispo[i] = "Vous pouvez appliquer la technique \n'L'ilot bleu' sur la ligne " + val.to_s()
@@ -347,8 +350,8 @@ class Aide
 
 	 0.upto(@Largeur-1){|o|
       somme = 0
-      0.upto(@LongueurTabC - 1){|p|
-        somme += @TabColonnes[p][o] 
+      0.upto(@Longueur - 1){|p|
+        somme += @TabColonne[p][o] 
           if(somme == @Longueur)
             val = o + 1
             #print "Vous pouvez appliquer la technique "Le baton de feu" sur la colonnne " + val.to_s() + "\n"
@@ -359,7 +362,7 @@ class Aide
             #print "Vous pouvez appliquer la technique 'La cave à vin' sur la colonnne " + val.to_s() + "\n"
             @TabAideDispo[i] = "Vous pouvez appliquer la technique \n'La cave à vin' sur la colonne " + val.to_s()
             i += 1
-          elsif(@TabColonnes[p][o] > @Longueur / 2)
+          elsif(@TabColonne[p][o] > @Longueur / 2)
             val = o + 1
             #print "Vous pouvez appliquer la technique "L'ilot bleu" sur la colonnne " + val.to_s() + "\n"
             @TabAideDispo[i] = "Vous pouvez appliquer la technique \n'L'ilot bleu' sur la colonne " + val.to_s()
@@ -384,7 +387,3 @@ class Aide
     return @TabAideDispo
   end
 end
-
-
-
-
