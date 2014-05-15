@@ -136,6 +136,7 @@ class Picross
     listGrlJouable.each { |grille|
       if grille.nom_de_sauvegarde == nom_de_sauvegarde then 
         @grille = grille 
+        @gestionnaireDeSauvegarde.sauvegarderGrillesJouables
         return true
       end
     }
