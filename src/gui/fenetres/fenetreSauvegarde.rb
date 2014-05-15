@@ -30,7 +30,7 @@ class FenetreSauvegarde < Window
   ## 
   # prend une instance de class Picross en paramètre
   def initialize(picross, temps_ecoule)
-    super("Sauvergader la partie en cours")
+    super("Sauvegarder la partie en cours")
     signal_connect("destroy") { destroy }
     set_default_size(100,300)
     set_resizable(false)
