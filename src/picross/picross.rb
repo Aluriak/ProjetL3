@@ -108,9 +108,11 @@ class Picross
   # Le nom de sauvegarde permet d'identifier la sauvegarde.
   # force_sauvegarde indique si la sauvegarde doit écraser une éventuelle 
   # sauvegarde du même nom.
-  def sauverGrilleJouable(nom_de_sauvegarde, force_sauvegarde = false)
-    # on modifie le nom de sauvegarde de la grille
+  def sauverGrilleJouable(nom_de_sauvegarde, temps_ecoule, 
+                          force_sauvegarde = false)
+    # on modifie le nom de sauvegarde et le temps écoulé de la grille
     @grille.nom_de_sauvegarde = nom_de_sauvegarde
+    @grille.temps_ecoule = temps_ecoule
     # et on sauvegarde
     if @gestionnaireDeSauvegarde.ajouterGrilleJouable(
                         @grille, force_sauvegarde) then 
