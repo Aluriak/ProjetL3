@@ -57,12 +57,11 @@ class FenetreCharger < Window
 		}
 			
 		buttonValider.signal_connect("clicked"){
-                  # destruction de la gui existante
-                  parent_gui.destroy
+                  taille, nom = cbTailles.active_text.to_i, cbParties.active_text
+                  parent_gui.destroy    # destruction de la gui existante
+                  self.destroy          # destruction de la fenetre de chargement
                   # et création d'une nouvelle
-                  gui = Gui.new(cbTailles.active_text.to_i, cbParties.active_text)
-                  # destruction de la fenetre de chargement
-                  self.destroy
+                  gui = Gui.new(taille, nom)
 		}
 		
                 # SHOW
