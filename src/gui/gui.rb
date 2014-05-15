@@ -68,31 +68,33 @@ class Gui < Window
                 add_events(Gdk::Event::BUTTON_PRESS_MASK)
 		
 		grille_jouable = @picross.grille
+
+
+		# GESTION DU CHRONOMÈTRE
+		timer_label = Label.new("")
+		timer = Chronometre.new(timer_label, @picross.grille.temps_ecoule)
+		# arrêt/départ du chrono suivant le focus de la fenêtre par l'utilisateur
+		signal_connect("focus_in_event") { timer.start }
+		signal_connect("focus_out_event") { timer.stop }
+		# intégration à la GUI
+		boxTimer = VBox.new(false, 2)
+		boxTimer.pack_start(Frame.new.add(timer_label))
 	
-		#Partie haute de l"application
+
+		# PARTIE HAUTE DE L"APPLICATION
 		vbox.pack_start(hBoxHaut = HBox.new(false, 2))
-		
 		menuHaut = MenuPrincipal.creerMenuHaut(hBoxHaut)
 		
 		menuHaut.clickerSur("Nouveau")	{ nouveau = FenetreNouveauTaille.new(self) }
 		menuHaut.clickerSur("Editer")	{ print "fenetreEditer\n"; fenetreEditer = FenetreEditionTaille.new }
 		menuHaut.clickerSur("Charger")	{ fenetreCharger = FenetreCharger.new(self, @picross)}
-		menuHaut.clickerSur("Sauvegarder"){ fenetreSauvegarder = FenetreSauvegarde.new(@picross) }
+		menuHaut.clickerSur("Sauvegarder"){ fenetreSauvegarder = FenetreSauvegarde.new(@picross, timer.sec) }
 		menuHaut.clickerSur("Score")	{ fenetreScore = FenetreScore.new(self, @picross.scores.scoresDeGrille(@picross.grille.nom), @picross.grille.nom) } 
 		menuHaut.clickerSur("Manuel")	{ fenetreManuel = FenetreManuel.new }
 		menuHaut.clickerSur("A Propos")	{ fenetreAPropos = FenetreAPropos.new}
 
 
-		# Gestion du chronomètre
-		timer_label = Label.new("")
-		timer = Chronometre.new(timer_label)
-		# arrêt/départ du chrono suivant le focus de la fenêtre par l'utilisateur
-		signal_connect("focus_in_event") { timer.start }
-		signal_connect("focus_out_event") { timer.stop }
 		
-		# intégration à la GUI
-		boxTimer = VBox.new(false, 2)
-		boxTimer.pack_start(Frame.new.add(timer_label))
 		
 		#Partie basse de l"application
 		vbox.pack_start(hBoxBas = HBox.new(false, 2))
