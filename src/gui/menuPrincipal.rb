@@ -25,6 +25,8 @@ class MenuPrincipal
 		toolbar = Toolbar.new
 		toolbar.set_toolbar_style(Toolbar::Style::ICONS)
 
+		tooltip = Tooltips.new
+
 		newtb = ToolButton.new(Stock::NEW)
 	  	edittb = ToolButton.new(Stock::EDIT)
       		opentb = ToolButton.new(Stock::OPEN)
