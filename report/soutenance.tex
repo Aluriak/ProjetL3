@@ -2,23 +2,20 @@
 
 \usepackage[frenchb]{babel}
 \usepackage[T1]{fontenc}
-\usepackage[utf8x]{inputenc}    % accent
+\usepackage[utf-8]{inputenc}    % accent
 \usepackage{graphicx}           % pictures
 \usepackage{multimedia}         % sounds and movies
 \usetheme{Warsaw}
 \title {Projet Picross}
 \author{Groupe B}
 \date{16 Mai 2014}
-\institute{Université du Maine}
-
-
-
+\institute{Universit√© du Maine}
 %%%%%%%%%%%%%%%%%
-% PRÉAMBULE     %
+% PR√âAMBULE     %
 %%%%%%%%%%%%%%%%%
 \setbeamertemplate{itemize item}[circle]
 \hypersetup{
-        pdfpagemode = FullScreen,% afficher le pdf en plein écran
+        pdfpagemode = FullScreen,% afficher le pdf en plein √©cran
         pdfauthor   = {groupe B},%
         pdftitle    = {projet}%
         pdfsubject  = {projet},%
@@ -27,82 +24,123 @@
 \setbeamertemplate{navigation symbols}{
         \insertslidenavigationsymbol
         \insertframenavigationsymbol
-        %\insertsubsectionnavigationsymbol
-        %\insertsectionnavigationsymbol
-        %\insertdocnavigationsymbol
-        %\insertbackfindforwardnavigationsymbol
+        \insertsubsectionnavigationsymbol
+        \insertsectionnavigationsymbol
+        \insertdocnavigationsymbol
+        \insertbackfindforwardnavigationsymbol
 }
-% Faire apparaître un sommaire avant chaque section
+% Faire appara√Ætre un sommaire avant chaque section
 \AtBeginSection[]{
         \begin{frame}
         \begin{center}{\Large Plan }\end{center}
-        %%% affiche en début de chaque section, les noms de sections et
+        %%% affiche en d√©but de chaque section, les noms de sections et
         %%% noms de sous-sections de la section en cours.
         \tableofcontents[currentsection,hideothersubsections]
         \end{frame} 
 }
-
-
-
-
-
 %%%%%%%%%%%%%%%%%
 % DOCUMENT      %
 %%%%%%%%%%%%%%%%%
 \begin{document}
-
 \maketitle
-
-
 % FRAME %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{}
   \tableofcontents
 \end{frame}
    
-
-
-
 %%%%%%%%%%%%%%%%%%
 % Présentation
 %%%%%%%%%%%%%%%%%%
 \section{Présentation}
-
-
 % FRAME %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}{Présentation du Projet}
+\begin{frame}
+\frametitle{Présentation du Projet}
     \begin{enumerate}
-      \item Presentation des membres
+     
+      \item Présentation des membres
         \begin{enumerate}
         \item Lucas Bourneuf   (Chef de Projet)
         \item Ewen Cousin      (Developpeur GUI)
         \item Jaweed Parwany   (Developpeur Système)
         \item Charlie Marechal (Documentaliste)
         \item Nicolas Bourdin  (Developpeur GUI)
-        \item Julien Legall    (Developpeur IA)
+        \item Julien Le Gall    (Developpeur IA)
         \end{enumerate}\pause
+     
       \item Objectif
         \begin{enumerate}
-        \item  Créer un Picross en Ruby
+            \item Créer un Picross en Ruby
         \end{enumerate}\pause
+     
       \item Delai
         \begin{enumerate}
-        \item 3 mois
-        \end{enumerate}
+            \item 3 mois
+        \end{enumerate}\pause
+    
+   \item Liste des fonctionnalités
+    
+    \begin{enumerate}
+                        
+        \item Aide
+        \begin{enumerate}
+            \item En cas de blocage on peut avoir accès à l'aide 
+            \item Permet de trouver une solution selon deux niveaux
+        \end{enumerate}\pause
+                        
+        \item Gestion de sauvegarde
+        \begin{enumerate}
+            \item Sauvegarde la partie dans un fichier
+        \end{enumerate}\pause
+                        
+        \item Score
+        \begin{enumerate}
+            \item Affiche les scores de la grille en cours
+        \end{enumerate}\pause
+                        
+        \item Chargement de grille
+        \begin{enumerate}
+            \item Permet le chargement d'une grille déjà crée
+        \end{enumerate}\pause
+                        
+        \item Edition
+        \begin{enumerate}
+            \item Possibilité de créer ses propres grilles.
+        \end{enumerate}\pause
+                        
+        \item Manuel
+        \begin{enumerate}
+            \item Affiche les règles du jeu
+        \end{enumerate}\pause
+    \end{enumerate}
+    
+    
+    \item Contraintes 
+    \begin{enumerate}
+        \item Temps
+        \item Technique
+    \end{enumerate}
+    
+    %\item "Il s'agit d'un picross blablabla"
+    
     \end{enumerate}\pause
 \end{frame}
 
 
-\section{Realisation du Projet}
-\subsection{Le déroulement du Projet}
-\begin{frame}{Réalisation du Projet}
+\section{Réalisation du projet}
+\subsection{Le déroulement du projet}
+
+\begin{frame}{Réalisation du projet}
  %\begin{enumerate}
-  %\item Le déroulement du Projet
+  %\item Le déroulement du projet
     %\begin{enumerate}
-    %\item Diagramme de Gantt
-    %\item  Diagramme UML
+        %\item Répartition des tâches
+        %\item Diagramme de Gantt
+        %\item Diagramme UML
     %\end{enumerate}
-     %\end{enumerate}
+ %\end{enumerate}
 \end{frame}
+
+
 \begin{frame}
   %{Diagramme de Gantt}
   %\begin{figure}[t]
@@ -120,75 +158,97 @@
   %\end{figure}
 \end{frame}
 
-
- \subsection{Fonctionalité}
-    \begin{frame} {Fonctionalité}
-     %\begin{enumerate}
-     
-      %\item Fonctionalité
-        %\begin{enumerate}
-            %\item l'aide
-               %\begin{enumerate}
-                    %\item En cas de blockage on peut avoir accés à l'aide 
-                    %\item Permet de trouver une solution 
-                %\end{enumerate}\pause
-            %\item gestion de sauvegarde
-                %\begin{enumerate}
-                    %\item Sauvegarde la partie dans un fichier
-                %\end{enumerate}\pause
-            %\item score
-                %\begin{enumerate}
-                    %\item Affiche le score du joueur 
-                %\end{enumerate}
-         %\end{enumerate}\pause
-        %\end{frame}
-
-         %\item Probléme rencontré
-            %\begin{enumerate}
-                %\item gestion du score 
-            %\end{enumerate}
-          %\end{enumerate}\pause
-        \end{frame}
-
 \subsection{Aspects techniques}
     \begin{frame}
+    
         \begin{enumerate}
             \item Languages
-                \begin{itemize}
-                    \item Ruby 
-                \end{itemize}
-            \item Support   
-            \begin{enumerate}
+            \begin{itemize}
+                \item Ruby
+                \item LateX
+            \end{itemize}
+                
+            \item Support
+            \begin{itemize}
                 \item Environnement Unix
+            \end{itemize}
+                
+            \item Outils
+            \begin{itemize}
+                \item IDE,
+                \begin{itemize}
+                    \item Vim,
+                    \item kate,
+                    \item sublim text,
+                    \item textmate
+                \end{itemize}
+                \item Module RMagick
+                \item IRC,
+                \item Etherpad,
+                \item Git/Github,
+                \item GanttProject,
+                \item Astah;
+                    
+            \end{itemize}
+                
+                    
+        \end{enumerate}
+\end{frame}
+
+
+\subsection{Fonctionnalités}
+    \begin{frame} {Fonctionnalités}
+        \begin{enumerate}
+            \item Fonctionnalités
+            \begin{itemize}
+                \item Drag 'n' assign
+                \item Sauvegarde
+                \item Chargement
+                \item Edition
+                \item Suppression
+            \end{itemize}    
+                        
+            \item Problèmes rencontrés
+            \begin{enumerate}
+                \item Gestion du score 
             \end{enumerate}
         \end{enumerate}
-    \end{frame}
+\end{frame}
 
-\subsection{Outils}
+\subsection{Difficultés}
     \begin{frame}
-        \begin{enumerate}
-           \item Eclips IDE
-       \end{enumerate}
+        \begin{itemize}
+          \item Travailler en groupe, la répartion des tâches
+          \item Utilisation de github
+        \end{itemize}
     \end{frame}
 
-
+\section{Démo}
+    \begin{frame}{Démo}
+    \end{frame}
 
 \section{Conclusion}
-\begin{frame}{Conclusion}
-  
-    %\begin{enumerate}
-        %\item Presentation du travail
-        %\begin{enumerate}
-            %\item Bilan du projet 
-        %\end{enumerate}\pause
-        %\begin{enumerate}
-            %\item Ce que l'on a appris
-            %\begin{enumerate}
-                %\item Comment un projet se déroule
-                %\item le travail collaboratif
-            %\end{enumerate}
-        %\end{enumerate}
-    %\end{enumerate}\pause
-\end{frame}
+    \begin{frame}{Conclusion}
+        
+        \begin{enumerate}
+            \item Perspectives d'améliorations
+            \begin{itemize}
+                \item Jouer en lan
+                \item Proposer la sauvegarde de la grille courante lorsque l'utilisateur ferme l'application
+                \item Amélioration de l'interface 
+            \end{itemize}
+            
+            \item Ce que l'on à appris
+            \begin{enumerate}
+                \item Comment un projet se déroule
+                \item le travail collaboratif
+            \end{enumerate}
+            
+            \item Ce que l'on à aimé
+            
+         
+        \end{enumerate}
+    \end{frame}
+    
 \appendix[Questions ?]
 \end{document}
