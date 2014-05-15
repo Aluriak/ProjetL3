@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 load "src/commun/commun.rb"
 
 include Gtk
@@ -23,6 +24,8 @@ class MenuPrincipal
 
 		toolbar = Toolbar.new
 		toolbar.set_toolbar_style(Toolbar::Style::ICONS)
+
+		tooltip = Tooltips.new
 
 		newtb = ToolButton.new(Stock::NEW)
 	  	edittb = ToolButton.new(Stock::EDIT)
