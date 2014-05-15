@@ -186,13 +186,13 @@ class Gui < Window
                 vBoxBasGauche.pack_start(bouton_aide2_txt)
 
                 bouton_aide1_txt.signal_connect("clicked"){
-                  aide = AideWrap.deNiveau1Sur(@picross.grille.matriceDeJeu)
+                  aide = AideWrap.deNiveau1Sur(@picross.grille)
                   @nbAppelAide += 1  
                   labelAide.set_text(aide) 
                             }
                  
                 bouton_aide2_txt.signal_connect("clicked"){
-                  aide = AideWrap.deNiveau2Sur(@picross.grille.matriceDeJeu)
+                  aide = AideWrap.deNiveau2Sur(@picross.grille)
                   @nbAppelAide += 2  
                   labelAide.set_text(aide) 
                 }
