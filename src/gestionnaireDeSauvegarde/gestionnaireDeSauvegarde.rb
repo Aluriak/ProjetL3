@@ -180,6 +180,10 @@ class GestionnaireDeSauvegarde
   
 
 
+  # Supprime la grille jouable de nom de sauvegarde et de taille donnée
+  def supprimerGrilleJouable(nom_de_sauvegarde, taille)
+    @grillesJouables.delete_if {|g| g.nom_de_sauvegarde == nom_de_sauvegarde }
+  end
 
   ##
   # Affichage de grillesRacines et grillesJouables
