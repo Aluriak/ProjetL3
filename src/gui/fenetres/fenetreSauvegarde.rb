@@ -87,16 +87,27 @@ class FenetreSauvegarde < Window
       end
 
       # sauvegarde
-      if validation then
+      if validation and nom_savgrd != "" then
         picross.ajouterProfil(nom_profil)
-        picross.sauverGrilleJouable(nom_savgrd)
-        self.confirmerSauvegarde(nom_savgrd)
-        self.destroy
+        if picross.sauverGrilleJouable(nom_savgrd) then
+          self.confirmerSauvegarde(nom_savgrd)
+          self.destroy
+        else
+          if self.ecraserSauvegarde?(nom_savgrd) then
+            picross.sauverGrilleJouable(nom_savgrd, true) # force_sauvegarde true
+            self.confirmerSauvegarde(nom_savgrd)
+            self.destroy
+          end
+        end
       end
     }
     @bouton_annuler.signal_connect("clicked") { self.destroy }
 
   end
+
+
+
+
 
   ##
   # Met à jour le nom de la sauvegarde en fonction des paramètres entrés
@@ -137,6 +148,32 @@ class FenetreSauvegarde < Window
 
     dialog.run
     dialog.destroy
+  end
+
+
+
+
+  ##
+  # La sauvegarde n'a pas été effectuée. L'utilisateur en est informé.
+  # Il peut choisir de sauvegarder par dessus la sauvegarde déjà existante, 
+  # ou revenir en arrière.
+  # La méthode renvois vrai si l'utilisateur veux écraser la sauvegarde, faux sinon.
+  def ecraserSauvegarde?(nom_sauvegarde)
+    dialog = Dialog.new(
+      "La sauvegarde existe déjà !", 
+      parent,
+      Dialog::DESTROY_WITH_PARENT | Dialog::MODAL,
+      ["Écraser", 1], 
+      ["Revenir en arrière", 2]
+    )
+    operation_choisie = 1
+    dialog.vbox.add(Label.new("Écraser la sauvegarde " + nom_sauvegarde + " ?"))
+    dialog.signal_connect("response") { |fenetre, id_rep| operation_choisie = id_rep }
+    dialog.show_all
+    dialog.run
+    dialog.destroy
+
+    return operation_choisie == 1
   end
 
 end
