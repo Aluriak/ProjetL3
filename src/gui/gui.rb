@@ -7,11 +7,18 @@ require "gtk2"
 require "glib2"
 include Gtk
 
+# objets hors gui
+load "src/picross/picross.rb"
+load "src/aide/aideWrap.rb"
+
+# objets dans la fenetre principale
 load "src/gui/planche.rb"
 load "src/gui/menuPrincipal.rb"
 load "src/gui/tablechiffre.rb"
 load "src/gui/chronometre.rb"
-load "src/picross/picross.rb"
+
+# fenetres
+load "src/gui/fenetres/fenetrePreference.rb"
 load "src/gui/fenetres/fenetreNouveauTaille.rb"
 load "src/gui/fenetres/fenetreEditionTaille.rb"
 load "src/gui/fenetres/grilleEditable.rb"
@@ -21,7 +28,7 @@ load "src/gui/fenetres/fenetreScore.rb"
 load "src/gui/fenetres/fenetreManuel.rb"
 load "src/gui/fenetres/fenetreAPropos.rb"
 load "src/gui/fenetres/fenetreFinJeu.rb"
-load "src/aide/aideWrap.rb"
+
 
 class Array
 	def orientationHorizontale?
@@ -48,19 +55,15 @@ class Gui < Window
 	def Gui.lancer(tailleChoisie = nil, nomGrille = nil)
 		new(tailleChoisie, nomGrille)
 	end
-
-	def Gui.fermer
-		
-	end	
 	
 	def initialize(tailleGrille, nomGrille)
-                @nbAppelAide = 0
-                @picross = Picross.new
-                tailleGrille = @picross.derniereTailleDeGrille if tailleGrille == nil 
-                # si pas de grille particulière demandée ou si la grille demandée n'existe pas
-                if nomGrille == nil or not @picross.chargerGrilleJouableNommee(nomGrille, tailleGrille) then
-                  @picross.nouvelleGrilleJouableDeTaille(tailleGrille)
-                end
+		@nbAppelAide = 0
+		@picross = Picross.new
+		tailleGrille = @picross.derniereTailleDeGrille if tailleGrille == nil 
+		# si pas de grille particulière demandée ou si la grille demandée n'existe pas
+		if nomGrille == nil or not @picross.chargerGrilleJouableNommee(nomGrille, tailleGrille) then
+			@picross.nouvelleGrilleJouableDeTaille(tailleGrille)
+		end
 		super("Picross")
 		signal_connect("destroy") { Gtk.main_quit }
 		set_resizable(false)
@@ -86,14 +89,16 @@ class Gui < Window
 		menuHaut = MenuPrincipal.creerMenuHaut(hBoxHaut)
 		
 		menuHaut.clickerSur("Nouveau")	{ nouveau = FenetreNouveauTaille.new(self) }
-		menuHaut.clickerSur("Editer")	{ print "fenetreEditer\n"; fenetreEditer = FenetreEditionTaille.new }
+		menuHaut.clickerSur("Editer")	{ print "mode: edition\n"; fenetreEditer = FenetreEditionTaille.new }
 		menuHaut.clickerSur("Charger")	{ fenetreCharger = FenetreCharger.new(self, @picross)}
 		menuHaut.clickerSur("Sauvegarder"){ fenetreSauvegarder = FenetreSauvegarde.new(@picross, timer.sec) }
-		menuHaut.clickerSur("Score")	{ fenetreScore = FenetreScore.new(self, @picross.scores.scoresDeGrille(@picross.grille.nom), @picross.grille.nom) } 
 		menuHaut.clickerSur("Manuel")	{ fenetreManuel = FenetreManuel.new }
+		menuHaut.clickerSur("Preference"){ fenetreManuel = FenetrePreference.new(nil) } #mettre un gds à la place
 		menuHaut.clickerSur("A Propos")	{ fenetreAPropos = FenetreAPropos.new}
-
-
+		
+		menuHaut.clickerSur("Score")	{ 
+			fenetreScore = FenetreScore.new(self, @picross.scores.scoresDeGrille(@picross.grille.nom), @picross.grille.nom) 
+		}
 		
 		
 		#Partie basse de l"application

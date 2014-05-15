@@ -30,7 +30,7 @@ class MenuPrincipal
       	savetb = ToolButton.new(Stock::SAVE)
       	scoretb = ToolButton.new(iconeScore, "Score")
       	helptb = ToolButton.new(Stock::HELP)
-		preftb = ToolButton.new(iconePreference, "Preferences")
+		preftb = ToolButton.new(iconePreference, "Preference")
       	abouttb = ToolButton.new(Stock::ABOUT)
     
 
@@ -49,7 +49,7 @@ class MenuPrincipal
       	savetb.set_label("Sauvegarder")
       	scoretb.set_label("Score")
       	helptb.set_label("Manuel")
-		preftb.set_label("Preferences")
+		preftb.set_label("Preference")
       	abouttb.set_label("A Propos")
 		
 		@listMenuBtns = [newtb,edittb,opentb,savetb,scoretb,helptb,preftb,abouttb]
