@@ -98,14 +98,8 @@ class GestionnaireDeSauvegarde
   ##
   # Retourne une liste contenant les grilles racines de taille reçue.
   def grillesRacinesDeTaille(taille)
-    grilleRacineTemp = []
     raise "Grilles racines non chargées" if @grillesRacines == nil
-    @grillesRacines.each do |grl|
-      if grl.taille == taille then 
-        grilleRacineTemp.push(grl)
-      end
-    end
-    return grilleRacineTemp
+    return @grillesRacines.select { |g| g.taille == taille }
   end
 
 

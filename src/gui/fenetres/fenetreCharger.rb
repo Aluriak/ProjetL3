@@ -119,3 +119,8 @@ class FenetreCharger < Window
     return operation_choisie == 1
   end
 end
+
+
+
+
+

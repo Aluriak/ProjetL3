@@ -135,10 +135,11 @@ class Gui < Window
                       if @picross.grille.terminee? then
                         fenetre_fin_jeu = FenetreFinJeu.new(@picross, timer.sec, @nbAppelAide)
 			fenetre_fin_jeu.show_all
+                        self.destroy
                         fenetre_fin_jeu.signal_connect("destroy") {
                           # on démarre une nouvelle grille !
-                          @picross.nouvelleGrilleJouableDeTaille(@picross.grille.taille)
-                          timer.raz
+                          # de la même taille que la précédente !
+                          Gui.lancer(@picross.grille.taille)
                         }
                       else 
                         dialog = MessageDialog.new(self, 
@@ -160,7 +161,7 @@ class Gui < Window
 			nombres = grille_jouable.tableLigne.nombresDeLaLigne(row)
 			# pour chaque nombre de la ligne
 			nombres.size.times { |col|
-				nombre = nombres[col].to_s
+				nombre = nombres[col].to_s + " "
 				labelsNombreLigne.attach(Label.new(nombre), col, col+1, row, row+1) 
 			}
                         if nombres.size == 0 then

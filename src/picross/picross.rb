@@ -83,6 +83,17 @@ class Picross
 
 
 
+  ##
+  # Renvois toutes les grilles racines de taille reçue.
+  def grillesRacinesDeTaille(taille)
+    raise "Taille non définie" if not Grille.tailles.include?(taille)
+    listGrlRacine = @gestionnaireDeSauvegarde.grillesRacinesDeTaille(taille)
+    return listGrlRacine
+  end
+
+
+
+
 
   ##
   # Définit une nouvelle @grille jouable de la taille demandée pour self.

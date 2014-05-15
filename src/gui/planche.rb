@@ -89,14 +89,16 @@ class Planche
 					end
                                         @modeDragAndAssign = true
                                         @etatModeDragAndAssign = @tableEtat[x][y]
-					actualiser(x,y)                                  
+					actualiser(x,y)
 				}
                                 @event_box[x][y].signal_connect("button_release_event") {
-                                        @modeDragAndAssign = false
+                                  @modeDragAndAssign = false
                                 }
-                                @event_box[x][y].signal_connect("enter-notify-event") {
+                                @event_box[x][y].signal_connect("enter_notify_event") {
+                                  puts @modeDragAndAssign
                                   if @modeDragAndAssign then
-                                    basculer(x,y, @etatModeDragAndAssign)
+                                    puts @modeDragAndAssign
+                                    self.basculer(x, y, @etatModeDragAndAssign)
                                   end
                                 }
 			}
@@ -120,6 +122,7 @@ class Planche
         def basculer(x, y, etat = nil)
           @tableEtat[x][y] = Etat.suivant(@tableEtat[x][y]) if etat == nil
           @tableEtat[x][y] = etat if etat != nil
+          self.actualiser(x, y)
         end
 
 
