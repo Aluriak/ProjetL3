@@ -137,6 +137,7 @@ class FenetreEditionTaille < Window
 		add(vBoxPrincipal)
 		set_window_position(:center)
 		show_all
+		set_modal(true)
 
 		entryPath.set_visible(false)
 	end
