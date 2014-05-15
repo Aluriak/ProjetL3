@@ -178,7 +178,7 @@ class Gui < Window
 		table.attach(planche.table, 1, 2, 1, 2)
 
 		#Partie basse droite de l"application
-		vBoxBas.add(Frame.new.add(vBoxBasGauche = VBox.new(2)))
+		vBoxBas.add(Frame.new("Aide").add(vBoxBasGauche = VBox.new(2)))
                 bouton_aide1_txt = Button.new("Aiguillez-moi !")
                 bouton_aide2_txt = Button.new("Que dois-je faire?")
 
