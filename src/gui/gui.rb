@@ -191,6 +191,12 @@ class Gui < Window
                   @nbAppelAide += 2  
                   labelAide.set_text(aide) 
                 }
+
+
+                # Lorsque le bouton est relâché, le mode drag and assign de la planche de jeu est terminé.
+                self.signal_connect("button_release_event") {
+                  planche.modeDragAndAssign = false
+                }
               
     add(vbox)
     set_window_position(:center)
