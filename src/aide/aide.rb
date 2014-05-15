@@ -120,7 +120,7 @@ class Aide
         @TabAideDispo.push("Regardez à la ligne " + num_ligne.to_s() + "\nFACILE non ?")
       elsif(val_max > @Largeur / 2)
         @TabAideDispo.push("Regardez à la ligne " + num_ligne.to_s() + ",\nLa case du milieu est forcement coloriée !!")
-      elsif(nombres > @Largeur / 2)
+      elsif(nombres.size > @Largeur / 2)
         @TabAideDispo.push("Regardez à la ligne" + num_ligne.to_s()+",\nVous pouvez colorier la premiere case !!")
       end
     }
@@ -139,7 +139,7 @@ class Aide
         @TabAideDispo.push("Regardez à la colonne " + num_colonne.to_s() + "\nFACILE non ?")
       elsif(val_max > @Hauteur / 2)
         @TabAideDispo.push("Regardez à la colonne " + num_colonne.to_s() + ",\nLa case du milieu est forcement coloriée !!")
-      elsif(nombres > @Hauteur / 2)
+      elsif(nombres.size > @Hauteur / 2)
         @TabAideDispo.push("Regardez à la ligne" + num_colonne.to_s()+",\nVous pouvez colorier la premiere case !!")
       end
     }
