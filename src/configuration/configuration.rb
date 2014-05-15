@@ -21,6 +21,7 @@ class Configuration
   @derniereTailleGrille
   @scores
   @profils
+  @nomTexture
 
   # taille de la dernière grille jouée
   attr_reader :derniereTailleGrille
@@ -28,13 +29,16 @@ class Configuration
   attr_reader :scores
   # liste de nom de profils
   attr_reader :profils
+  # nom de texture
+  attr_accessor :nomTexture
+
 
 
 
   ##
   # Constructeur
-  def initialize(taille, scores, profils)
-    @derniereTailleGrille, @scores, @profils = taille, scores, profils
+  def initialize(taille, scores, profils, nomTexture)
+    @derniereTailleGrille, @scores, @profils, @nomTexture = taille, scores, profils, nomTexture
   end
 
 
@@ -122,12 +126,12 @@ class Configuration
   ##
   # Marshal API : méthode de dump
   def marshal_dump
-    [@derniereTailleGrille, @scores, @profils]
+    [@derniereTailleGrille, @scores, @profils, @nomTexture]
   end
   
   # Marshal API : méthode de chargement
   def marshal_load(ary)
-    @derniereTailleGrille, @scores, @profils = ary
+    @derniereTailleGrille, @scores, @profils, @nomTexture = ary
   end
 
 end
