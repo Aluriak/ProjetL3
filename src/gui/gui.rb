@@ -113,9 +113,8 @@ class Gui < Window
 		menuHaut.clickerSur("Manuel")	{ fenetreManuel = FenetreManuel.new }
 		menuHaut.clickerSur("Preference"){ fenetreManuel = FenetrePreference.new(@picross) } 
 		menuHaut.clickerSur("A Propos")	{ fenetreAPropos = FenetreAPropos.new}
-		
 		menuHaut.clickerSur("Score")	{ 
-			fenetreScore = FenetreScore.new(self, @picross.scores.scoresDeGrille(@picross.grille.nom), @picross.grille.nom) 
+			fenetreScore = FenetreScore.new(self, @picross.scoresDeGrille(@picross.grille.nom), @picross.grille.nom) 
 		}
 		
 		
