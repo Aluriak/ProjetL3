@@ -37,37 +37,35 @@ class Gui < Window
 	@derniereTailleGrille
         @nbAppelAide = 0
 	
-	@picross = Picross.new
-	@derniereTailleGrille = @picross.derniereTailleDeGrille
-	
 	# la gui crée un picross à son lancement
 	attr_reader :picross
-	
-	# window est la fenetre affichée
-	#attr_reader :window
 	
 	# la taille de la derniere taille de grille
 	# pratique pour l'utilisateur; s'il jouait sur une grille
 	# de 20*20, le jeu chargera une grille de 20*20
 	attr_reader :derniereTailleGrille
 	
-	def Gui.lancer(tailleChoisie = @derniereTailleGrille)
-		new(tailleChoisie)
+	def Gui.lancer(tailleChoisie = nil, nomGrille = nil)
+		new(tailleChoisie, nomGrille)
 	end
 
 	def Gui.fermer
 		
 	end	
 	
-	def initialize(tailleGrille)
+	def initialize(tailleGrille, nomGrille)
                 @nbAppelAide = 0
-		@picross = Picross.new
-		@picross.nouvelleGrilleDeTaille(tailleGrille)
+                @picross = Picross.new
+                tailleGrille = @picross.derniereTailleDeGrille if tailleGrille == nil 
+                # si pas de grille particulière demandée ou si la grille demandée n'existe pas
+                if nomGrille == nil or not @picross.chargerGrilleJouableNommee(nomGrille, tailleGrille) then
+                  @picross.nouvelleGrilleJouableDeTaille(tailleGrille)
+                end
 		super("Picross")
 		signal_connect("destroy") { Gtk.main_quit }
 		set_resizable(false)
 		vbox = VBox.new(false, 2)
-    add_events(Gdk::Event::BUTTON_PRESS_MASK)
+                add_events(Gdk::Event::BUTTON_PRESS_MASK)
 		
 		grille_jouable = @picross.grille
 	
@@ -78,7 +76,7 @@ class Gui < Window
 		
 		menuHaut.clickerSur("Nouveau")	{ nouveau = FenetreNouveauTaille.new(self) }
 		menuHaut.clickerSur("Editer")	{ print "fenetreEditer\n"; fenetreEditer = FenetreEditionTaille.new }
-		menuHaut.clickerSur("Charger")	{ fenetreCharger = FenetreCharger.new(@picross)}
+		menuHaut.clickerSur("Charger")	{ fenetreCharger = FenetreCharger.new(self, @picross)}
 		menuHaut.clickerSur("Sauvegarder"){ fenetreSauvegarder = FenetreSauvegarde.new(@picross) }
 		menuHaut.clickerSur("Score")	{ fenetreScore = FenetreScore.new(self, @picross.scores.scoresDeGrille(@picross.grille.nom), @picross.grille.nom) } 
 		menuHaut.clickerSur("Manuel")	{ fenetreManuel = FenetreManuel.new }
