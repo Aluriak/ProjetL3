@@ -114,7 +114,7 @@ class FenetreSauvegarde < Window
   def maj_entry_nom
     unless @combo_profils.active_text == nil
       # proposer un nom par défaut
-      @entry_nom.set_text(@picross.grille.nom + "_" + @combo_profils.active_text + DateTime.now.strftime(format='_%d%b%Y_%H%M%S'))
+      @entry_nom.set_text(@picross.grille.nom + "_" + @combo_profils.active_text)
     end
     self.maj_button
   end
