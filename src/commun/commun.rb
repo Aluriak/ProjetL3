@@ -106,3 +106,26 @@ end
 
 
 
+#################################
+# LOGS				#
+#################################
+# mainteneur : BOURNEUF
+
+class Logs
+
+  # impossible d'instancier cette classe
+  private_class_method :new
+
+  ##
+  # Ajoute le texte reçu dans les logs
+  def Logs.add(txt)
+    puts txt
+  end
+
+end
+
+
+
+
+
+
