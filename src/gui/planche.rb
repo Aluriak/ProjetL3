@@ -63,6 +63,7 @@ class Planche
 				@event_box[x][y] = EventBox.new.add(@image[x][y])  
 				
 				@table.attach(@event_box[x][y], y, y+1, x, x+1) 
+
               
 				#crée les évenements de click sur chaque cases
 				@event_box[x][y].signal_connect("button_press_event") { |widget, event|
@@ -94,10 +95,14 @@ class Planche
                                 @event_box[x][y].signal_connect("button_release_event") {
                                   @modeDragAndAssign = false
                                 }
+                                #@event_box[x][y].signal_connect("event") { |w,e|
+                                  #if e.event_type == Gdk::Event::ENTER_NOTIFY then
+                                    #puts w
+                                    #puts e.event_type
+                                  #end
+                                #}
                                 @event_box[x][y].signal_connect("enter_notify_event") {
-                                  puts @modeDragAndAssign
                                   if @modeDragAndAssign then
-                                    puts @modeDragAndAssign
                                     self.basculer(x, y, @etatModeDragAndAssign)
                                   end
                                 }
