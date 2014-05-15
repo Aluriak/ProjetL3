@@ -33,6 +33,7 @@ class FenetreSauvegarde < Window
     super("Sauvegarder la partie en cours")
     signal_connect("destroy") { destroy }
     set_default_size(100,300)
+    set_modal(true)
     set_resizable(false)
     @picross = picross
   

@@ -29,45 +29,36 @@ class MenuPrincipal
 
 		newtb = ToolButton.new(Stock::NEW)
 	  	edittb = ToolButton.new(Stock::EDIT)
-      		opentb = ToolButton.new(Stock::OPEN)
-      		savetb = ToolButton.new(Stock::SAVE)
-      		scoretb = ToolButton.new(iconeScore, "Score")
-      		helptb = ToolButton.new(Stock::HELP)
+		opentb = ToolButton.new(Stock::OPEN)
+		savetb = ToolButton.new(Stock::SAVE)
+		scoretb = ToolButton.new(iconeScore, "Score")
+		helptb = ToolButton.new(Stock::HELP)
 		preftb = ToolButton.new(iconePreference, "Preference")
-      		abouttb = ToolButton.new(Stock::ABOUT)
+		abouttb = ToolButton.new(Stock::ABOUT)
     
-	    	tooltip.set_tip(newtb,"Nouvelle partie", nil)
-	        tooltip.set_tip(edittb,"Edition d'une grille", nil)
-	        tooltip.set_tip(opentb,"Charger une grille", nil)
-	        tooltip.set_tip(savetb,"Sauvegarde de la grille en cours", nil)
-	        tooltip.set_tip(scoretb,"Affichage des scores pour la grille en cours",nil)
-	        tooltip.set_tip(helptb,"Manuel d'aide du picross", nil)
-	        tooltip.set_tip(preftb,"Option de préférence", nil)
-	        tooltip.set_tip(abouttb,"A propos du picross", nil)
-	    
-	        tooltip.enable
-
-	      	toolbar.insert(0, newtb)
-	      	toolbar.insert(1, edittb)
-	      	toolbar.insert(2, opentb)
-	      	toolbar.insert(3, savetb)
-	      	toolbar.insert(4, scoretb)
-	      	toolbar.insert(5, helptb)
-		toolbar.insert(6, preftb)
-	      	toolbar.insert(7, abouttb)
+		tooltip.set_tip(newtb,"Nouvelle partie",nil)
+		tooltip.set_tip(edittb,"Edition d'une grille", nil)
+		tooltip.set_tip(opentb,"Charger une grille", nil)
+		tooltip.set_tip(savetb,"Sauvegarder cette grille", nil)
+		tooltip.set_tip(scoretb,"Scores de cette grille",nil)
+		tooltip.set_tip(helptb,"Manuel d'aide", nil)
+		tooltip.set_tip(preftb,"Préférences", nil)
+		tooltip.set_tip(abouttb,"A propos", nil)
 	
-	      	newtb.set_label("Nouveau")
-	      	edittb.set_label("Editer")
-	      	opentb.set_label("Charger")
-	      	savetb.set_label("Sauvegarder")
-	      	scoretb.set_label("Score")
-	      	helptb.set_label("Manuel")
-		preftb.set_label("Preference")
-	      	abouttb.set_label("A Propos")
+		tooltip.enable
+
+		toolbar.insert(0, newtb.set_label("Nouveau"))
+		toolbar.insert(1, edittb.set_label("Editer"))
+		toolbar.insert(2, opentb.set_label("Charger"))
+		toolbar.insert(3, savetb.set_label("Sauvegarder"))
+		toolbar.insert(4, scoretb.set_label("Score"))
+		toolbar.insert(5, helptb.set_label("Manuel"))
+		toolbar.insert(6, preftb.set_label("Preference"))
+		toolbar.insert(7, abouttb.set_label("A Propos"))
 		
 		@listMenuBtns = [newtb,edittb,opentb,savetb,scoretb,helptb,preftb,abouttb]
 
-      		box.pack_start(toolbar)
+		box.pack_start(toolbar)
 	end	
 
 	# renvoie le menu(le bouton) correspondant au nom qu'on a rentré

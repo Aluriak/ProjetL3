@@ -15,7 +15,9 @@ class GrilleEditable < Window
 		
 		@picross = picross
 		super("Edition Grille")
+		set_window_position(:center)
 		set_default_size(210,100)
+		set_modal(true)
 		set_resizable(false)
 		vbox = VBox.new(false, 3)
 		
