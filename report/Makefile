@@ -26,9 +26,16 @@ stn_:
 	- pdflatex soutenance.tex && pdflatex soutenance.tex
 	- evince pdf/soutenance.pdf
 
+
+# manuel d'aide
+aid: aid_ posttreat
+aid_:
+	- pdflatex manuel.tex && pdflatex aide.tex
+
+
 # PDF moving
 posttreat: clear
-	- mv *.pdf pdf/
+	- mv *.pdf pdf/ 
 
 # cleaning
 clear:
