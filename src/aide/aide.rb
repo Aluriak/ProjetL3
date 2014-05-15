@@ -49,16 +49,14 @@ class Aide
   
   def initialize(uneGrille)
     @GrillePicross = uneGrille
-    @Largeur = @GrillePicross.length
-    @Longueur = @GrillePicross.length
+    @Largeur = @GrillePicross.taille
+    @Hauteur = @GrillePicross.taille
  
     #@LargeurTabL = (@Largeur / 2) + (@Largeur % 2)
     #@LongueurTabC = (@Longueur / 2) + (@Longueur % 2)
     
-    @TabLigne = uneGrille.tabLigne
-    #Array.new(@Longueur){Array.new(@LargeurTabL)}
-    @TabColonne = uneGrille.tabColonne
-    #Array.new(@LongueurTabC){Array.new(@Largeur)}
+    @TabLigne = uneGrille.tableLigne
+    @TabColonne = uneGrille.tableColonne
     @TabAideDispo = Array.new()
     
 =begin
@@ -216,7 +214,7 @@ class Aide
     print "Matrices des Lignes : \n"
     0.upto(@Longueur -1){|o|
       0.upto(@Largeur -1){|p|
-         print @TabLigne[o][p]
+         print @TabLigne.nombresDeLaLigne(o)[p]
       }
       print "\n"
     }
@@ -244,83 +242,59 @@ class Aide
   #Définition des aides possible à partir de la matrice TabLignes
 
   def aideDeNiveau1
-    i = 0
-    0.upto(@Longueur-1){|o|
-      somme = 0
-      0.upto(@Largeur - 1){|p|
-        somme += @TabLigne[o][p] 
-          if(somme == @Largeur)
-            val = o + 1
-            #print "Oui, regardez à la ligne " + val.to_s() + ", vous pouvez colorier toutes les cases !! :) \n"
-            @TabAideDispo[i] = "Regardez à la ligne " + val.to_s() + ",\nVous pouvez colorier toutes les cases !! :)"
-            i += 1
-          elsif(somme == @Largeur - 1)
-            val = o + 1
-            #print "Oui, regardez à la ligne " + val.to_s() + " ... FACILE non ? :) \n"
-            @TabAideDispo[i] = "Regardez à la ligne " + val.to_s() + "\nFACILE non ? :)"
-            i += 1
-          elsif(@TabLigne[o][p] > @Largeur / 2)
-            val = o + 1
-            #print "Oui, regardez à la ligne " + val.to_s() + ", la case du milieu est forcement coloriée !! :) \n"
-            @TabAideDispo[i] = "Regardez à la ligne " + val.to_s() + ",\nLa case du milieu est forcement coloriée !! :)"
-            i += 1
-          end
-      }
-       if(somme == 0) 
-         val = o + 1
-         #print"Oui, regardez à la ligne " + val.to_s() + " ... HYPER simple :) \n"
-         @TabAideDispo[i] = "Regardez à la ligne " + val.to_s() + "\nHYPER simple :)"
-         i += 1
-       end
+    # TABLE LIGNE
+    0.upto(@TabLigne.hauteur-1){ |o|
+      num_ligne = o + 1
+      nombres = @TabLigne.nombresDeLaLigne(o)
+      somme = nombres.inject { |val, sum| sum += val }
+      val_max = @TabLigne.nombresDeLaLigne(o).max
+      val_max = 0 if val_max == nil # cas où la ligne est vide
+      if(somme == @Largeur)
+        @TabAideDispo.push("Regardez à la ligne " + num_ligne.to_s() + ",\nVous pouvez colorier toutes les cases !! :)")
+      elsif(somme == @Largeur - 1)
+        @TabAideDispo.push("Regardez à la ligne " + num_ligne.to_s() + "\nFACILE non ? :)")
+      elsif(val_max > @Largeur / 2)
+        @TabAideDispo.push("Regardez à la ligne " + num_ligne.to_s() + ",\nLa case du milieu est forcement coloriée !! :)")
+      end
     }
 
-	 0.upto(@Largeur-1){|o|
-      somme = 0
-      0.upto(@Longueur - 1){|p|
-        somme += @TabColonne[p][o] 
-          if(somme == @Longueur)
-            val = o + 1
-            #print "Oui, regardez à la colonne " + val.to_s() + ", vous pouvez colorier toutes les cases !! :) \n"
-            @TabAideDispo[i] = "Regardez à la colonne " + val.to_s() + ",\nVous pouvez colorier toutes les cases !!"
-            i += 1
-          elsif(somme == @Longueur - 1)
-            val = o + 1
-            #print "Oui, regardez à la colonne "+ val.to_s() + " \n"
-            @TabAideDispo[i] = "Regardez à la colonne "+ val.to_s() + ",\nVous pouvez colorier toutes les cases sauf une !!"
-            i += 1
-          elsif(@TabColonne[p][o] > @Longueur / 2)
-            val = o + 1
-            #print "Oui, regardez à la colonne " + val.to_s() + ", la case du milieu est forcement coloriée !! :) \n"
-            @TabAideDispo[i] = "Regardez à la colonne " + val.to_s() + ",\nLa case du milieu est forcement coloriée !!"
-            i += 1
-          end
-      }
-       if(somme == 0) 
-         val = o + 1
-         #print"Oui, regardez à la colonne " + val.to_s() + " ... HYPER simple :) \n"
-         @TabAideDispo[i] = "Regardez à la colonne " + val.to_s() + ",\nAucune case n'est coloriée !!"
-         i += 1
-       end
+
+    # TABLE COLONNE
+    0.upto(@TabColonne.hauteur-1){ |o|
+      num_colonne = o + 1
+      nombres = @TabColonne.nombresDeLaColonne(o)
+      somme = nombres.inject { |val, sum| sum += val }
+      val_max = @TabColonne.nombresDeLaColonne(o).max
+      val_max = 0 if val_max == nil # cas où la colonne est vide
+      if(somme == @Hauteur)
+        @TabAideDispo.push("Regardez à la colonne " + num_colonne.to_s() + ",\nVous pouvez colorier toutes les cases !! :)")
+      elsif(somme == @Hauteur-1)
+        @TabAideDispo.push("Regardez à la colonne " + num_colonne.to_s() + "\nFACILE non ? :)")
+      elsif(val_max > @Hauteur / 2)
+        @TabAideDispo.push("Regardez à la colonne " + num_colonne.to_s() + ",\nLa case du milieu est forcement coloriée !! :)")
+      end
     }
 
-    if(i == 0)
-		@TabAideDispo[i] = "Il n'y a aucune aide dispo\n"
-		#print @TabAideDispo[0]
-	else
-		r = rand(0..i-1)
-		#print @TabAideDispo[r]
-	end
-  return @TabAideDispo
-    
+
+
+    @TabAideDispo.push("Il n'y a aucune aide dispo") if @TabAideDispo.size == 0
+    Logs.add(@TabAideDispo)
+    return @TabAideDispo
   end
   
+
+
+
+
+
+
   def aideDeNiveau2
 
   i = 0
     0.upto(@Longueur-1){|o|
       somme = 0
       0.upto(@LargeurTabL - 1){|p|
-        somme += @TabLigne[o][p]
+        somme += @TabLigne.nombresDeLaLigne(o)[p]
         
           if(somme == @Largeur)
             val = o + 1
@@ -332,7 +306,7 @@ class Aide
             #print "Vous pouvez appliquer la technique 'La cave à vin' la ligne " + val.to_s() + "\n"
             @TabAideDispo[i] = "Vous pouvez appliquer la technique \n'La cave à vin' sur la ligne " + val.to_s()
             i += 1
-          elsif(@TabLigne[o][p] > @Largeur / 2)
+          elsif(@TabLigne.nombresDeLaLigne(o)[p] > @Largeur / 2)
             val = o + 1
             #print "Vous pouvez appliquer la technique "L'ilot bleu" sur la ligne " + val.to_s() + "\n"
             @TabAideDispo[i] = "Vous pouvez appliquer la technique \n'L'ilot bleu' sur la ligne " + val.to_s()
