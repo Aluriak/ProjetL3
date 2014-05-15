@@ -73,8 +73,21 @@ class Picross
 
 
   ##
+  # Renvois toutes les grilles jouables de taille reçue.
+  def grillesJouablesDeTaille(taille)
+    raise "Taille non définie" if not Grille.tailles.include?(taille)
+    listGrlRacine = @gestionnaireDeSauvegarde.grillesJouablesDeTaille(taille)
+    return listGrlRacine
+  end
+
+
+
+
+
+  ##
   # Définit une nouvelle @grille jouable de la taille demandée pour self.
-  def nouvelleGrilleDeTaille(taille)
+  def nouvelleGrilleJouableDeTaille(taille)
+    raise "Taille non définie" if not Grille.tailles.include?(taille)
     listGrlRacine = @gestionnaireDeSauvegarde.grillesRacinesDeTaille(taille)
     if listGrlRacine.size == 0 then
       grille = GrilleJouable.deTaille(taille) # création d'une grille à la volée.
@@ -93,10 +106,38 @@ class Picross
   ##
   # Sauvegarde la grille actuellement jouée dans une nouvelle sauvegarde.
   # Le nom de sauvegarde permet d'identifier la sauvegarde.
-  def sauverGrilleJouable(nom_sauvegarde)
-    @gestionnaireDeSauvegarde.ajouterGrilleJouable(@grille)
-    @gestionnaireDeSauvegarde.sauvegarderGrillesJouables
-    return nil
+  # force_sauvegarde indique si la sauvegarde doit écraser une éventuelle 
+  # sauvegarde du même nom.
+  def sauverGrilleJouable(nom_de_sauvegarde, force_sauvegarde = false)
+    # on modifie le nom de sauvegarde de la grille
+    @grille.nom_de_sauvegarde = nom_de_sauvegarde
+    # et on sauvegarde
+    if @gestionnaireDeSauvegarde.ajouterGrilleJouable(
+                        @grille, force_sauvegarde) then 
+      @gestionnaireDeSauvegarde.sauvegarderGrillesJouables
+      return true
+    else 
+      return false
+    end
+  end
+
+
+
+
+  ##
+  # Charge et utilise la grille jouable enregistrée dont le nom de sauvegarde
+  # et la taille sont en paramètre. 
+  # N'effectue aucun traitement si aucune grille n'est trouvée.
+  def chargerGrilleJouableNommee(nom_de_sauvegarde, taille)
+    raise "Taille non définie" if not Grille.tailles.include?(taille)
+    listGrlJouable = @gestionnaireDeSauvegarde.grillesJouablesDeTaille(taille)
+    listGrlJouable.each { |grille|
+      if grille.nom_de_sauvegarde == nom_de_sauvegarde then 
+        @grille = grille 
+        return true
+      end
+    }
+    return false
   end
 
 
