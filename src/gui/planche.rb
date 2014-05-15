@@ -34,14 +34,14 @@ class Planche
 	attr_reader :modeEdition
 	
 	#creation de planche
-	def Planche.creer(jouable, modeEdition = false)
-		new(jouable, modeEdition)
+	def Planche.creer(jouable, modeEdition = false, texture = "coeurrouge")
+		new(jouable, modeEdition, texture)
 	end
 	
-	def initialize(jouable, modeEdition)
+	def initialize(jouable, modeEdition, texture)
 		dossier = CONSTANT_FICHIER_GUI_IMAGE #dossier contenant les images
 		@tabImg = ["blanc.jpg", "noir.jpg", "croix.jpg"]
-		@tabImg.map!{|img| dossier + img}
+		@tabImg.map!{|img| dossier + texture + "/" + img}
 		@jouable = jouable
 		@table = Table.new(jouable.taille,jouable.taille)
                 @table.add_events(Gdk::Event::BUTTON_PRESS_MASK)
