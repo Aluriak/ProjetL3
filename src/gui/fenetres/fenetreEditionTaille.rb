@@ -24,7 +24,7 @@ class FenetreEditionTaille
 		@chemin = "vierge"
 		
 		fenetreEditer = Window.new("Editer")
-		fenetreEditer.set_resizable(true)
+		fenetreEditer.set_resizable(false)
 
 		vBoxPrincipal = VBox.new(false, 3)
 		vBoxPrincipal.pack_start(hBoxHaut 	= HBox.new(false, 2))
