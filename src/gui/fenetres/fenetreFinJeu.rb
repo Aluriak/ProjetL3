@@ -11,14 +11,14 @@
 require "gtk2"
 require "glib2"
 load "src/gui/confirmerNouveauProfil.rb"
-
+include Gtk
 
 
 #################################
 # FENETRE FIN JEU		#
 #################################
 # mainteneur : BOURNEUF
-class FenetreFinJeu < Gtk::Window
+class FenetreFinJeu < Window
 
   ##
   # Attend une instance de picross, le temps de réalisation en seconde et le nombre d'appels à l'aide
@@ -26,11 +26,11 @@ class FenetreFinJeu < Gtk::Window
     # WINDOW
     super()
     self.modal = true
-    widgets = Gtk::VBox.new
+    widgets = VBox.new
 
 
     # BOUTON OK
-    bouton_ok = Gtk::Button.new("Ok !")
+    bouton_ok = Button.new("Ok !")
     bouton_ok.sensitive = false
 
 
@@ -49,7 +49,7 @@ class FenetreFinJeu < Gtk::Window
     
     
     # BOXING
-    widgets.pack_start(Gtk::Label.new("Votre score est de " + score.to_s), true, true)
+    widgets.pack_start(Label.new("Votre score est de " + score.to_s), true, true)
     widgets.pack_start(combo_profils, true, true)
     widgets.pack_start(bouton_ok, true, true)
     

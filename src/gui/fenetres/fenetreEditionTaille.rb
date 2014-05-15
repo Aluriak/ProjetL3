@@ -12,19 +12,17 @@ load "src/image/image.rb"
 #	Cette fenetre affiche les différents élements qu'on veut parametrer pour ensuite travailler
 #	sur une grille en mode Edition
 #
-class FenetreEditionTaille
+class FenetreEditionTaille < Window
 
 	@tailleGrille
 	@chemin	#texte qui est soit "vierge" soit le chemin de l'image (soit "pleine" +tard)
 	
 	def initialize(picross)
 		
-		p "pas beug\n"
-
 		@chemin = "vierge"
 		
-		fenetreEditer = Window.new("Editer")
-		fenetreEditer.set_resizable(false)
+		super("Editer")
+		set_resizable(false)
 
 		vBoxPrincipal = VBox.new(false, 3)
 		vBoxPrincipal.pack_start(hBoxHaut 	= HBox.new(false, 2))
@@ -53,9 +51,6 @@ class FenetreEditionTaille
 		
 		hBoxMilieu.pack_start(entryPath = Entry.new)
 		
-	
-
-
 		rbVierge.signal_connect("clicked") { 
 			boutonChargerImage.set_sensitive(false)
 			entryPath.set_visible(false)
@@ -94,10 +89,7 @@ class FenetreEditionTaille
 		hBoxBas.pack_start(boutonOK = Button.new(Stock::OK), true, true)
 		hBoxBas.pack_start(boutonFermer = Button.new(Stock::CLOSE), true, true)
 		
-		boutonFermer.signal_connect("clicked"){
-			fenetreEditer.destroy
-			#Gui.lancer
-		}
+		boutonFermer.signal_connect("clicked"){ destroy }
 		
 		boutonOK.signal_connect("clicked"){
 				
@@ -113,7 +105,7 @@ class FenetreEditionTaille
 				@tailleGrille = 25
 			end
 
-			fenetreEditer.destroy
+			destroy
 
 			grilleDetat =  Array.new(@tailleGrille) { Array.new(@tailleGrille)}
 		
@@ -147,11 +139,11 @@ class FenetreEditionTaille
 		}#fin de clic du boutonOK
 		
 		
-		boutonFermer.signal_connect("clicked"){ fenetreEditer.destroy }
+		boutonFermer.signal_connect("clicked"){ destroy }
 
-		fenetreEditer.add(vBoxPrincipal)
-		fenetreEditer.set_window_position(:center)
-		fenetreEditer.show_all
+		add(vBoxPrincipal)
+		set_window_position(:center)
+		show_all
 
 		entryPath.set_visible(false)
 	end
