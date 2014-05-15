@@ -213,6 +213,25 @@ class Picross
     @gestionnaireDeSauvegarde.chargerGrillesJouables
   end
 
+
+
+  ## 
+  # Sauvegarde le nom de texture donné, via la configuration
+  def sauverNomTexture(nom)
+    @config.nomTexture = nom
+  end
+
+
+
+  ##
+  # Accesseur sur le nom de texture de la configuration.
+  def nomTexture()
+    return @config.nomTexture
+  end
+
+
+
+
 end # end class
 
 
