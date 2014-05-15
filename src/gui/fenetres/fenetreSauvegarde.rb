@@ -29,7 +29,7 @@ class FenetreSauvegarde < Window
 
   ## 
   # prend une instance de class Picross en paramètre
-  def initialize(picross)
+  def initialize(picross, temps_ecoule)
     super("Sauvergader la partie en cours")
     signal_connect("destroy") { destroy }
     set_default_size(100,300)
@@ -89,12 +89,12 @@ class FenetreSauvegarde < Window
       # sauvegarde
       if validation and nom_savgrd != "" then
         picross.ajouterProfil(nom_profil)
-        if picross.sauverGrilleJouable(nom_savgrd) then
+        if picross.sauverGrilleJouable(nom_savgrd, temps_ecoule) then
           self.confirmerSauvegarde(nom_savgrd)
           self.destroy
         else
           if self.ecraserSauvegarde?(nom_savgrd) then
-            picross.sauverGrilleJouable(nom_savgrd, true) # force_sauvegarde true
+            picross.sauverGrilleJouable(nom_savgrd, temps_ecoule, true) # force_sauvegarde true
             self.confirmerSauvegarde(nom_savgrd)
             self.destroy
           end
