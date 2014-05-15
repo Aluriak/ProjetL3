@@ -15,7 +15,7 @@ load "src/grille/tableNombre.rb"
 
 # LOAD
 gds = GestionnaireDeSauvegarde.new(true)
-cnf = Configuration.new(5, Scores.creer(), [])
+cnf = Configuration.new(5, Scores.creer(), [], "default")
 
 
 # FILLING
