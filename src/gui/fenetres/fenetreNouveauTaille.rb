@@ -60,7 +60,7 @@ class FenetreNouveauTaille < Window
 
 		add(Frame.new.add(vb))
 		set_window_position(:center)
-		
+		set_modal(true)
 		show_all	
 	end
 end
