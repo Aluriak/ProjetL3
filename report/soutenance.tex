@@ -1,21 +1,21 @@
 \documentclass[12pt]{beamer}
-
 \usepackage[frenchb]{babel}
 \usepackage[T1]{fontenc}
-\usepackage[utf-8]{inputenc}    % accent
+\usepackage[utf8x]{inputenc} 
+\usepackage{ucs}   
 \usepackage{graphicx}           % pictures
 \usepackage{multimedia}         % sounds and movies
 \usetheme{Warsaw}
 \title {Projet Picross}
 \author{Groupe B}
 \date{16 Mai 2014}
-\institute{Universit√© du Maine}
+\institute{Université du Maine}
 %%%%%%%%%%%%%%%%%
-% PR√âAMBULE     %
+% PREAMBULE     %
 %%%%%%%%%%%%%%%%%
 \setbeamertemplate{itemize item}[circle]
 \hypersetup{
-        pdfpagemode = FullScreen,% afficher le pdf en plein √©cran
+        pdfpagemode = FullScreen,% afficher le pdf en plein Ecran
         pdfauthor   = {groupe B},%
         pdftitle    = {projet}%
         pdfsubject  = {projet},%
@@ -29,11 +29,11 @@
         \insertdocnavigationsymbol
         \insertbackfindforwardnavigationsymbol
 }
-% Faire appara√Ætre un sommaire avant chaque section
+% Faire apparaitre un sommaire avant chaque section
 \AtBeginSection[]{
         \begin{frame}
         \begin{center}{\Large Plan }\end{center}
-        %%% affiche en d√©but de chaque section, les noms de sections et
+        %%% affiche en début de chaque section, les noms de sections et
         %%% noms de sous-sections de la section en cours.
         \tableofcontents[currentsection,hideothersubsections]
         \end{frame} 
@@ -68,49 +68,53 @@
         \end{enumerate}\pause
      
       \item Objectif
-        \begin{enumerate}
+        \begin{itemize}
             \item Créer un Picross en Ruby
-        \end{enumerate}\pause
+        \end{itemize}\pause
      
       \item Delai
-        \begin{enumerate}
+        \begin{itemize}
             \item 3 mois
-        \end{enumerate}\pause
+        \end{itemize}
+ \end{enumerate}   
+ \end{frame}
     
+   \begin{frame}
+   \begin{enumerate}
    \item Liste des fonctionnalités
     
     \begin{enumerate}
                         
         \item Aide
-        \begin{enumerate}
+        \begin{itemize}
             \item En cas de blocage on peut avoir accès à l'aide 
             \item Permet de trouver une solution selon deux niveaux
-        \end{enumerate}\pause
+        \end{itemize}\pause
                         
         \item Gestion de sauvegarde
-        \begin{enumerate}
+        \begin{itemize}
             \item Sauvegarde la partie dans un fichier
-        \end{enumerate}\pause
+        \end{itemize}\pause
                         
         \item Score
-        \begin{enumerate}
+        \begin{itemize}
             \item Affiche les scores de la grille en cours
-        \end{enumerate}\pause
+        \end{itemize}\pause
                         
         \item Chargement de grille
-        \begin{enumerate}
+        \begin{itemize}
             \item Permet le chargement d'une grille déjà crée
-        \end{enumerate}\pause
+        \end{itemize}\pause
                         
         \item Edition
-        \begin{enumerate}
+        \begin{itemize}
             \item Possibilité de créer ses propres grilles.
-        \end{enumerate}\pause
+        \end{itemize}\pause
                         
         \item Manuel
-        \begin{enumerate}
+        \begin{itemize}
             \item Affiche les règles du jeu
-        \end{enumerate}\pause
+        \end{itemize}\pause
     \end{enumerate}
     
     
@@ -122,40 +126,42 @@
     
     %\item "Il s'agit d'un picross blablabla"
     
-    \end{enumerate}\pause
+    \end{enumerate}
 \end{frame}
 
 
 \section{Réalisation du projet}
 \subsection{Le déroulement du projet}
 
-\begin{frame}{Réalisation du projet}
- %\begin{enumerate}
-  %\item Le déroulement du projet
-    %\begin{enumerate}
-        %\item Répartition des tâches
-        %\item Diagramme de Gantt
-        %\item Diagramme UML
-    %\end{enumerate}
- %\end{enumerate}
+\begin{frame}
+\frametitle{Réalisation du projet}
+ \begin{enumerate}
+  \item Le déroulement du projet
+    \begin{enumerate}
+        \item Répartition des tâches
+        \item Diagramme de Gantt
+        \item Diagramme UML
+    \end{enumerate}
+ \end{enumerate}
 \end{frame}
 
 
 \begin{frame}
-  %{Diagramme de Gantt}
-  %\begin{figure}[t]
-    %\centering
-    %\includegraphics[height=\dimexpr11\textheight/16\relax]{ganttDiagramm}
-    %\caption{Diagramme de Gantt}
-  %\end{figure}
+  \frametitle{Diagramme de Gantt}
+  \begin{figure}[t]
+    \centering
+    \includegraphics[scale=0.38]{ganttDiagram}
+    \caption{Diagramme de Gantt}
+  \end{figure}
 \end{frame}
+
 \begin{frame}
-  %{Diagramme de UML}
-  %\begin{figure}[t]
-    %\centering
-    %\includegraphics[height=\dimexpr11\textheight/16\relax]{UMLDiagram}
-    %\caption{Diagrammes UML}
-  %\end{figure}
+  \frametitle{Diagramme de UML}
+  \begin{figure}[t]
+    \centering
+    \includegraphics[height=\dimexpr11\textheight/16\relax]{UMLDiagram}
+    \caption{Diagrammes UML}
+  \end{figure}
 \end{frame}
 
 \subsection{Aspects techniques}
@@ -197,7 +203,8 @@
 
 
 \subsection{Fonctionnalités}
-    \begin{frame} {Fonctionnalités}
+    \begin{frame} 
+    \frametitle{Fonctionnalités}
         \begin{enumerate}
             \item Fonctionnalités
             \begin{itemize}
@@ -207,18 +214,13 @@
                 \item Edition
                 \item Suppression
             \end{itemize}    
-                        
-            \item Problèmes rencontrés
-            \begin{enumerate}
-                \item Gestion du score 
-            \end{enumerate}
         \end{enumerate}
 \end{frame}
 
 \subsection{Difficultés}
     \begin{frame}
         \begin{itemize}
-          \item Travailler en groupe, la répartion des tâches
+          \item Travailler en groupe, la répartition des taches
           \item Utilisation de github
         \end{itemize}
     \end{frame}
@@ -228,13 +230,13 @@
     \end{frame}
 
 \section{Conclusion}
-    \begin{frame}{Conclusion}
+    \begin{frame}
+    \frametitle{Conclusion}
         
         \begin{enumerate}
             \item Perspectives d'améliorations
             \begin{itemize}
-                \item Jouer en lan
-                \item Proposer la sauvegarde de la grille courante lorsque l'utilisateur ferme l'application
+                \item Statistique d'un profil
                 \item Amélioration de l'interface 
             \end{itemize}
             
@@ -244,7 +246,7 @@
                 \item le travail collaboratif
             \end{enumerate}
             
-            \item Ce que l'on à aimé
+            \item Ce que l'on a aimé
             
          
         \end{enumerate}
