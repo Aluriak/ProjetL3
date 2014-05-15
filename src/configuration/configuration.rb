@@ -95,7 +95,11 @@ class Configuration
   ## 
   # Ajoute le profil donné à la liste des profils
   def ajouterProfil(nom_profil)
-    @profils.push(nom_profil) if not @profils.include?(nom_profil)
+    if not @profils.include?(nom_profil) then
+      @profils.push(nom_profil) 
+      Logs.add("Profil %s ajouté." % [nom_profil])
+    end
+
     return nil
   end
 

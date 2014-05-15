@@ -50,8 +50,11 @@ class GestionnaireDeSauvegarde
   # Ajoute une grille racine à la liste.
   def ajouterGrilleRacine(grille)
     raise "Grilles racines non chargées" if @grillesRacines == nil
-    @grillesRacinesModifiees = true
-    @grillesRacines.push(grille)
+    if not @grillesRacines.include?(grille) then
+      @grillesRacinesModifiees = true
+      @grillesRacines.push(grille)
+      Logs.add("Grille racine %s ajoutée à la liste des grilles racines." % [grille.nom])
+    end
     return nil
   end
   
@@ -65,6 +68,7 @@ class GestionnaireDeSauvegarde
     begin
       File.open(CONSTANT_FICHIER_DATA_RACINE, "r") do |f|
         @grillesRacines = Marshal.load(f)
+        Logs.add("%i grilles racines chargées depuis le fichier %s." % [@grillesRacines.size, CONSTANT_FICHIER_DATA_RACINE])
       end
     rescue Errno::ENOENT
       puts "ERREUR: GestionnaireDeSauvegarde: chargerGrillesRacines(): le fichier #{CONSTANT_FICHIER_DATA_RACINE} n'est pas accessible. "
@@ -83,6 +87,7 @@ class GestionnaireDeSauvegarde
     @grillesRacinesModifiees = false
     File.open(CONSTANT_FICHIER_DATA_RACINE, 'w') do |f|
      f.puts Marshal.dump(@grillesRacines)
+      Logs.add("%i grilles racines sauvegardées dans le fichier %s." % [@grillesRacines.size, CONSTANT_FICHIER_DATA_RACINE])
     end
     return nil
   end
@@ -125,6 +130,7 @@ class GestionnaireDeSauvegarde
           g = grille 
           grille = nil
           @grillesJouablesModifiees = true
+          Logs.add("Grille jouable %s ajoutée à la liste des grilles jouables." % [grille.nom_de_sauvegarde])
           return true
         else
           return false
@@ -135,6 +141,7 @@ class GestionnaireDeSauvegarde
     # si aucune sauvegarde n'a été trouvée
     @grillesJouables.push(grille)
     @grillesJouablesModifiees = true
+    Logs.add("Grille jouable %s ajoutée à la liste des grilles jouables." % [grille.nom_de_sauvegarde])
     return true
   end
   
@@ -147,6 +154,7 @@ class GestionnaireDeSauvegarde
     begin
       File.open(CONSTANT_FICHIER_DATA_JOUABLE, "r") do |f|
         @grillesJouables = Marshal.load(f)
+        Logs.add("%i grilles jouables chargées depuis le fichier %s." % [@grillesJouables.size, CONSTANT_FICHIER_DATA_JOUABLE])
       end
     rescue Errno::ENOENT
       puts "ERREUR: GestionnaireDeSauvegarde: chargerGrillesJouables(): le fichier #{CONSTANT_FICHIER_DATA_JOUABLE} n'est pas accessible. "
@@ -164,7 +172,8 @@ class GestionnaireDeSauvegarde
   def sauvegarderGrillesJouables()
     @grillesJouablesModifiees = false
     File.open(CONSTANT_FICHIER_DATA_JOUABLE, 'w') do |f|
-     f.puts Marshal.dump(@grillesJouables)
+      f.puts Marshal.dump(@grillesJouables)
+      Logs.add("%i grilles jouables sauvegardées dans le fichier %s." % [@grillesJouables.size, CONSTANT_FICHIER_DATA_JOUABLE])
     end
   end
 
@@ -184,6 +193,11 @@ class GestionnaireDeSauvegarde
   def supprimerGrilleJouable(nom_de_sauvegarde, taille)
     @grillesJouables.delete_if {|g| g.nom_de_sauvegarde == nom_de_sauvegarde }
   end
+
+
+
+  
+
 
   ##
   # Affichage de grillesRacines et grillesJouables

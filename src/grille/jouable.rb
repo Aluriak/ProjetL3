@@ -37,6 +37,7 @@ class GrilleJouable < GrilleRacine
     @nom_de_sauvegarde = nom_de_sauvegarde
     @temps_ecoule = temps_ecoule
     @matriceDeJeu = Array.new(taille) { Array.new(taille) {Etat.Blanc} }
+    Logs.add("Grille Jouable créée : taille=%i, nom=%s, nom_de_sauvegarde=%s, temps_ecoule=%i" % [taille, nom, nom_de_sauvegarde, temps_ecoule])
   end
 
 
