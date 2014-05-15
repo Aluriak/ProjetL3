@@ -11,9 +11,9 @@ class GrilleEditable
 	@tailleNouvelleMatrice
 	@picross
 
-	def initialize(grilleDetat)
+	def initialize(picross, tableEtat)
 		
-		@picross = Picross.new
+		@picross = picross
 		popupEdition = Window.new("Edition Grille")
 		popupEdition.set_resizable(false)
 		vbox = VBox.new(false, 3)
@@ -33,7 +33,7 @@ class GrilleEditable
 		hBoxBas.pack_start(boutonAnnuler = Button.new(Stock::CANCEL))
 		
 		# devrait être dans fenetreEditionTaille, et on récupère une grille jouable toute faite(vierge, noir, ou imagée)
-		planche = Planche.creer(jouable.matriceDeJeu,true)
+		planche = Planche.creer(tableEtat,true)
 		
 		table.attach(planche.table, 1, 2, 1, 2)
 		popupEdition.add(vbox)
@@ -47,8 +47,8 @@ class GrilleEditable
 				
 		#Quand on appuie sur btnSauvegarder, on crée la matrice de jeu
 		boutonSauvegarder.signal_connect("clicked"){ 
-			print "grille jouable dans grilleEditable #{jouable.matriceDeJeu}\n" if CONSTANT_MODE_DEBUG
-			picross.creerGrilleRacine(tableEtat) 
+			Logs.add("grille jouable dans grilleEditable #{tableEtat}\n")
+			@picross.creerGrilleRacine(tableEtat) 
 			confirmerEnregistrement(textNom.text)
 			popupEdition.destroy
 		}
