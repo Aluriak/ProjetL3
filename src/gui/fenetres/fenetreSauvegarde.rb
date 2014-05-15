@@ -87,7 +87,7 @@ class FenetreSauvegarde < Window
       end
 
       # sauvegarde
-      if validation and nom_savgrd != "" then
+      if validation and not nom_savgrd.empty? then
         picross.ajouterProfil(nom_profil)
         if picross.sauverGrilleJouable(nom_savgrd, temps_ecoule) then
           self.confirmerSauvegarde(nom_savgrd)
@@ -125,7 +125,7 @@ class FenetreSauvegarde < Window
   ##
   # Met à jour les boutons de la fenêtre.
   def maj_button
-    if @combo_profils.active_text != nil and @entry_nom.text != "" then
+    if @combo_profils.active_text != nil and not @entry_nom.text.empty? then
         @bouton_valider.sensitive = true
       else
         @bouton_valider.sensitive = false

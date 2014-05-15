@@ -44,7 +44,7 @@ class FenetreFinJeu < Gtk::Window
     combo_profils = ComboBoxEntry.new(true) # text only
     picross.profils.each { |nom| combo_profils.append_text(nom) }
     combo_profils.signal_connect("changed") {
-      bouton_ok.sensitive = ("" != combo_profils.active_text)
+      bouton_ok.sensitive = (!combo_profils.active_text.empty?)
     }
     
     
