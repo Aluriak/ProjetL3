@@ -57,9 +57,7 @@ class Gui < Window
 		new(tailleChoisie, nomGrille)
 	end
 	
-
 	
-
 
 	def initialize(tailleGrille, nomGrille)
 		@nbAppelAide = 0
@@ -75,14 +73,14 @@ class Gui < Window
 		timer_label = Label.new("")
 		timer = Chronometre.new(timer_label, @picross.grille.temps_ecoule)
 		
-
+		signal_connect("destroy") { Gtk.main_quit }
 
 		signal_connect('delete_event'){
 			
 
 
 			#FenetreSauvegarderAvantQuitter.new(@picross, timer)
-			FenetreSauvegarderAvantQuitter.show(@picross, timer, self)
+			FenetreSauvegarderAvantQuitter.show(@picross, timer.sec, self)
 		}
 
 
