@@ -13,7 +13,7 @@ class FenetreCharger < Window
 	def initialize(parent_gui, picross)
 		super("Charger une partie")
 		add(vb = VBox.new)
-		set_default_size(350, 60)
+		set_default_size(240, 60)
 		set_window_position(:center)
 		
 
