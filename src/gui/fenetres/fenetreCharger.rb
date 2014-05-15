@@ -91,6 +91,7 @@ class FenetreCharger < Window
 		
                 # SHOW
 		self.show_all
+		self.set_modal(true)
 	end
 
 
