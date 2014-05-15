@@ -23,6 +23,7 @@ class FenetreEditionTaille < Window
 		
 		super("Editer")
 		set_resizable(false)
+		set_window_position(:center)
 
 		vBoxPrincipal = VBox.new(false, 3)
 		vBoxPrincipal.pack_start(hBoxHaut 	= HBox.new(false, 2))
@@ -30,8 +31,6 @@ class FenetreEditionTaille < Window
 		vBoxPrincipal.pack_start(hBoxBas 	= HBox.new(false, 2))
 		
 		hBoxHaut.pack_start(Frame.new("Taille").add(vBoxTaille = VBox.new(false, 2)))
-		
-		
 		
 		vBoxTaille.pack_start(rb5 	= RadioButton.new("5 x 5"))
 		vBoxTaille.pack_start(rb10 	= RadioButton.new(rb5, "10 x 10"))
@@ -42,7 +41,6 @@ class FenetreEditionTaille < Window
 		hBoxHaut.pack_start(Frame.new("Type").add(vBoxType = VBox.new(false, 2)))
 		vBoxType.pack_start(rbVierge = RadioButton.new("Vierge"))
 		vBoxType.pack_start(rbPleine = RadioButton.new(rbVierge, "Pleine"))
-		
 		
 		vBoxType.pack_start(hBoxChargerImage = HBox.new(false, 2))
 		hBoxChargerImage.pack_start(rbCharger = RadioButton.new(rbPleine, ""))
@@ -93,16 +91,11 @@ class FenetreEditionTaille < Window
 		
 		boutonOK.signal_connect("clicked"){
 				
-			if (rb5.active?)
-				@tailleGrille = 5
-			elsif (rb10.active?)
-				@tailleGrille = 10
-			elsif (rb15.active?)
-				@tailleGrille = 15
-			elsif (rb20.active?)
-				@tailleGrille = 20
-			elsif (rb25.active?)
-				@tailleGrille = 25
+			if (rb5.active?) then @tailleGrille = 5
+			elsif (rb10.active?)then @tailleGrille = 10
+			elsif (rb15.active?) then @tailleGrille = 15
+			elsif (rb20.active?) then @tailleGrille = 20
+			elsif (rb25.active?) then @tailleGrille = 25
 			end
 
 			destroy
