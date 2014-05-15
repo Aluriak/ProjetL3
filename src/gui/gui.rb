@@ -89,7 +89,7 @@ class Gui < Window
 		menuHaut = MenuPrincipal.creerMenuHaut(hBoxHaut)
 		
 		menuHaut.clickerSur("Nouveau")	{ nouveau = FenetreNouveauTaille.new(self) }
-		menuHaut.clickerSur("Editer")	{ print "mode: edition\n"; fenetreEditer = FenetreEditionTaille.new }
+		menuHaut.clickerSur("Editer")	{ print "mode: edition\n"; fenetreEditer = FenetreEditionTaille.new(@picross) }
 		menuHaut.clickerSur("Charger")	{ fenetreCharger = FenetreCharger.new(self, @picross)}
 		menuHaut.clickerSur("Sauvegarder"){ fenetreSauvegarder = FenetreSauvegarde.new(@picross, timer.sec) }
 		menuHaut.clickerSur("Manuel")	{ fenetreManuel = FenetreManuel.new }
