@@ -19,6 +19,7 @@ class MenuPrincipal
 
 		#Chargement de l'icone pour le boutton score
 		iconeScore = Gtk::Image.new CONSTANT_FICHIER_GUI_IMAGE+"score.png"
+		iconePreference = Gtk::Image.new CONSTANT_FICHIER_GUI_IMAGE+"preference.png"
 
 		toolbar = Toolbar.new
 		toolbar.set_toolbar_style(Toolbar::Style::ICONS)
@@ -29,6 +30,7 @@ class MenuPrincipal
       	savetb = ToolButton.new(Stock::SAVE)
       	scoretb = ToolButton.new(iconeScore, "Score")
       	helptb = ToolButton.new(Stock::HELP)
+		preftb = ToolButton.new(iconePreference, "Preferences")
       	abouttb = ToolButton.new(Stock::ABOUT)
     
 
@@ -38,7 +40,8 @@ class MenuPrincipal
       	toolbar.insert(3, savetb)
       	toolbar.insert(4, scoretb)
       	toolbar.insert(5, helptb)
-      	toolbar.insert(6, abouttb)
+		toolbar.insert(6, preftb)
+      	toolbar.insert(7, abouttb)
 
       	newtb.set_label("Nouveau")
       	edittb.set_label("Editer")
@@ -46,9 +49,10 @@ class MenuPrincipal
       	savetb.set_label("Sauvegarder")
       	scoretb.set_label("Score")
       	helptb.set_label("Manuel")
+		preftb.set_label("Preferences")
       	abouttb.set_label("A Propos")
 		
-		@listMenuBtns = [newtb,edittb,opentb,savetb,scoretb,helptb,abouttb]
+		@listMenuBtns = [newtb,edittb,opentb,savetb,scoretb,helptb,preftb,abouttb]
 
       	box.pack_start(toolbar)
 	end	

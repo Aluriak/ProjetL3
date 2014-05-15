@@ -39,7 +39,7 @@ class Planche
 	end
 	
 	def initialize(jouable, modeEdition, texture)
-		dossier = CONSTANT_FICHIER_GUI_IMAGE #dossier contenant les images
+		dossier = CONSTANT_FICHIER_GUI_TEXTURE #dossier contenant les images
 		@tabImg = ["blanc.jpg", "noir.jpg", "croix.jpg"]
 		@tabImg.map!{|img| dossier + texture + "/" + img}
 		@jouable = jouable
