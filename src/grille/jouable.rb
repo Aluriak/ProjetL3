@@ -163,8 +163,10 @@ class GrilleJouable < GrilleRacine
   ##
   # Marshal API : méthode de chargement
   def marshal_load(ary)
-    # le dernier item est pour self
-    @matriceDeJeu, @nom_de_sauvegarde, @temps_ecoule = ary.pop
+    # les derniers items sont pour self
+    @temps_ecoule = ary.pop
+    @nom_de_sauvegarde = ary.pop
+    @matriceDeJeu = ary.pop
     # les autres sont pour la classe-mère
     super ary
   end
