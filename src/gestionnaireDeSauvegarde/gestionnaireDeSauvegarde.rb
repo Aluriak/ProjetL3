@@ -174,14 +174,8 @@ class GestionnaireDeSauvegarde
   ##
   # Retourne une liste contenant les grilles jouables de taille reçue.
   def grillesJouablesDeTaille(taille)
-    grillesJouablesTemp = []
     raise "Grilles jouables non chargées" if @grillesJouables == nil
-    @grillesJouables.each do |grl|
-      if grl.taille == taille then 
-        grillesJouablesTemp.push(grl)
-      end
-    end
-    return grillesJouablesTemp
+    return @grillesJouables.select { |g| g.taille == taille }
   end
   
 
