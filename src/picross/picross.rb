@@ -198,6 +198,21 @@ class Picross
     @config.sauvegarder
     return nil
   end
+
+
+
+  ##
+  # Remet le jeu avec ses valeurs par défaut.
+  def restaurerDonneesInitiales()
+    load "src/addDefaultContent.rb"
+    # Chargement de la Configuration
+    @config = Configuration.charger
+    # Chargement d'une grille
+    @gestionnaireDeSauvegarde = GestionnaireDeSauvegarde.new
+    @gestionnaireDeSauvegarde.chargerGrillesRacines
+    @gestionnaireDeSauvegarde.chargerGrillesJouables
+  end
+
 end # end class
 
 
