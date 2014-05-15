@@ -22,11 +22,11 @@ CONSTANT_FICHIER_DATA_SAVE 	= 'data/saves'		unless defined?	CONSTANT_FICHIER_DAT
 #modes d'utilisation des grille;utile pour la gui
 CONSTANT_MODE_JOUABLE		= -5 			unless defined?	CONSTANT_MODE_JOUABLE
 CONSTANT_MODE_EDTION		= -6 			unless defined?	CONSTANT_MODE_EDTION
-# Fichiers images pour la GUI
-CONSTANT_FICHIER_GUI_IMAGE	= 'data/gui/texture/'		unless defined?	CONSTANT_FICHIER_GUI_IMAGE
 
-# le nombre de chiffres que l'utilisateur peut entrer pour une taille de grille
-CONSTANT_MAX_CHIFFRES 		= 2 			unless defined?	CONSTANT_MAX_CHIFFRES
+# Fichiers texture pour la GUI
+CONSTANT_FICHIER_GUI_TEXTURE	= 'data/gui/texture/'	unless defined?	CONSTANT_FICHIER_GUI_TEXTURE
+# Fichiers images pour la GUI
+CONSTANT_FICHIER_GUI_IMAGE = 'data/gui/' unless defined?	CONSTANT_FICHIER_GUI_IMAGE
 
 # Mode d'interprétation.
 CONSTANT_MODE_DEBUG		= true			unless defined?	CONSTANT_MODE_DEBUG
