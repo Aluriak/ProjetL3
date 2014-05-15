@@ -20,11 +20,18 @@ cdc_:
 	- pdflatex cahierDesCharges.tex &&  pdflatex cahierDesCharges.tex
 
 
+# Soutenance
+stn: stn_ posttreat
+stn_:
+	- pdflatex soutenance.tex && pdflatex soutenance.tex
+	- evince pdf/soutenance.pdf
+
 # PDF moving
 posttreat: clear
 	- mv *.pdf pdf/
 
 # cleaning
 clear:
-	rm *.aux *.log
+	rm *.aux *.log 
+	- rm *.toc *.nav *.snm *.out
 
