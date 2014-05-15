@@ -22,6 +22,7 @@ class GrilleJouable < GrilleRacine
   @matriceDeJeu
   @nom_de_sauvegarde
   @temps_ecoule
+  @nbAppelAide
 
   # matrice carrée d'états de cases du picross
   attr_accessor :matriceDeJeu
@@ -29,13 +30,16 @@ class GrilleJouable < GrilleRacine
   attr_accessor :nom_de_sauvegarde
   # temps écoulé depuis que l'utilisateur planche sur cette grille, en secondes
   attr_accessor :temps_ecoule
+  # nombre de fois où le joueur s'est fait aider
+  attr_accessor :nbAppelAide
 
 
   #initialisation de la grille
-  def initialize(taille, nom = nil, tableLigne = nil, tableColonne = nil, nom_de_sauvegarde = nil, temps_ecoule = 0)
+  def initialize(taille, nom = nil, tableLigne = nil, tableColonne = nil, nom_de_sauvegarde = nil, temps_ecoule = 0, nbAppelAide = 0)
     super(taille, nom, tableLigne, tableColonne)
     @nom_de_sauvegarde = nom_de_sauvegarde
     @temps_ecoule = temps_ecoule
+    @nbAppelAide = nbAppelAide
     @matriceDeJeu = Array.new(taille) { Array.new(taille) {Etat.Blanc} }
     Logs.add("Grille Jouable créée : taille=%i, nom=%s, nom_de_sauvegarde=%s, temps_ecoule=%i" % [taille, nom, nom_de_sauvegarde, temps_ecoule])
   end
@@ -155,7 +159,7 @@ class GrilleJouable < GrilleRacine
   def marshal_dump
     # concaténation de la structure de la classe mère et de self
     # l'item de self est placé en dernière place de tableau
-    super + [@matriceDeJeu, @nom_de_sauvegarde, @temps_ecoule]
+    super + [@matriceDeJeu, @nom_de_sauvegarde, @temps_ecoule, @nbAppelAide]
 
   
   end
@@ -164,6 +168,7 @@ class GrilleJouable < GrilleRacine
   # Marshal API : méthode de chargement
   def marshal_load(ary)
     # les derniers items sont pour self
+    @nbAppelAide = ary.pop
     @temps_ecoule = ary.pop
     @nom_de_sauvegarde = ary.pop
     @matriceDeJeu = ary.pop
