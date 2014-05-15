@@ -10,16 +10,16 @@ include Gtk
 # FenetreNouveauTaille est la fenetre qui s'ouvre lorsqu'on appuie sur "Nouveau".
 # Cela ouvre une fenetre où on peut choisir une nouvelle partie, selon sa taille, 
 # de 5x5 jusqu'à 25x25.
-class FenetreNouveauTaille
+class FenetreNouveauTaille < Window
 
 	@tailleNouvelleMatrice
 
 	def initialize(ancienneFenetre)
 
-		#Creation d'une 2eme fenetre pour choisir la taille de la grille
-		popupTailleGrille = Window.new("Nouvelle Grille")
-		popupTailleGrille.set_resizable(false)
-
+		super("Nouvelle Grille")
+		set_default_size(210,100)
+		#set_resizable(false)
+		
 		vb = VBox.new(false, 6)
 		
 		vb.pack_start(b5 = RadioButton.new("5 x 5"))
@@ -32,7 +32,7 @@ class FenetreNouveauTaille
 		hbBouton = HBox.new(false, 1)
 		hbBouton.pack_start(boutonOK = Button.new(Stock::OK), true, true)
 		hbBouton.pack_start(boutonAnnuler = Button.new(Stock::CLOSE), true, true)
-		boutonAnnuler.signal_connect("clicked") { popupTailleGrille.destroy }
+		boutonAnnuler.signal_connect("clicked") { destroy }
 		vb.pack_start(hbBouton)
 
 		#Evenement lors du click sur OK
@@ -53,13 +53,14 @@ class FenetreNouveauTaille
 			#Il faudra donc surcharger le constructeur de gui pour pouvoir y ajouter une taille de matrice
 			print "Lancement de la nouvelle grille de taille : ", @tailleNouvelleMatrice, "\n"
 
-			popupTailleGrille.destroy
+			self.destroy
 			ancienneFenetre.destroy
 			Gui.lancer(@tailleNouvelleMatrice)
 		}
 
-		popupTailleGrille.add(Frame.new.add(vb))
-		popupTailleGrille.set_window_position :center
-		popupTailleGrille.show_all	
+		add(Frame.new.add(vb))
+		set_window_position(:center)
+		
+		show_all	
 	end
 end

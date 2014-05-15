@@ -71,14 +71,14 @@ class FenetreSauvegarde < Window
 
     # connects
     @combo_profils.signal_connect("changed") { |last|
-      self.maj_entry_nom() if last != @combo_profils.active_text 
+      self.maj_entry_nom if last != @combo_profils.active_text 
     }
     @entry_nom.signal_connect("insert_text") { |last|
-      self.maj_button()
+      self.maj_button
     }
     @bouton_valider.signal_connect("clicked") {
       nom_profil = @combo_profils.active_text
-      nom_savgrd = @entry_nom.text()
+      nom_savgrd = @entry_nom.text
       validation = true
 
       # vérification de création de profil
@@ -124,7 +124,7 @@ class FenetreSauvegarde < Window
 
   ##
   # Met à jour les boutons de la fenêtre.
-  def maj_button()
+  def maj_button
     if @combo_profils.active_text != nil and @entry_nom.text != "" then
         @bouton_valider.sensitive = true
       else
