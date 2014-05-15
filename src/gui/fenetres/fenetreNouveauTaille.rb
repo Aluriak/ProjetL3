@@ -11,56 +11,89 @@ include Gtk
 # Cela ouvre une fenetre où on peut choisir une nouvelle partie, selon sa taille, 
 # de 5x5 jusqu'à 25x25.
 class FenetreNouveauTaille < Window
+  @combo_tailles
+  @combo_grille
+  @boutonValider
+  @boutonAnnuler
+  @gui
 
-	@tailleNouvelleMatrice
+	def initialize(gui)
+          @gui = gui
+          super("Nouvelle Grille")
+          self.set_default_size(300,30)
+          box_window = HBox.new
+          self.add(box_window)
+          self.set_window_position(:center)
 
-	def initialize(ancienneFenetre)
+          # BOUTON ANNULER
+          box_window.pack_start(@boutonAnnuler = Button.new(Stock::CLOSE))
+          @boutonAnnuler.signal_connect("clicked") { self.destroy }
 
-		super("Nouvelle Grille")
-		set_default_size(210,100)
-		#set_resizable(false)
-		
-		vb = VBox.new(false, 6)
-		
-		vb.pack_start(b5 = RadioButton.new("5 x 5"))
-		vb.pack_start(b10 = RadioButton.new(b5, "10 x 10"))
-		vb.pack_start(b15 = RadioButton.new(b10, "15 x 15"))
-		vb.pack_start(b20 = RadioButton.new(b15, "20 x 20"))
-		vb.pack_start(b25 = RadioButton.new(b20, "25 x 25"))
-		
-		#Ajout de la 2eme horizontal box contenant boutons
-		hbBouton = HBox.new(false, 1)
-		hbBouton.pack_start(boutonOK = Button.new(Stock::OK), true, true)
-		hbBouton.pack_start(boutonAnnuler = Button.new(Stock::CLOSE), true, true)
-		boutonAnnuler.signal_connect("clicked") { destroy }
-		vb.pack_start(hbBouton)
+          # COMBO POUR LA TAILLE
+          box_window.pack_start(Label.new("  Taille : "))
+          box_window.pack_start(@combo_tailles = ComboBox.new(true))
+          5.downto(1) { |i| @combo_tailles.insert_text(0, "%i" % [i*5]) }
+          @combo_tailles.signal_connect("changed") {
+            taille = @combo_tailles.active_text.to_i
+            if Grille.tailles.include?(taille) then
+              self.actualiserListeGrille
+            end
+          }
 
-		#Evenement lors du click sur OK
-		boutonOK.signal_connect("clicked"){
-			if (b5.active?)
-				@tailleNouvelleMatrice = 5
-			elsif (b10.active?)
-				@tailleNouvelleMatrice = 10
-			elsif (b15.active?)
-				@tailleNouvelleMatrice = 15
-			elsif (b20.active?)
-				@tailleNouvelleMatrice = 20
-			elsif (b25.active?)
-				@tailleNouvelleMatrice = 25			
-			end				
-						
-			#On crée un nouveau jeu de picross avec pour taille, la taille du radiobutton selectionné
-			#Il faudra donc surcharger le constructeur de gui pour pouvoir y ajouter une taille de matrice
-			print "Lancement de la nouvelle grille de taille : ", @tailleNouvelleMatrice, "\n"
 
-			self.destroy
-			ancienneFenetre.destroy
-			Gui.lancer(@tailleNouvelleMatrice)
-		}
+          # COMBO POUR LES GRILLES
+          box_window.pack_start(Label.new("  Grille : "))
+          box_window.pack_start(@combo_grille = ComboBox.new(true))
+          puts @combo_grille
 
-		add(Frame.new.add(vb))
-		set_window_position(:center)
-		
-		show_all	
-	end
+
+          # BOUTON VALIDER
+          box_window.pack_start(@boutonValider = Button.new(Stock::OK))
+          @boutonValider.signal_connect("clicked") {
+            taille = @combo_tailles.active_text.to_i
+            nom_grille = @combo_grille.active_text
+            if nom_grille == "Une au hasard" then
+              self.lancerNouvellePartie(taille) # partie au hasard
+            else
+              self.lancerNouvellePartie(taille, nom_grille)
+            end
+          }
+
+
+          # SHOW !
+          self.show_all
+        end
+
+
+
+
+        ##
+        # Vide puis remplis la @combo_grille selon les grilles disponibles
+        # via la @gui et la taille choisie par @combo_tailles.
+        def actualiserListeGrille()
+          taille = @combo_tailles.active_text.to_i
+          @combo_grille.set_active(0)
+          (puts "plop" ; @combo_grille.remove_text(0)) while @combo_grille.active_text != nil
+          @gui.picross.grillesRacinesDeTaille(taille).each { |g| @combo_grille.insert_text(0, g.nom) }
+          # Ajout du choix "grille aléatoire"
+          @combo_grille.insert_text(0, "Une au hasard")
+        end 
+
+
+
+
+        ## 
+        # Lance une nouvelle partie, avec une grille de la taille demandée, prise au hasard parmis les grilles racines.
+        # Néanmoins, si le nom est renseigné, et juste, c'est la grille racine ayant ce nom qui sera chargée.
+        def lancerNouvellePartie(taille, nom = nil)
+          Logs.add("Lancement de la nouvelle grille de taille " + taille.to_s + " #{nom != nil ? " générée depuis #{nom}" : ""}")
+          self.destroy
+          @gui.destroy
+          Gui.lancer(taille, nom)
+        end
 end
+
+
+
+
+
