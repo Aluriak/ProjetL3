@@ -1,3 +1,4 @@
+# -*- encoding: utf-8 -*-
 load "src/commun/commun.rb"
 
 include Gtk
