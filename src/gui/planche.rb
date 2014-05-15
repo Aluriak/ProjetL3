@@ -54,7 +54,6 @@ class Planche
 		@table = Table.new(tableEtat.size,tableEtat.size)
                 @table.add_events(Gdk::Event::BUTTON_PRESS_MASK)
 		@modeEdition = modeEdition
-		#self.setup(tableEtat)
                 @image = Array.new(tableEtat.size) { Array.new(tableEtat.size) }
 		@event_box = Array.new(tableEtat.size) { Array.new(tableEtat.size) }
 		
