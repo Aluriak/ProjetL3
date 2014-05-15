@@ -60,13 +60,13 @@ class Gui < Window
 	
 
 	def initialize(tailleGrille, nomGrille)
-		@nbAppelAide = 0
 		@picross = Picross.new
 		tailleGrille = @picross.derniereTailleDeGrille if tailleGrille == nil 
 		# si pas de grille particulière demandée ou si la grille demandée n'existe pas
 		if nomGrille == nil or not @picross.chargerGrilleJouableNommee(nomGrille, tailleGrille) then
 			@picross.nouvelleGrilleJouableDeTaille(tailleGrille)
 		end
+		@nbAppelAide = @picross.grille.nbAppelAide
 		super("Picross")
                 self.signal_connect("destroy") {
                   Gtk.main_quit
@@ -109,7 +109,7 @@ class Gui < Window
 		menuHaut.clickerSur("Nouveau")	{ nouveau = FenetreNouveauTaille.new(self) }
 		menuHaut.clickerSur("Editer")	{ fenetreEditer = FenetreEditionTaille.new(@picross) }
 		menuHaut.clickerSur("Charger")	{ fenetreCharger = FenetreCharger.new(self, @picross)}
-		menuHaut.clickerSur("Sauvegarder"){ fenetreSauvegarder = FenetreSauvegarde.new(@picross, timer.sec) }
+		menuHaut.clickerSur("Sauvegarder"){ fenetreSauvegarder = FenetreSauvegarde.new(@picross, timer.sec, @nbAppelAide) }
 		menuHaut.clickerSur("Manuel")	{ fenetreManuel = FenetreManuel.new }
 		menuHaut.clickerSur("Preference"){ fenetreManuel = FenetrePreference.new(@picross) } 
 		menuHaut.clickerSur("A Propos")	{ fenetreAPropos = FenetreAPropos.new}
