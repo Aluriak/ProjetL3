@@ -169,7 +169,7 @@ class Aide
         @TabAideDispo.push("Vous pouvez appliquer la technique \n'La cave à vin' sur la ligne " + num_ligne.to_s())
       elsif(val_max > @Largeur / 2)
         @TabAideDispo.push("Vous pouvez appliquer la technique \n'L'ilot bleu' sur la ligne " + num_ligne.to_s())
-      elsif(nombres > @Largeur / 2)
+      elsif(nombres.size > @Largeur / 2)
         @TabAideDispo.push("Regardez à la ligne" + num_ligne.to_s()+",\nVous pouvez colorier la premiere case !!")
       end
     }
@@ -187,7 +187,7 @@ class Aide
         @TabAideDispo.push("Vous pouvez appliquer la technique \n'La cave à vin' sur la colonne " + num_colonne.to_s())
       elsif(val_max > @Hauteur / 2)
         @TabAideDispo.push("Vous pouvez appliquer la technique \n'L'ilot bleu' sur la colonne " + num_colonne.to_s())
-      elsif(nombres > @Hauteur / 2)
+      elsif(nombres.size > @Hauteur / 2)
         @TabAideDispo.push("Regardez à la ligne" + num_colonne.to_s()+",\nVous pouvez colorier la premiere case !!")
       end
     }
