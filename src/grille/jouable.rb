@@ -16,19 +16,26 @@ load "src/grille/racine.rb"
 #################################
 # mainteneur : BOURNEUF
 
-# Une Grille Jouable est une grille Racine avec une matrice d'état.
-# Un Picross modifiée par l'utilisateur.
+# Une Grille Jouable est une grille Racine avec une matrice d'état et quelques données permettant de gérer les sauvegardes.
+# Un Picross modifié par l'utilisateur.
 class GrilleJouable < GrilleRacine
   @matriceDeJeu
+  @nom_de_sauvegarde
+  @temps_ecoule
 
   # matrice carrée d'états de cases du picross
   attr_reader :matriceDeJeu
-
+  # nom sous lequel la grille jouable est connue
+  attr_accessor :nom_de_sauvegarde
+  # temps écoulé depuis que l'utilisateur planche sur cette grille, en secondes
+  attr_accessor :temps_ecoule
 
 
   #initialisation de la grille
-  def initialize(taille, nom = nil, tableLigne = nil, tableColonne = nil)
+  def initialize(taille, nom = nil, tableLigne = nil, tableColonne = nil, nom_de_sauvegarde = nil, temps_ecoule = nil)
     super(taille, nom, tableLigne, tableColonne)
+    @nom_de_sauvegarde = nom_de_sauvegarde
+    @temps_ecoule = temps_ecoule
     @matriceDeJeu = Array.new(taille) { Array.new(taille) {Etat.Blanc} }
   end
 
@@ -43,9 +50,10 @@ class GrilleJouable < GrilleRacine
   # Sinon, elles sont remplacées par des matrices initialisées aléatoirement.
   # Le nom généré aléatoirement se base sur la taille et la date courante.
   def GrilleJouable.deTaille(taille, nom = nil, 
-  			    tableLigne = nil, tableColonne = nil)
+  	                      tableLigne = nil, tableColonne = nil, 
+                              nom_de_sauvegarde = nil, temps_ecoule = nil)
     raise "Taille #{taille} non définie" if not Grille.tailles.include?(taille)
-    return new(taille, nom, tableLigne, tableColonne)
+    return new(taille, nom, tableLigne, tableColonne, nom_de_sauvegarde, temps_ecoule)
   end
 
 
@@ -147,14 +155,16 @@ class GrilleJouable < GrilleRacine
   def marshal_dump
     # concaténation de la structure de la classe mère et de self
     # l'item de self est placé en dernière place de tableau
-    super + [matriceDeJeu]
+    super + [@matriceDeJeu, @nom_de_sauvegarde, @temps_ecoule]
+
+  
   end
 
   ##
   # Marshal API : méthode de chargement
   def marshal_load(ary)
     # le dernier item est pour self
-    @matriceDeJeu = ary.pop
+    @matriceDeJeu, @nom_de_sauvegarde, @temps_ecoule = ary.pop
     # les autres sont pour la classe-mère
     super ary
   end
