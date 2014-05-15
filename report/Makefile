@@ -27,10 +27,16 @@ stn_:
 	- evince pdf/soutenance.pdf
 
 
+# manuel d'utilisateur
+utl: utl_ posttreat
+utl_:
+	- pdflatex manuel.tex && pdflatex manuel.tex
+
+
 # manuel d'aide
 aid: aid_ posttreat
 aid_:
-	- pdflatex manuel.tex && pdflatex aide.tex
+	- pdflatex ManuelAidePicross.tex && pdflatex ManuelAidePicross.tex
 
 
 # PDF moving
