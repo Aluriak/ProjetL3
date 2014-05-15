@@ -35,12 +35,6 @@ class FenetrePreference < Window
 		box_profil.pack_start(Label.new("Texture: "))
 		box_profil.pack_start(@combo_profils)
 		
-		
-		box_grille = HBox.new
-		@entry_nom = Entry.new
-		box_grille.pack_start(Label.new("Nom de sauvegarde: "))
-		box_grille.pack_start(@entry_nom)
-		
 		box_bouton = HBox.new
 		@bouton_valider = Button.new(Stock::OK)
 		@bouton_annuler = Button.new(Stock::CLOSE)
@@ -50,7 +44,7 @@ class FenetrePreference < Window
 		
 		box_window = VBox.new
 		box_window.pack_start(box_profil, true, true)
-		box_window.pack_start(box_grille, true, true)
+		#box_window.pack_start(box_grille, true, true)
 		box_window.pack_start(box_bouton, true, true)
 		self.add(box_window)
 		self.set_window_position(:center)
@@ -60,16 +54,15 @@ class FenetrePreference < Window
 		@combo_profils.signal_connect("changed") { |last|
 			self.maj_entry_nom if last != @combo_profils.active_text 
 		}
-		@entry_nom.signal_connect("insert_text") { |last|
-			self.maj_button
-		}
+
+		@bouton_annuler.signal_connect("clicked") { self.destroy }
 		@bouton_valider.signal_connect("clicked") {
 			
 			nom_profil = @combo_profils.active_text
 			nom_savgrd = @entry_nom.text
 			validation = true
 		}
-		@bouton_annuler.signal_connect("clicked") { self.destroy }
+
 		
 	end
 	
