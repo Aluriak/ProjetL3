@@ -24,7 +24,7 @@ class GrilleJouable < GrilleRacine
   @temps_ecoule
 
   # matrice carrée d'états de cases du picross
-  attr_reader :matriceDeJeu
+  attr_accessor :matriceDeJeu
   # nom sous lequel la grille jouable est connue
   attr_accessor :nom_de_sauvegarde
   # temps écoulé depuis que l'utilisateur planche sur cette grille, en secondes
