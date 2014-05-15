@@ -117,13 +117,15 @@ class Picross
   ##
   # Sauvegarde la grille actuellement jouée dans une nouvelle sauvegarde.
   # Le nom de sauvegarde permet d'identifier la sauvegarde.
+  # Le nombre d'appel à l'aide et le le temps écoulé sont des valeurs assignée plus tard à la grille.
   # force_sauvegarde indique si la sauvegarde doit écraser une éventuelle 
   # sauvegarde du même nom.
-  def sauverGrilleJouable(nom_de_sauvegarde, temps_ecoule, 
+  def sauverGrilleJouable(nom_de_sauvegarde, temps_ecoule, nb_appel_aide, 
                           force_sauvegarde = false)
     # on modifie le nom de sauvegarde et le temps écoulé de la grille
     @grille.nom_de_sauvegarde = nom_de_sauvegarde
     @grille.temps_ecoule = temps_ecoule
+    @grille.nbAppelAide = nb_appel_aide
     # et on sauvegarde
     if @gestionnaireDeSauvegarde.ajouterGrilleJouable(
                         @grille, force_sauvegarde) then 
@@ -164,6 +166,28 @@ class Picross
     @gestionnaireDeSauvegarde.sauvegarderGrillesJouables
     return nil
   end
+
+
+
+
+
+  ##
+  # Ajoute le score demandé au scores
+  def ajouterScoreALaGrille(grille_nom, score, profil_nom)
+    @config.ajouterScoreALaGrille(grille_nom, score, profil_nom)
+  end
+
+
+
+
+
+  ##
+  # Retourne les meilleurs scores pour la grille dont le nom est en argument
+  def scoresDeGrille(grille_nom)
+    return @config.scores.scoresDeGrille(grille_nom)
+  end
+
+
 
   ## 
   # Renvois une instance de la classe Scores
