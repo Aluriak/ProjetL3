@@ -92,8 +92,7 @@ class GrilleJouable < GrilleRacine
   # Lève des exceptions en cas d'état ou de coordonées non valides
   def basculer(i, j, etat = nil)
     # Assertion
-    #raise "Etat #{etat} non valide" if not (Etat.include?(etat) and etat != nil)
-	raise "Coordonnées(#{x},#{y}) non valide" if not (i.between?(0, @matriceDeJeu.size) and j.between?(0, @matriceDeJeu.size))
+    raise "Coordonnées(#{x},#{y}) non valide" if not (i.between?(0, @matriceDeJeu.size) and j.between?(0, @matriceDeJeu.size))
     # Bascule
     if etat == nil then
       @matriceDeJeu[i][j] = Etat.suivant(@matriceDeJeu[i][j])
