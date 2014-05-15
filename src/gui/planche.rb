@@ -9,7 +9,7 @@ class Planche
 	@event_box
 	@image
 	@table
-	@jouable
+	@tableEtat
 	@modeEdition
         @modeDragAndAssign
         @etatModeDragAndAssign
@@ -22,14 +22,14 @@ class Planche
 	#listes de images
 	attr_reader :tabImg		
 	
-	#event sur la jouable d'image
+	#event sur la tableEtat d'image
 	attr_reader :event_box	
 	
-	#jouable d'image
+	#tableEtat d'image
 	attr_reader :image		
 	
-	# la grille jouable qui est en train d'etre jouée
-	attr_reader :jouable
+	# la grille tableEtat qui est en train d'etre jouée
+	attr_reader :tableEtat
 	
 	# si on est en mode édition, alors les etats sont soit blanc soit noir
 	# sinon, en mode normal(ou jeu), les états sont drapeau, blanc, ou noir
@@ -41,26 +41,26 @@ class Planche
 	
 
 	#creation de planche
-	def Planche.creer(jouable, modeEdition = false, texture = "coeurrouge")
-		new(jouable, modeEdition, texture)
+	def Planche.creer(tableEtat, modeEdition = false, texture = "coeurrouge")
+		new(tableEtat, modeEdition, texture)
 	end
 	
-	def initialize(jouable, modeEdition, texture)
+	def initialize(tableEtat, modeEdition, texture)
                 @modeDragAndAssign = false
 		dossier = CONSTANT_FICHIER_GUI_TEXTURE #dossier contenant les images
 		@tabImg = ["blanc.jpg", "noir.jpg", "croix.jpg"]
 		@tabImg.map!{|img| dossier + texture + "/" + img}
-		@jouable = jouable
-		@table = Table.new(jouable.taille,jouable.taille)
+		@tableEtat = tableEtat
+		@table = Table.new(tableEtat.size,tableEtat.size)
                 @table.add_events(Gdk::Event::BUTTON_PRESS_MASK)
 		@modeEdition = modeEdition
-		#self.setup(jouable)
-		@image = Array.new(jouable.taille) { Array.new(jouable.taille) }
-		@event_box = Array.new(jouable.taille) { Array.new(jouable.taille) }
+		#self.setup(tableEtat)
+                @image = Array.new(tableEtat.size) { Array.new(tableEtat.size) }
+		@event_box = Array.new(tableEtat.size) { Array.new(tableEtat.size) }
 		
-		0.upto(jouable.taille - 1) { |y| 
-			0.upto(jouable.taille - 1) { |x|                         
-				@image[x][y] = self.image(jouable.matriceDeJeu[x][y])
+		0.upto(@tableEtat.size-1) { |y| 
+			0.upto(@tableEtat.size-1) { |x|                         
+				@image[x][y] = self.image(@tableEtat[x][y])
 				@event_box[x][y] = EventBox.new.add(@image[x][y])  
 				
 				@table.attach(@event_box[x][y], y, y+1, x, x+1) 
@@ -69,27 +69,27 @@ class Planche
 				@event_box[x][y].signal_connect("button_press_event") { |widget, event|
 					# si on est en mode edition -> noir/blanc
 					if modeEdition then
-						@jouable.basculer(x,y) 
-						if @jouable.etat(x,y) == Etat.Drapeau then
-							@jouable.basculer(x,y) 
+						basculer(x,y) 
+						if @tableEtat[x][y] == Etat.Drapeau then
+							basculer(x,y) 
 						end
 					# sinon mode normal -> noir/blanc/drapeau
 					else
                                                 clic_gauche = (event.button == 1)
-						#@jouable.basculer(x,y)												
-                                                if @jouable.etat(x,y) == Etat.Noir then
-                                                  @jouable.basculer(x,y, Etat.Blanc)   if clic_gauche
-                                                  @jouable.basculer(x,y, Etat.Drapeau) if not clic_gauche
-                                                elsif @jouable.etat(x,y) == Etat.Blanc then
-                                                  @jouable.basculer(x,y, Etat.Noir)    if clic_gauche
-                                                  @jouable.basculer(x,y, Etat.Drapeau) if not clic_gauche
+						#@tableEtat.basculer(x,y)												
+                                                if @tableEtat[x][y] == Etat.Noir then
+                                                  basculer(x,y, Etat.Blanc)   if clic_gauche
+                                                  basculer(x,y, Etat.Drapeau) if not clic_gauche
+                                                elsif @tableEtat[x][y] == Etat.Blanc then
+                                                  basculer(x,y, Etat.Noir)    if clic_gauche
+                                                  basculer(x,y, Etat.Drapeau) if not clic_gauche
                                                 else
-                                                  @jouable.basculer(x,y, Etat.Noir)  if clic_gauche
-                                                  @jouable.basculer(x,y, Etat.Blanc) if not clic_gauche
+                                                  basculer(x,y, Etat.Noir)  if clic_gauche
+                                                  basculer(x,y, Etat.Blanc) if not clic_gauche
                                                 end
 					end
                                         @modeDragAndAssign = true
-                                        @etatModeDragAndAssign = @jouable.etat(x,y)
+                                        @etatModeDragAndAssign = @tableEtat[x][y]
 					actualiser(x,y)                                  
 				}
                                 @event_box[x][y].signal_connect("button_release_event") {
@@ -97,7 +97,7 @@ class Planche
                                 }
                                 @event_box[x][y].signal_connect("enter-notify-event") {
                                   if @modeDragAndAssign then
-                                    @jouable.basculer(x,y, @etatModeDragAndAssign)
+                                    basculer(x,y, @etatModeDragAndAssign)
                                   end
                                 }
 			}
@@ -112,7 +112,17 @@ class Planche
 	
 	#actualise(affiche la nouvelle valeur) la case en (x, y)
 	def actualiser(x,y)
-		@image[x][y].file = @tabImg[@jouable.etat(x,y)]
+		@image[x][y].file = @tabImg[@tableEtat[x][y]]
 	end
+
+        ## 
+        # Bascule l'état de la case (x;y) de la table d'état.
+        # Si l'arguement est nil, l'état passera au suivant.
+        def basculer(x, y, etat = nil)
+          @tableEtat[x][y] = Etat.suivant(@tableEtat[x][y]) if etat == nil
+          @tableEtat[x][y] = etat if etat != nil
+        end
+
+
 
 end #fin de classe
