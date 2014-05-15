@@ -135,10 +135,11 @@ class Gui < Window
                       if @picross.grille.terminee? then
                         fenetre_fin_jeu = FenetreFinJeu.new(@picross, timer.sec, @nbAppelAide)
 			fenetre_fin_jeu.show_all
+                        self.destroy
                         fenetre_fin_jeu.signal_connect("destroy") {
                           # on démarre une nouvelle grille !
-                          @picross.nouvelleGrilleJouableDeTaille(@picross.grille.taille)
-                          timer.raz
+                          # de la même taille que la précédente !
+                          Gui.lancer(@picross.grille.taille)
                         }
                       else 
                         dialog = MessageDialog.new(self, 
