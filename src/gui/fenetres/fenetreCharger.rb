@@ -13,52 +13,55 @@ class FenetreCharger < Window
 	def initialize(picross)
 		super("Charger une partie")
 		add(vb = VBox.new)
-		set_default_size(250, 60)
+		set_default_size(350, 60)
 		set_window_position(:center)
 		
-		cbParties = ComboBox.new
-		cbParties.signal_connect("changed") { |w, e|
-			on_changed(w, e, label)
-		}
-		
-			
-		#picross.gestionnaireDeSauvegarde.each { |nom| @combo_profils.append_text(nom) }
-		buttonValider = Button.new("Valider")
+
+                # WIDGETS
+                # Liste des tailels de grille
 		labelTaille = Label.new("Taille de la grille : ")
 		cbTailles = ComboBox.new
+                # ajout des tailles de grilles 
+		Grille.tailles.each() { |t| cbTailles.append_text(t.to_s) }
 		cbTailles.set_active(0)
 
+                # Liste des parties jouables
+		cbParties = ComboBox.new
+                picross.grillesJouablesDeTaille(5).each { |grille| cbParties.append_text(grille.nom) }
+		
+		# Bouton de validation	
+		buttonValider = Button.new("Valider")
+                buttonValider.sensitive = (cbParties.active_text != nil)
 	
+
+                # PACKING
 		vb.pack_start(hboxTaille = HBox.new(2))
 		hboxTaille.pack_start(labelTaille)
 		hboxTaille.pack_start(cbTailles)
 		vb.pack_start(cbParties)
 		vb.pack_start(buttonValider)
 
-		if(cbTailles.active == 0)
-			tailleFiltre = 5
-		elsif(cbTailles.active == 1)
-			tailleFiltre = 10
-		elsif(cbTailles.active == 2)
-			tailleFiltre = 15
-		elsif(cbTailles.active == 3)
-			tailleFiltre = 20    		
-		end
 		
-		cbTailles.append_text("5")
-		cbTailles.append_text("10")
-		cbTailles.append_text("15")
-		cbTailles.append_text("20")
-		
+	        # CONNECTS	
 		cbTailles.signal_connect("changed") {
-			#Grilles.taille.each { |tailleFiltre| lst_grilles.push(gds.grilleJouablesDeTaille(tailleFiltre)) }
+                  sauvegardes = picross.grillesJouablesDeTaille(cbTailles.active_text.to_i) # nouvelles entrées
+                  # on rajoute les nouvelles
+                  sauvegardes.each { |grl| cbParties.append_text(grl.nom_de_sauvegarde) } 
+                  # si il n'y a pas de parties dispos, validation impossible
+                  buttonValider.sensitive = (cbParties.active_text != nil)
+		}
+
+		cbParties.signal_connect("changed") {
+                  # si il n'y a pas de partie sélectionnée, validation impossible
+                  buttonValider.sensitive = (cbParties.active_text != nil)
 		}
 			
 		buttonValider.signal_connect("clicked"){
-			#picross.gestionnaireDeSauvegarde.chargerGrillesJouables
+                  picross.chargerGrilleJouableNommee(cbParties.active_text, cbTailles.active_text.to_i)
 		}
 		
-		show_all
+                # SHOW
+		self.show_all
 	end
 
 end
