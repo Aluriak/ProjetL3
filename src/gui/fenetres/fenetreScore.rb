@@ -48,7 +48,7 @@ class FenetreScore < Window
     add(Frame.new.add(table))
     set_modal(true)            # this window block interactions with 
     set_transient_for(parent)  # parent window.
-    set_resizable(true)
+    set_resizable(false)
     set_default_size(300,40+scores_grille.size*30)
     set_window_position :center
     show_all

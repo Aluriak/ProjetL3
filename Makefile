@@ -9,4 +9,4 @@ doc_:
 	rdoc src/ -x src/samples/ -o doc 
 
 default:
-	ruby1.9.1 src/addDefaultContent.rb
+	#ruby1.9.1 src/addDefaultContent.rb

@@ -8,7 +8,9 @@
 #################################
 # IMPORTS			#
 #################################
-load "src/gui/confirmerNouveauProfil.rb"
+load "src/gestionnaireDeSauvegarde/gestionnaireDeSauvegarde.rb"
+load "src/picross/picross.rb"
+
 require "gtk2"
 require "glib2"
 require "date"
@@ -22,6 +24,7 @@ class FenetrePreference < Window
 		signal_connect("destroy") { destroy }
 		set_default_size(100,300)
 		set_resizable(false)
+		set_modal(true)
 		@gestionnaireDeSauvegarde = gestionnaireDeSauvegarde
 		
 		# ComboBox des profils: création et insertion de chacun des profils existants
@@ -33,12 +36,6 @@ class FenetrePreference < Window
 		box_profil.pack_start(Label.new("Texture: "))
 		box_profil.pack_start(@combo_profils)
 		
-		
-		box_grille = HBox.new
-		@entry_nom = Entry.new
-		box_grille.pack_start(Label.new("Nom de sauvegarde: "))
-		box_grille.pack_start(@entry_nom)
-		
 		box_bouton = HBox.new
 		@bouton_valider = Button.new(Stock::OK)
 		@bouton_annuler = Button.new(Stock::CLOSE)
@@ -48,7 +45,7 @@ class FenetrePreference < Window
 		
 		box_window = VBox.new
 		box_window.pack_start(box_profil, true, true)
-		box_window.pack_start(box_grille, true, true)
+		#box_window.pack_start(box_grille, true, true)
 		box_window.pack_start(box_bouton, true, true)
 		self.add(box_window)
 		self.set_window_position(:center)
@@ -56,37 +53,17 @@ class FenetrePreference < Window
 		
 		# connects
 		@combo_profils.signal_connect("changed") { |last|
-		                                           self.maj_entry_nom if last != @combo_profils.active_text 
-		                                         }
-		@entry_nom.signal_connect("insert_text") { |last|
-		                                           self.maj_button
-		                                         }
-		@bouton_valider.signal_connect("clicked") {
-			nom_profil = @combo_profils.active_text
-		nom_savgrd = @entry_nom.text
-		validation = true
-		
-		# vérification de création de profil
-		#if not @picross.profils.include?(nom_profil) then
-		#validation = ConfirmerNouveauProfil.show(self, nom_profil)
-		#end
-		
-		# sauvegarde
-		#if validation and nom_savgrd != "" then
-		#picross.ajouterProfil(nom_profil)
-		#if picross.sauverGrilleJouable(nom_savgrd, temps_ecoule) then
-		#self.confirmerSauvegarde(nom_savgrd)
-		#self.destroy
-		#else
-		#if self.ecraserSauvegarde?(nom_savgrd) then
-		#picross.sauverGrilleJouable(nom_savgrd, temps_ecoule, true) # force_sauvegarde true
-		#self.confirmerSauvegarde(nom_savgrd)
-		#self.destroy
-		#end
-		#end
-		#end
+			self.maj_entry_nom if last != @combo_profils.active_text 
 		}
+
 		@bouton_annuler.signal_connect("clicked") { self.destroy }
+		@bouton_valider.signal_connect("clicked") {
+			
+			nom_profil = @combo_profils.active_text
+			nom_savgrd = @entry_nom.text
+			validation = true
+		}
+
 		
 	end
 	
@@ -110,7 +87,7 @@ class FenetrePreference < Window
 	##
 	# Met à jour les boutons de la fenêtre.
 	def maj_button
-		if @combo_profils.active_text != nil and @entry_nom.text != "" then
+		if @combo_profils.active_text != nil and not @entry_nom.text.empty? then
 			@bouton_valider.sensitive = true
 		else
 			@bouton_valider.sensitive = false

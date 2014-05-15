@@ -6,7 +6,7 @@ include Gtk
 
 load "src/picross/picross.rb"
 
-class GrilleEditable
+class GrilleEditable < Window
 
 	@tailleNouvelleMatrice
 	@picross
@@ -14,8 +14,11 @@ class GrilleEditable
 	def initialize(picross, tableEtat)
 		
 		@picross = picross
-		popupEdition = Window.new("Edition Grille")
-		popupEdition.set_resizable(false)
+		super("Edition Grille")
+		set_window_position(:center)
+		set_default_size(210,100)
+		set_modal(true)
+		set_resizable(false)
 		vbox = VBox.new(false, 3)
 		
 		#Grille
@@ -36,11 +39,11 @@ class GrilleEditable
 		planche = Planche.creer(tableEtat,true)
 		
 		table.attach(planche.table, 1, 2, 1, 2)
-		popupEdition.add(vbox)
-		popupEdition.set_window_position(:center)
-		popupEdition.show_all
+		add(vbox)
+		set_window_position(:center)
+		show_all
 		
-		boutonAnnuler.signal_connect("clicked"){ popupEdition.destroy }
+		boutonAnnuler.signal_connect("clicked"){ destroy }
 		textNom.signal_connect("insert_text") {
 			boutonSauvegarder.sensitive = textNom.text.empty? ? false : true
 		}
@@ -50,7 +53,7 @@ class GrilleEditable
 			Logs.add("grille jouable dans grilleEditable #{tableEtat}\n")
 			@picross.creerGrilleRacine(tableEtat) 
 			confirmerEnregistrement(textNom.text)
-			popupEdition.destroy
+			destroy
 		}
 	end
 	

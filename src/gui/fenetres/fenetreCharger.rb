@@ -13,7 +13,8 @@ class FenetreCharger < Window
 	def initialize(parent_gui, picross)
 		super("Charger une partie")
 		add(vb = VBox.new)
-		set_default_size(350, 60)
+		set_default_size(240, 60)
+		set_resizable(false)
 		set_window_position(:center)
 		
 
@@ -90,6 +91,7 @@ class FenetreCharger < Window
 		
                 # SHOW
 		self.show_all
+		self.set_modal(true)
 	end
 
 

@@ -12,19 +12,18 @@ load "src/image/image.rb"
 #	Cette fenetre affiche les différents élements qu'on veut parametrer pour ensuite travailler
 #	sur une grille en mode Edition
 #
-class FenetreEditionTaille
+class FenetreEditionTaille < Window
 
 	@tailleGrille
 	@chemin	#texte qui est soit "vierge" soit le chemin de l'image (soit "pleine" +tard)
 	
 	def initialize(picross)
 		
-		p "pas beug\n"
-
 		@chemin = "vierge"
 		
-		fenetreEditer = Window.new("Editer")
-		fenetreEditer.set_resizable(true)
+		super("Editer")
+		set_resizable(false)
+		set_window_position(:center)
 
 		vBoxPrincipal = VBox.new(false, 3)
 		vBoxPrincipal.pack_start(hBoxHaut 	= HBox.new(false, 2))
@@ -32,8 +31,6 @@ class FenetreEditionTaille
 		vBoxPrincipal.pack_start(hBoxBas 	= HBox.new(false, 2))
 		
 		hBoxHaut.pack_start(Frame.new("Taille").add(vBoxTaille = VBox.new(false, 2)))
-		
-		
 		
 		vBoxTaille.pack_start(rb5 	= RadioButton.new("5 x 5"))
 		vBoxTaille.pack_start(rb10 	= RadioButton.new(rb5, "10 x 10"))
@@ -45,7 +42,6 @@ class FenetreEditionTaille
 		vBoxType.pack_start(rbVierge = RadioButton.new("Vierge"))
 		vBoxType.pack_start(rbPleine = RadioButton.new(rbVierge, "Pleine"))
 		
-		
 		vBoxType.pack_start(hBoxChargerImage = HBox.new(false, 2))
 		hBoxChargerImage.pack_start(rbCharger = RadioButton.new(rbPleine, ""))
 		hBoxChargerImage.pack_start(boutonChargerImage = Button.new("Charger Image"))
@@ -53,9 +49,6 @@ class FenetreEditionTaille
 		
 		hBoxMilieu.pack_start(entryPath = Entry.new)
 		
-	
-
-
 		rbVierge.signal_connect("clicked") { 
 			boutonChargerImage.set_sensitive(false)
 			entryPath.set_visible(false)
@@ -94,26 +87,18 @@ class FenetreEditionTaille
 		hBoxBas.pack_start(boutonOK = Button.new(Stock::OK), true, true)
 		hBoxBas.pack_start(boutonFermer = Button.new(Stock::CLOSE), true, true)
 		
-		boutonFermer.signal_connect("clicked"){
-			fenetreEditer.destroy
-			#Gui.lancer
-		}
+		boutonFermer.signal_connect("clicked"){ destroy }
 		
 		boutonOK.signal_connect("clicked"){
 				
-			if (rb5.active?)
-				@tailleGrille = 5
-			elsif (rb10.active?)
-				@tailleGrille = 10
-			elsif (rb15.active?)
-				@tailleGrille = 15
-			elsif (rb20.active?)
-				@tailleGrille = 20
-			elsif (rb25.active?)
-				@tailleGrille = 25
+			if (rb5.active?) then @tailleGrille = 5
+			elsif (rb10.active?)then @tailleGrille = 10
+			elsif (rb15.active?) then @tailleGrille = 15
+			elsif (rb20.active?) then @tailleGrille = 20
+			elsif (rb25.active?) then @tailleGrille = 25
 			end
 
-			fenetreEditer.destroy
+			destroy
 
 			grilleDetat =  Array.new(@tailleGrille) { Array.new(@tailleGrille)}
 		
@@ -147,11 +132,12 @@ class FenetreEditionTaille
 		}#fin de clic du boutonOK
 		
 		
-		boutonFermer.signal_connect("clicked"){ fenetreEditer.destroy }
+		boutonFermer.signal_connect("clicked"){ destroy }
 
-		fenetreEditer.add(vBoxPrincipal)
-		fenetreEditer.set_window_position(:center)
-		fenetreEditer.show_all
+		add(vBoxPrincipal)
+		set_window_position(:center)
+		show_all
+		set_modal(true)
 
 		entryPath.set_visible(false)
 	end

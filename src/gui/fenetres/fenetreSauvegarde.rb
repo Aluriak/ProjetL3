@@ -30,9 +30,10 @@ class FenetreSauvegarde < Window
   ## 
   # prend une instance de class Picross en paramètre
   def initialize(picross, temps_ecoule)
-    super("Sauvergader la partie en cours")
+    super("Sauvegarder la partie en cours")
     signal_connect("destroy") { destroy }
     set_default_size(100,300)
+    set_modal(true)
     set_resizable(false)
     @picross = picross
   
@@ -87,7 +88,7 @@ class FenetreSauvegarde < Window
       end
 
       # sauvegarde
-      if validation and nom_savgrd != "" then
+      if validation and not nom_savgrd.empty? then
         picross.ajouterProfil(nom_profil)
         if picross.sauverGrilleJouable(nom_savgrd, temps_ecoule) then
           self.confirmerSauvegarde(nom_savgrd)
@@ -125,7 +126,7 @@ class FenetreSauvegarde < Window
   ##
   # Met à jour les boutons de la fenêtre.
   def maj_button
-    if @combo_profils.active_text != nil and @entry_nom.text != "" then
+    if @combo_profils.active_text != nil and not @entry_nom.text.empty? then
         @bouton_valider.sensitive = true
       else
         @bouton_valider.sensitive = false
