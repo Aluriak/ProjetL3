@@ -111,7 +111,7 @@ class Gui < Window
 		menuHaut.clickerSur("Charger")	{ fenetreCharger = FenetreCharger.new(self, @picross)}
 		menuHaut.clickerSur("Sauvegarder"){ fenetreSauvegarder = FenetreSauvegarde.new(@picross, timer.sec) }
 		menuHaut.clickerSur("Manuel")	{ fenetreManuel = FenetreManuel.new }
-		menuHaut.clickerSur("Preference"){ fenetreManuel = FenetrePreference.new(nil) } #mettre un gds à la place
+		menuHaut.clickerSur("Preference"){ fenetreManuel = FenetrePreference.new(@picross) } 
 		menuHaut.clickerSur("A Propos")	{ fenetreAPropos = FenetreAPropos.new}
 		
 		menuHaut.clickerSur("Score")	{ 
