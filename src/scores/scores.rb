@@ -126,18 +126,23 @@ class Scores
   #  avec le nom du joueur l'ayant réalisé. 
   #  Si les scores déjà entrés sont meilleurs, le score donné ne sera pas ajouté.
   def ajouterScoreALaGrille(grille_nom, score, profil_nom)    
+    score_ajoute = [profil_nom, score]
     # si la grille a déjà des scores
     if @scoreGrille.has_key?(grille_nom) then
-      @scoreGrille[grille_nom].push([profil_nom, score])      # on ajoute
+      @scoreGrille[grille_nom].push(score_ajoute)      # on ajoute
       @scoreGrille[grille_nom].sort! {|a,b| a[1] <=> b[1] }   # on trie
-      # et s'il y en a trop, on enlève le dernier
+    # et s'il y en a trop, on enlève le dernier
       if @scoreGrille[grille_nom].size > @max_score_par_grille then
-        @scoreGrille[grille_nom].pop
+        score_retire = @scoreGrille[grille_nom].pop
       end
 
     # si pas de scores existant, on créé l'entrée
     else
-      @scoreGrille[grille_nom] = [[profil_nom, score]]
+      @scoreGrille[grille_nom] = [score_ajoute]
+    end
+
+    if score_ajoute != score_retire then
+      Logs.add("Le score de " + profil_nom + " est dans les high scores de la grille #{grille_nom} !")
     end
   end
   
