@@ -81,8 +81,8 @@ class Gui < Window
 			
 
 
-			FenetreSauvegarderAvantQuitter.new(@picross, timer)
-
+			#FenetreSauvegarderAvantQuitter.new(@picross, timer)
+			FenetreSauvegarderAvantQuitter.show(@picross, timer, self)
 		}
 
 
