@@ -21,7 +21,7 @@ include Gtk
 
 
 
-class FenetreSauvegarderAvantQuitter < Window
+class FenetreSauvegarderAvantQuitter
 
 
 	 # impossible de créer une instance de classe
@@ -46,21 +46,25 @@ class FenetreSauvegarderAvantQuitter < Window
    	
     
     btnQuit.signal_connect("clicked"){
-    	puts "Quit"
+    	parent.destroy
 
     }
+
     btnAnnuler.signal_connect("clicked"){
-    	puts "Annuler"
+    	dialog.destroy
     }
+
     btnSauvegarder.signal_connect("clicked"){
-    	puts "Save"
+    	FenetreSauvegarde.new(picross, timer)
+    	#parent.destroy
     }
+
+    dialog.signal_connect("destroy"){dialog.destroy}
 
     dialog.set_resizable(false)
     dialog.show_all
     dialog.run
-    dialog.destroy
-
+   
 
     
   end
