@@ -24,6 +24,7 @@ class FenetrePreference < Window
 		signal_connect("destroy") { destroy }
 		set_default_size(100,300)
 		set_resizable(false)
+		set_modal(true)
 		@gestionnaireDeSauvegarde = gestionnaireDeSauvegarde
 		
 		# ComboBox des profils: création et insertion de chacun des profils existants
