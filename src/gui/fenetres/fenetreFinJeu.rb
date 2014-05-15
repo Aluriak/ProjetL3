@@ -25,7 +25,7 @@ class FenetreFinJeu < Window
   def initialize(picross, temps, nb_appel_aide)
     # WINDOW
     super()
-    self.modal = true
+    self.set_modal(true)
     widgets = VBox.new
 
 
