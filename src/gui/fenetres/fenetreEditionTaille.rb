@@ -4,10 +4,10 @@ require "glib2"
 include Gtk
 
 load "src/gui/fenetres/grilleEditable.rb"
-load "src/image/image.rb" # cause des problèmes(conflits) entre Gtk::Image et RMagick::Image, à voir comment changer ça
+load "src/image/image.rb"
 
 #		
-#				FENETRE EDITION TAILLE
+#		FENETRE EDITION TAILLE
 #
 #	Cette fenetre affiche les différents élements qu'on veut parametrer pour ensuite travailler
 #	sur une grille en mode Edition
@@ -17,7 +17,7 @@ class FenetreEditionTaille
 	@tailleGrille
 	@chemin	#texte qui est soit "vierge" soit le chemin de l'image (soit "pleine" +tard)
 	
-	def initialize
+	def initialize(picross)
 		
 		p "pas beug\n"
 
@@ -142,7 +142,7 @@ class FenetreEditionTaille
 			end
 		
 			p grilleDetat
-			grilleEditable = GrilleEditable.new(grilleDetat)
+			grilleEditable = GrilleEditable.new(picross, grilleDetat)
 		
 		}#fin de clic du boutonOK
 		
