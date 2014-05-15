@@ -11,6 +11,8 @@ class Planche
 	@table
 	@jouable
 	@modeEdition
+        @modeDragAndAssign
+        @etatModeDragAndAssign
 
 	DEBUG = false
 	
@@ -32,13 +34,19 @@ class Planche
 	# si on est en mode édition, alors les etats sont soit blanc soit noir
 	# sinon, en mode normal(ou jeu), les états sont drapeau, blanc, ou noir
 	attr_reader :modeEdition
+
+        # Si vrai, le mode drag and assign est activé. Dans le ce mode, toute case 
+        # rencontrée par la souris de l'utilisateur est basculée à l'état suivant.
+        attr_accessor :modeDragAndAssign
 	
+
 	#creation de planche
 	def Planche.creer(jouable, modeEdition = false, texture = "coeurrouge")
 		new(jouable, modeEdition, texture)
 	end
 	
 	def initialize(jouable, modeEdition, texture)
+                @modeDragAndAssign = false
 		dossier = CONSTANT_FICHIER_GUI_IMAGE #dossier contenant les images
 		@tabImg = ["blanc.jpg", "noir.jpg", "croix.jpg"]
 		@tabImg.map!{|img| dossier + texture + "/" + img}
@@ -80,10 +88,22 @@ class Planche
                                                   @jouable.basculer(x,y, Etat.Blanc) if not clic_gauche
                                                 end
 					end
+                                        @modeDragAndAssign = true
+                                        @etatModeDragAndAssign = @jouable.etat(x,y)
 					actualiser(x,y)                                  
 				}
+                                @event_box[x][y].signal_connect("button_release_event") {
+                                        @modeDragAndAssign = false
+                                }
+                                @event_box[x][y].signal_connect("enter-notify-event") {
+                                  if @modeDragAndAssign then
+                                    @jouable.basculer(x,y, @etatModeDragAndAssign)
+                                  end
+                                }
 			}
 		}
+
+
 	end
 	
 	def image(etat)
