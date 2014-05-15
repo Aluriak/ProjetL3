@@ -70,6 +70,9 @@ class Gui < Window
 			@picross.nouvelleGrilleJouableDeTaille(tailleGrille)
 		end
 		super("Picross")
+                self.signal_connect("destroy") {
+                  Gtk.main_quit
+                }
 
 		# GESTION DU CHRONOMÈTRE
 		timer_label = Label.new("")
@@ -88,7 +91,7 @@ class Gui < Window
 
 		set_resizable(false)
 		vbox = VBox.new(false, 2)
-    add_events(Gdk::Event::BUTTON_PRESS_MASK)
+                add_events(Gdk::Event::BUTTON_PRESS_MASK)
 		
 		grille_jouable = @picross.grille
 
@@ -135,10 +138,10 @@ class Gui < Window
                       if @picross.grille.terminee? then
                         fenetre_fin_jeu = FenetreFinJeu.new(@picross, timer.sec, @nbAppelAide)
 			fenetre_fin_jeu.show_all
-                        self.destroy
                         fenetre_fin_jeu.signal_connect("destroy") {
                           # on démarre une nouvelle grille !
                           # de la même taille que la précédente !
+                          self.destroy
                           Gui.lancer(@picross.grille.taille)
                         }
                       else 
