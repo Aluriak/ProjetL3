@@ -10,7 +10,7 @@ load "src/gestionnaireDeSauvegarde/gestionnaireDeSauvegarde.rb"
 class FenetreCharger < Window
 
 
-	def initialize(picross)
+	def initialize(parent_gui, picross)
 		super("Charger une partie")
 		add(vb = VBox.new)
 		set_default_size(350, 60)
@@ -57,7 +57,12 @@ class FenetreCharger < Window
 		}
 			
 		buttonValider.signal_connect("clicked"){
-                  picross.chargerGrilleJouableNommee(cbParties.active_text, cbTailles.active_text.to_i)
+                  # destruction de la gui existante
+                  parent_gui.destroy
+                  # et création d'une nouvelle
+                  gui = Gui.new(cbTailles.active_text.to_i, cbParties.active_text)
+                  # destruction de la fenetre de chargement
+                  self.destroy
 		}
 		
                 # SHOW
