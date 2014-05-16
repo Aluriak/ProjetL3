@@ -67,8 +67,8 @@ class FenetreFinJeu < Window
       profil_existant = picross.profils.include?(profil_nom)
       # si le profil existe ou confirmation de création de profil
       if profil_existant or ConfirmerNouveauProfil.show(self, profil_nom) then
-        picross.ajouterProfil(profil_nom)  # gère le cas où le profil existe déjà
-        picross.scores.ajouterScoreALaGrille(picross.grille.nom, score, profil_nom)
+        picross.ajouterScoreALaGrille(picross.grille.nom, score, profil_nom)
+        picross.sauvegarderScores
       end
       # fin de la fenêtre
       self.destroy

@@ -14,7 +14,6 @@ load "src/aide/aideWrap.rb"
 # objets dans la fenetre principale
 load "src/gui/planche.rb"
 load "src/gui/menuPrincipal.rb"
-load "src/gui/tablechiffre.rb"
 load "src/gui/chronometre.rb"
 
 # fenetres
@@ -60,13 +59,13 @@ class Gui < Window
 	
 
 	def initialize(tailleGrille, nomGrille)
-		@nbAppelAide = 0
 		@picross = Picross.new
 		tailleGrille = @picross.derniereTailleDeGrille if tailleGrille == nil 
 		# si pas de grille particulière demandée ou si la grille demandée n'existe pas
 		if nomGrille == nil or not @picross.chargerGrilleJouableNommee(nomGrille, tailleGrille) then
 			@picross.nouvelleGrilleJouableDeTaille(tailleGrille)
 		end
+		@nbAppelAide = @picross.grille.nbAppelAide
 		super("Picross")
                 self.signal_connect("destroy") {
                   Gtk.main_quit
@@ -109,15 +108,14 @@ class Gui < Window
 		menuHaut = MenuPrincipal.creerMenuHaut(hBoxHaut)
 		
 		menuHaut.clickerSur("Nouveau")	{ nouveau = FenetreNouveauTaille.new(self) }
-		menuHaut.clickerSur("Editer")	{ print "mode: edition\n"; fenetreEditer = FenetreEditionTaille.new(@picross) }
+		menuHaut.clickerSur("Editer")	{ fenetreEditer = FenetreEditionTaille.new(@picross) }
 		menuHaut.clickerSur("Charger")	{ fenetreCharger = FenetreCharger.new(self, @picross)}
-		menuHaut.clickerSur("Sauvegarder"){ fenetreSauvegarder = FenetreSauvegarde.new(@picross, timer.sec) }
+		menuHaut.clickerSur("Sauvegarder"){ fenetreSauvegarder = FenetreSauvegarde.new(@picross, timer.sec, @nbAppelAide) }
 		menuHaut.clickerSur("Manuel")	{ fenetreManuel = FenetreManuel.new }
 		menuHaut.clickerSur("Preference"){ fenetreManuel = FenetrePreference.new(@picross) } 
 		menuHaut.clickerSur("A Propos")	{ fenetreAPropos = FenetreAPropos.new}
-		
 		menuHaut.clickerSur("Score")	{ 
-			fenetreScore = FenetreScore.new(self, @picross.scores.scoresDeGrille(@picross.grille.nom), @picross.grille.nom) 
+			fenetreScore = FenetreScore.new(self, @picross.scoresDeGrille(@picross.grille.nom), @picross.grille.nom) 
 		}
 		
 		
