@@ -48,7 +48,12 @@ class Planche
 	def initialize(tableEtat, modeEdition, texture)
                 @modeDragAndAssign = false
 		dossier = CONSTANT_FICHIER_GUI_TEXTURE #dossier contenant les images
-		@tabImg = ["blanc.jpg", "noir.jpg", "croix.jpg"]
+		if tableEtat.size == 25
+			@tabImg = ["blanc25.jpg", "noir25.jpg", "croix25.jpg"]
+		else
+			@tabImg = ["blanc.jpg", "noir.jpg", "croix.jpg"]
+		end
+		
 		@tabImg.map!{|img| dossier + texture + "/" + img}
 		@tableEtat = tableEtat
 		@table = Table.new(tableEtat.size,tableEtat.size)
