@@ -37,7 +37,7 @@ class FenetreSauvegarderAvantQuitter
       "Sauvegarder la grille courante avant de quitter? ", 
       parent, 
       Dialog::DESTROY_WITH_PARENT | Dialog::MODAL)
-    dialog.vbox.pack_start(Label.new("Attention vos modifications sur la grille courante seront perdues\nsi vous ne la sauvegardez pas."))
+    dialog.vbox.pack_start(Label.new("\tAttention vos modifications sur la grille\n\tcourante seront perdues si vous ne la sauvegardez pas."))
     dialog.vbox.pack_start(hbox = HBox.new)
 
     hbox.pack_start(btnQuit = Button.new("Quitter sans sauvegarder"))
