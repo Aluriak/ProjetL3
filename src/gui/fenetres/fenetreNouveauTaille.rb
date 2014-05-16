@@ -21,6 +21,8 @@ class FenetreNouveauTaille < Window
           @gui = gui
           super("Nouvelle Grille")
           self.set_default_size(300,30)
+          set_resizable(false)
+          set_modal(false)
           box_window = HBox.new
           self.add(box_window)
           self.set_window_position(:center)
