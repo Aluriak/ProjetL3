@@ -28,6 +28,7 @@ load "src/gui/fenetres/fenetreManuel.rb"
 load "src/gui/fenetres/fenetreAPropos.rb"
 load "src/gui/fenetres/fenetreFinJeu.rb"
 load "src/gui/fenetres/fenetreSauvegarderAvantQuitter.rb"
+load "src/gui/fenetres/fenetreManuelUtilisateur.rb"
 
 
 class Array
@@ -111,7 +112,8 @@ class Gui < Window
 		menuHaut.clickerSur("Editer")	{ fenetreEditer = FenetreEditionTaille.new(@picross) }
 		menuHaut.clickerSur("Charger")	{ fenetreCharger = FenetreCharger.new(self, @picross)}
 		menuHaut.clickerSur("Sauvegarder"){ fenetreSauvegarder = FenetreSauvegarde.new(@picross, timer.sec, @nbAppelAide) }
-		menuHaut.clickerSur("Manuel")	{ fenetreManuel = FenetreManuel.new }
+		menuHaut.clickerSur("Manuel d'aide")	{ fenetreManuel = FenetreManuel.new }
+		menuHaut.clickerSur("Manuel utilisateur")	{ fenetreManuelUtilisation = FenetreManuelUtilisateur.new }
 		menuHaut.clickerSur("Preference"){ fenetreManuel = FenetrePreference.new(@picross) } 
 		menuHaut.clickerSur("A Propos")	{ fenetreAPropos = FenetreAPropos.new}
 		menuHaut.clickerSur("Score")	{ 
