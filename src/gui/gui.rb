@@ -81,9 +81,11 @@ class Gui < Window
 		signal_connect('delete_event'){
 			
 
-
-			#FenetreSauvegarderAvantQuitter.new(@picross, timer)
-			FenetreSauvegarderAvantQuitter.show(@picross, timer.sec, self)
+			if not @picross.grille.empty?
+				#FenetreSauvegarderAvantQuitter.new(@picross, timer)
+				FenetreSauvegarderAvantQuitter.show(@picross, timer.sec, self)œ
+			end	
+			
 		}
 
 
