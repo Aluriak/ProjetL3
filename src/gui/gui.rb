@@ -14,7 +14,6 @@ load "src/aide/aideWrap.rb"
 # objets dans la fenetre principale
 load "src/gui/planche.rb"
 load "src/gui/menuPrincipal.rb"
-load "src/gui/tablechiffre.rb"
 load "src/gui/chronometre.rb"
 
 # fenetres
