@@ -45,6 +45,11 @@ class GrilleJouable < GrilleRacine
   end
 
 
+  #renvoie vrai si la matrice de Jeu est toute blanche, faux sinon
+  def empty?
+    return @matriceDeJeu.flatten.select{ |etat| etat == Etat.Noir}.empty?
+  end
+
 
 
   ##
@@ -105,10 +110,7 @@ class GrilleJouable < GrilleRacine
     end
   end
 
-  #renvoie vrai si la matrice de Jeu est toute blanche, faux sinon
-  def empty?
-	  return @matriceDeJeu.size.flatten.select{ |etat| etat == Etat.Noir}.empty?
-  end 
+ 
 
 
   ##
