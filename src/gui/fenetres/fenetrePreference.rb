@@ -19,6 +19,11 @@ include Gtk
 class FenetrePreference < Window
 	
 	def initialize(picross)
+		
+		here = Dir.pwd
+		Dir.chdir(CONSTANT_FICHIER_GUI_TEXTURE)
+		p listesTextures = Dir.glob("*")
+		Dir.chdir(here)
 		super("Preferences")
 		signal_connect("destroy") { destroy }
 		set_default_size(100,300)
