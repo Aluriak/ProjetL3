@@ -23,17 +23,20 @@ class FenetreNouveauTaille < Window
           self.set_default_size(300,30)
           set_resizable(false)
           set_modal(false)
-          box_window = HBox.new
-          self.add(box_window)
+		  
+		  vbox_principale = VBox.new
+		  
+		  # spécifications
+		  vbox_principale.pack_start(hbox_spe = HBox.new)
+		  # boutons
+		  vbox_principale.pack_start(hbox_btn = HBox.new)
+		  
+          self.add(vbox_principale)
           self.set_window_position(:center)
 
-          # BOUTON ANNULER
-          box_window.pack_start(@boutonAnnuler = Button.new(Stock::CLOSE))
-          @boutonAnnuler.signal_connect("clicked") { self.destroy }
-
           # COMBO POUR LA TAILLE
-          box_window.pack_start(Label.new("  Taille : "))
-          box_window.pack_start(@combo_tailles = ComboBox.new(true))
+          hbox_spe.pack_start(Label.new("  Taille : "))
+          hbox_spe.pack_start(@combo_tailles = ComboBox.new(true))
           5.downto(1) { |i| @combo_tailles.insert_text(0, "%i" % [i*5]) }
           @combo_tailles.signal_connect("changed") {
             taille = @combo_tailles.active_text.to_i
@@ -44,13 +47,17 @@ class FenetreNouveauTaille < Window
 
 
           # COMBO POUR LES GRILLES
-          box_window.pack_start(Label.new("  Grille : "))
-          box_window.pack_start(@combo_grille = ComboBox.new(true))
+          hbox_spe.pack_start(Label.new("  Grille : "))
+          hbox_spe.pack_start(@combo_grille = ComboBox.new(true))
           puts @combo_grille
 
 
+		  # BOUTON ANNULER
+		  hbox_btn.pack_start(@boutonAnnuler = Button.new(Stock::CLOSE))
+		  @boutonAnnuler.signal_connect("clicked") { self.destroy }
+		  
           # BOUTON VALIDER
-          box_window.pack_start(@boutonValider = Button.new(Stock::OK))
+          hbox_btn.pack_start(@boutonValider = Button.new(Stock::OK))
           @boutonValider.signal_connect("clicked") {
             taille = @combo_tailles.active_text.to_i
             nom_grille = @combo_grille.active_text
