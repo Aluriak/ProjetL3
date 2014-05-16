@@ -31,7 +31,7 @@ class FenetreSauvegarderAvantQuitter
 	
     # vérification de création de profil
     dialog = Dialog.new(
-      "Sauvegarder la grille courante avant de quitter? ", 
+      "Voulez-vous sauvegarder?", 
       parent, 
       Dialog::DESTROY_WITH_PARENT | Dialog::MODAL)
     dialog.vbox.pack_start(labelInfo = Label.new.set_markup(texteInformatif))
