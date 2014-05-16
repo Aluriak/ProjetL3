@@ -1,92 +1,27 @@
 # Projet L3 de Picross
-Repository officiel pour le code, la doc et autres fichiers.
+Repository officiel pour le code, la doc et autres fichiers :  
+https://github.com/Aluriak/ProjetL3  
+  
+
 
 # Directives
 Le Makefile contient 2 directives :
-- run, pour lancer le programme de picross;
-- doc, pour compiler la documentation du code;
+- *run*, pour lancer le programme de picross;
+- *doc*, pour compiler la documentation du code;
+
+# Archi
+- src: les sources, interprétables avec *make run*;
+- data: les données utilisées par le jeu (sauvegardes, images,...);
+- doc: documentation (générable avec *make doc*);
+- report: dossier des fichiers, où un makefile permet des compilations *make ddc*, *make cdc*,...;
+- pdf: contient les pdf, qui peuvnet être recompilés et retrouvé dans report/pdf/;
 
 
-# Tuto: Utiliser GIT 
-(merci Antoine pour le tuto)
 
-##Installation
-
-* [Pour Windows] , c'est tout nouveau, apparemment c'est intuitif et ça fonctionne bien, je vous laisse découvrir !
-* [Pour Mac] , c'est tout nouveau, apparemment c'est intuitif et ça fonctionne bien, je vous laisse découvrir !
-* Pour (Maître) Linux voir ci-dessous 
-
-Debian:  
-```Bash
-sudo apt-get install git
-```
-Fedora:  
-```Bash
-sudo yum install git
-```
-
-[Pour Windows]: http://windows.github.com
-[Pour Mac]: http://mac.github.com
-NB: pour Windows et Mac, le tuto s'arrête ici. Pour Linux également, ils existe des logiciels (tig, gitk,...) pour gérer git sans passser (ou presque) par les commandes expliquées dans la suite du tuto.
-
-##Configuration (pour Linux)
-
-Quelques étapes de configuration vous seront nécessaire pour pouvoir utiliser GIT tranquillement.
-
-###Les couleurs
-
-```Bash
-git config --global color.diff auto
-git config --global color.status auto
-git config --global color.branch auto
-```
-
-###Les informations diverses
-
-```Bash
-git config --global user.name "Votre nom/pseudo"
-git config --global user.email "Votre e-mail utilisé pour vous inscrire sur github/bitbucket/gitorious/..."
-git config --global credential.helper cache			# garde le mot de passe en cache 15 minutes après authentification réussie, c'est plus pratique
-git config --global credential.helper 'cache --timeout=X' 	# X secondes plutôt que 15 minutes
-```
-
-###Ajouter le repo et rediriger les push sur le repo commun
-
-```Bash
-git remote add origin addresseDuProjet # ici https://github.com/Aluriak/ProjetL3.git
-git fetch origin
-```
-
-##Utilisation (pour Linux)
-
-En seulement 4 étapes !
-
-**Rep tant que "Travail non finit"**
-
-1.Faire un changement (travail)
-
-2. Ajouter le changement à l'index de git
-```Bash
-git add monFichierModifie  
-```
-
-2. Commiter le changement :
-```Bash
-git commit -m "Explication pas plus longue que cette phrase sur les changements effectués permettant d'idientifier le commit"
-```
-**Fin rep**
-
-3.Pusher votre travail (Mettre à jour le repo central)
-```Bash
-git push
-```
-
-### Pulling
-Lorsque des modifications ont eu lieu sur le dépôt central, il est nécessaire de rapatrier en local ces modifications :  
-```Bash
-git pull
-```
+# Dépendances
+ruby (1.9.1), GTK2, et le module rmagick, installable avec *ruby gem install rmagick*.
+Rmagick est généralement disponible sur les dépôts officiels de distribution.
 
 
-#That's all
-![Obama](http://voyagerloin.com/wp-content/uploads/2013/08/Obama-reddit-ama-not-bad.jpg "Tu as réussi")
+
+
