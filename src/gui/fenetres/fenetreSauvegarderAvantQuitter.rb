@@ -23,7 +23,7 @@ class FenetreSauvegarderAvantQuitter
 
 
   
-  def FenetreSauvegarderAvantQuitter.show(picross, timer, parent)
+  def FenetreSauvegarderAvantQuitter.show(picross, timer, parent, appelsAide)
     operation_choisie = Dialog::RESPONSE_OK
 
 	texteInformatif = "<i>Attention vos modifications sur la grille
@@ -46,7 +46,7 @@ class FenetreSauvegarderAvantQuitter
     btnAnnuler.signal_connect("clicked"){ dialog.destroy }
 
     btnSauvegarder.signal_connect("clicked"){
-    	fenetreSauvegarde = FenetreSauvegarde.new(picross, timer)
+    	fenetreSauvegarde = FenetreSauvegarde.new(picross, timer, appelsAide)
     	fenetreSauvegarde.signal_connect("destroy"){parent.destroy}
     }
 

@@ -42,7 +42,7 @@ class Gui < Window
 	#@window
 	@picross
 	@derniereTailleGrille
-  @nbAppelAide = 0
+	@nbAppelAide = 0
 	
 	# la gui crée un picross à son lancement
 	attr_reader :picross
@@ -82,7 +82,7 @@ class Gui < Window
 
 			if not @picross.grille.empty?
 				#FenetreSauvegarderAvantQuitter.new(@picross, timer)
-				FenetreSauvegarderAvantQuitter.show(@picross, timer.sec, self)
+				FenetreSauvegarderAvantQuitter.show(@picross, timer.sec, self, @nbAppelAide)
 			end	
 			
 		}
