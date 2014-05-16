@@ -91,16 +91,15 @@ class Planche
                                         @modeDragAndAssign = true
                                         @etatModeDragAndAssign = @tableEtat[x][y]
 					actualiser(x,y)
+                                        # lors de l'appuis du bouton et jusqu'au relâchement de bouton, 
+                                        # Gdk "grab" ce widget : les évènements ne parviennent plus qu'à cet unique bouton.
+                                        # Avec la commande suivante, le bouton est "ungrabé", permettant aux autres boutons de
+                                        # recevoir l'évènement "enter_notify_event".
+                                        Gdk.pointer_ungrab(Gdk::Event::CURRENT_TIME)
 				}
                                 @event_box[x][y].signal_connect("button_release_event") {
                                   @modeDragAndAssign = false
                                 }
-                                #@event_box[x][y].signal_connect("event") { |w,e|
-                                  #if e.event_type == Gdk::Event::ENTER_NOTIFY then
-                                    #puts w
-                                    #puts e.event_type
-                                  #end
-                                #}
                                 @event_box[x][y].signal_connect("enter_notify_event") {
                                   if @modeDragAndAssign then
                                     self.basculer(x, y, @etatModeDragAndAssign)
