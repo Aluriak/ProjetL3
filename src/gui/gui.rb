@@ -167,7 +167,7 @@ class Gui < Window
 			}
                         if nombres.size == 0 then
                           # aucun label n'a été affiché. Il faut combler le vide.
-                          labelsNombreLigne.attach(Label.new(""), 0, 1, row, row+1) 
+                          labelsNombreLigne.attach(Label.new(" "), 0, 1, row, row+1) 
                         end
 		}
 		
@@ -186,7 +186,7 @@ class Gui < Window
 			end
                         if nombres.size == 0 then
                           # aucun label n'a été affiché. Il faut combler le vide.
-                          labelsNombreColonne.attach(Label.new(""), 0, 1, col, col+1) 
+                          labelsNombreColonne.attach(Label.new(" "), col, col+1, 0, 1) 
                         end
 		end
 		
