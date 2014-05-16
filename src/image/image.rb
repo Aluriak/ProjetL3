@@ -121,6 +121,9 @@ class PicrossImage
 	# renvoie la matrice du picross (valeurs sont soit Etat.Blanc soit Etat.Noir)
 	#
 	def toPicross(taille)
+		# pour le picross il faut une rotation
+		@image.rotate!(90)
+		
 		algo = 1
 		case algo
 		when 1 then self.ps_dbmono(taille)
