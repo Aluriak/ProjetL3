@@ -119,7 +119,7 @@ class Logs
   ##
   # Ajoute le texte reçu dans les logs
   def Logs.add(txt)
-    puts txt
+    #puts txt
   end
 
 end
