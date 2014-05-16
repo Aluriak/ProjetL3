@@ -22,12 +22,12 @@
         pdfcreator  = {PDFLaTeX},%
 }
 \setbeamertemplate{navigation symbols}{
-        \insertslidenavigationsymbol
-        \insertframenavigationsymbol
-        \insertsubsectionnavigationsymbol
-        \insertsectionnavigationsymbol
-        \insertdocnavigationsymbol
-        \insertbackfindforwardnavigationsymbol
+        %\insertslidenavigationsymbol
+        %\insertframenavigationsymbol
+        %\insertsubsectionnavigationsymbol
+        %\insertsectionnavigationsymbol
+        %\insertdocnavigationsymbol
+        %\insertbackfindforwardnavigationsymbol
 }
 % Faire apparaitre un sommaire avant chaque section
 \AtBeginSection[]{
@@ -58,19 +58,19 @@
     \begin{enumerate}
      
       \item Présentation des membres
-        \begin{enumerate}
-        \item Lucas Bourneuf   (Chef de Projet)
-        \item Ewen Cousin      (Developpeur GUI)
-        \item Jaweed Parwany   (Developpeur Systéme)
-        \item Charlie Marechal (Documentaliste)
-        \item Nicolas Bourdin  (Developpeur GUI)
-        \item Julien Le Gall    (Developpeur IA)
-        \end{enumerate}\pause
+        \begin{itemize}
+            \item Lucas Bourneuf   (Chef de Projet)
+            \item Ewen Cousin      (Développeur GUI)
+            \item Jaweed Parwany   (Développeur Systéme)
+            \item Charlie Maréchal (Documentaliste)
+            \item Nicolas Bourdin  (Développeur GUI)
+            \item Julien Le Gall   (Développeur IA)
+        \end{itemize}
      
       \item Objectif
         \begin{itemize}
             \item Créer un Picross en Ruby
-        \end{itemize}\pause
+        \end{itemize}
      
       \item Delai
         \begin{itemize}
@@ -83,41 +83,17 @@
    \begin{enumerate}
    \item Liste des fonctionnalités
     
-    \begin{enumerate}
-                        
-        \item Aide
-        \begin{itemize}
-            \item En cas de blocage on peut avoir accés à l'aide 
-            \item Permet de trouver une solution selon deux niveaux
-        \end{itemize}\pause
-                        
+    \begin{itemize}
         \item Gestion de sauvegarde
-        \begin{itemize}
-            \item Sauvegarde la partie dans un fichier
-        \end{itemize}\pause
-                        
+        \item Drag 'n' Assign
         \item Score
-        \begin{itemize}
-            \item Affiche les scores de la grille en cours
-        \end{itemize}\pause
-                        
-        \item Chargement de grille
-        \begin{itemize}
-            \item Permet le chargement d'une grille déjà crée
-        \end{itemize}\pause
-                        
-        \item Edition
-        \begin{itemize}
-            \item Possibilité de créer ses propres grilles.
-        \end{itemize}\pause
-                        
-        \item Manuel
-        \begin{itemize}
-            \item Affiche les régles du jeu
-        \end{itemize}\pause
-    \end{enumerate}
+        \item Aide
+        \item Édition
+        \item Manuels
+    \end{itemize}
     
     
+    \pause
     \item Contraintes 
     \begin{enumerate}
         \item Temps
@@ -133,46 +109,30 @@
 \section{Réalisation du projet}
 \subsection{Le déroulement du projet}
 
-\begin{frame}
-\frametitle{Réalisation du projet}
- \begin{enumerate}
-  \item Le déroulement du projet
-    \begin{enumerate}
-        %\item Répartition des tâches%
-        \item Diagramme de Gantt
-        \item Diagramme UML
-	\item Diagramme UML GUI
-    \end{enumerate}
- \end{enumerate}
-\end{frame}
-
-
 
 \begin{frame}
   \frametitle{Diagramme de Gantt}
   \begin{figure}[t]
     \centering
-    \includegraphics[scale=0.38]{ganttDiagram}
+    \includegraphics[scale=0.38]{data/ganttDiagram}
     \caption{Diagramme de Gantt}
   \end{figure}
 \end{frame}
 
 
 \begin{frame}
-  \frametitle{Diagramme de UML}
-  \begin{figure}[t]
-    \centering
-    \includegraphics[height=\dimexpr11\textheight/16\relax]{UMLDiagram}
-    \caption{Diagrammes UML}
+  \frametitle{Diagramme UML Système}
+  \begin{figure}
+    \includegraphics[scale=0.20]{data/UMLDiagram}
+    \caption{Diagramme UML Système}
   \end{figure}
 \end{frame}
 
 \begin{frame}
   \frametitle{Diagramme UML GUI}
-  \begin{figure}[t]
-    \centering
-    \includegraphics[height=\dimexpr11\textheight/16\relax]{UMLGUI}
-    \caption{Diagrammes UML GUI}
+  \begin{figure}
+    \includegraphics[scale=0.23]{data/UMLGUI}
+    \caption{Diagramme UML GUI}
   \end{figure}
 \end{frame}
 
@@ -180,67 +140,56 @@
     \begin{frame}
     \frametitle{Aspects techniques}
     
-        \begin{enumerate}
+        \begin{itemize}
             \item Languages
-            \begin{itemize}
-                \item Ruby
-                \item LateX
-            \end{itemize}
-                
+            \pause
             \item Support
-            \begin{itemize}
-                \item Environnement Unix
-            \end{itemize}
-                
+            \pause
             \item Outils
             \begin{itemize}
                 \item IDE,
-                \begin{itemize}
-                    \item Vim,
-                    \item kate,
-                    \item sublim text,
-                    \item textmate
-                \end{itemize}
-                \item Module RMagick
+                \item Modules ruby,
                 \item IRC,
                 \item Etherpad,
                 \item Git/Github,
                 \item GanttProject,
                 \item Astah;
-                    
             \end{itemize}
-                
                     
-        \end{enumerate}
+        \end{itemize}
 \end{frame}
 
+\subsection{Partage des tâches}
+    \begin{frame}
+    \frametitle{Partage des tâches}
+        \begin{itemize}
+            \item Système : Lucas Bourneuf, Charlie Maréchal, Jaweed Parwany
+            \smallskip
+            \smallskip
+            \item GUI : Ewen Cousin, Nicolas Bourdin
+            \smallskip
+            \smallskip
+            \item Aide : Julien Le Gall
+        \end{itemize}
+    \end{frame}
 
-\subsection{Fonctionnalités}
-    \begin{frame} 
-    \frametitle{Fonctionnalités}
-        \begin{enumerate}
-            \item Fonctionnalités
-            \begin{itemize}
-                \item Drag 'n' assign
-                \item Sauvegarde
-                \item Chargement
-                \item Edition
-                \item Suppression
-            \end{itemize}    
-        \end{enumerate}
-\end{frame}
 
 \subsection{Difficultés}
     \begin{frame}
     \frametitle{Difficultés}
         \begin{itemize}
-          \item Travailler en groupe, la répartition des taches
-          \item Utilisation de github
+          \item Travailler en groupe;
+          \smallskip
+          \smallskip
+          \item répartition des tâches;
+          \smallskip
+          \smallskip
+          \item utilisation de git.
         \end{itemize}
     \end{frame}
 
-\section{Démo}
-    \begin{frame}{Démo}
+\section{Démonstration}
+    \begin{frame}{Démonstration}
     \end{frame}
 
 \section{Conclusion}
@@ -250,21 +199,26 @@
         \begin{enumerate}
             \item Perspectives d'améliorations
             \begin{itemize}
-                \item Statistique d'un profil
-                \item Amélioration de l'interface 
+                \item Statistiques d'un profil;
+                \item amélioration de l'interface.
             \end{itemize}
             
+            \pause
             \item Ce que l'on a appris
             \begin{enumerate}
-                \item Comment un projet se déroule
-                \item le travail collaboratif
+                \item Comment un projet se déroule;
+                \item le travail collaboratif.
             \end{enumerate}
             
-            \item Ce que l'on a aimé
+            \pause
+            \item Ce que l'on a aimé;
             
          
         \end{enumerate}
     \end{frame}
     
-\appendix[Questions ?]
+    \begin{frame}
+    \frametitle{Conclusion}
+        {\Huge Questions ?}
+    \end{frame}
 \end{document}
