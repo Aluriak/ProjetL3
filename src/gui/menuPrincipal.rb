@@ -21,6 +21,7 @@ class MenuPrincipal
 		#Chargement de l'icone pour le boutton score
 		iconeScore = Gtk::Image.new CONSTANT_FICHIER_GUI_IMAGE+"score.png"
 		iconePreference = Gtk::Image.new CONSTANT_FICHIER_GUI_IMAGE+"preference.png"
+		iconeLivre = Gtk::Image.new CONSTANT_FICHIER_GUI_IMAGE+"livre.png"
 
 		toolbar = Toolbar.new
 		toolbar.set_toolbar_style(Toolbar::Style::ICONS)
@@ -33,6 +34,7 @@ class MenuPrincipal
 		savetb = ToolButton.new(Stock::SAVE)
 		scoretb = ToolButton.new(iconeScore, "Score")
 		helptb = ToolButton.new(Stock::HELP)
+		mantb = ToolButton.new(iconeLivre, "Manuel utilisateur")
 		preftb = ToolButton.new(iconePreference, "Preference")
 		abouttb = ToolButton.new(Stock::ABOUT)
     
@@ -42,6 +44,7 @@ class MenuPrincipal
 		tooltip.set_tip(savetb,"Sauvegarder cette grille", nil)
 		tooltip.set_tip(scoretb,"Scores de cette grille",nil)
 		tooltip.set_tip(helptb,"Manuel d'aide", nil)
+		tooltip.set_tip(mantb,"Manuel utilisateur", nil)
 		tooltip.set_tip(preftb,"Préférences", nil)
 		tooltip.set_tip(abouttb,"A propos", nil)
 	
@@ -52,11 +55,12 @@ class MenuPrincipal
 		toolbar.insert(2, opentb.set_label("Charger"))
 		toolbar.insert(3, savetb.set_label("Sauvegarder"))
 		toolbar.insert(4, scoretb.set_label("Score"))
-		toolbar.insert(5, helptb.set_label("Manuel"))
-		toolbar.insert(6, preftb.set_label("Preference"))
-		toolbar.insert(7, abouttb.set_label("A Propos"))
+		toolbar.insert(5, helptb.set_label("Manuel d'aide"))
+		toolbar.insert(6, mantb.set_label("Manuel utilisateur"))
+		toolbar.insert(7, preftb.set_label("Preference"))
+		toolbar.insert(8, abouttb.set_label("A Propos"))
 		
-		@listMenuBtns = [newtb,edittb,opentb,savetb,scoretb,helptb,preftb,abouttb]
+		@listMenuBtns = [newtb,edittb,opentb,savetb,scoretb,helptb,mantb,preftb,abouttb]
 
 		box.pack_start(toolbar)
 	end	

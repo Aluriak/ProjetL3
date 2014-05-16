@@ -28,6 +28,7 @@ load "src/gui/fenetres/fenetreManuel.rb"
 load "src/gui/fenetres/fenetreAPropos.rb"
 load "src/gui/fenetres/fenetreFinJeu.rb"
 load "src/gui/fenetres/fenetreSauvegarderAvantQuitter.rb"
+load "src/gui/fenetres/fenetreManuelUtilisateur.rb"
 
 
 class Array
@@ -111,7 +112,8 @@ class Gui < Window
 		menuHaut.clickerSur("Editer")	{ fenetreEditer = FenetreEditionTaille.new(@picross) }
 		menuHaut.clickerSur("Charger")	{ fenetreCharger = FenetreCharger.new(self, @picross)}
 		menuHaut.clickerSur("Sauvegarder"){ fenetreSauvegarder = FenetreSauvegarde.new(@picross, timer.sec, @nbAppelAide) }
-		menuHaut.clickerSur("Manuel")	{ fenetreManuel = FenetreManuel.new }
+		menuHaut.clickerSur("Manuel d'aide")	{ fenetreManuel = FenetreManuel.new }
+		menuHaut.clickerSur("Manuel utilisateur")	{ fenetreManuelUtilisation = FenetreManuelUtilisateur.new }
 		menuHaut.clickerSur("Preference"){ fenetreManuel = FenetrePreference.new(@picross) } 
 		menuHaut.clickerSur("A Propos")	{ fenetreAPropos = FenetreAPropos.new}
 		menuHaut.clickerSur("Score")	{ 
@@ -167,7 +169,7 @@ class Gui < Window
 			}
                         if nombres.size == 0 then
                           # aucun label n'a été affiché. Il faut combler le vide.
-                          labelsNombreLigne.attach(Label.new(""), 0, 1, row, row+1) 
+                          labelsNombreLigne.attach(Label.new(" "), 0, 1, row, row+1) 
                         end
 		}
 		
@@ -186,7 +188,7 @@ class Gui < Window
 			end
                         if nombres.size == 0 then
                           # aucun label n'a été affiché. Il faut combler le vide.
-                          labelsNombreColonne.attach(Label.new(""), 0, 1, col, col+1) 
+                          labelsNombreColonne.attach(Label.new(" "), col, col+1, 0, 1) 
                         end
 		end
 		
