@@ -51,7 +51,7 @@ class GrilleEditable < Window
 		#Quand on appuie sur btnSauvegarder, on crée la matrice de jeu
 		boutonSauvegarder.signal_connect("clicked"){ 
 			Logs.add("grille jouable dans grilleEditable #{tableEtat}\n")
-			@picross.creerGrilleRacine(tableEtat) 
+			@picross.creerGrilleRacine(tableEtat, textNom.text) 
 			confirmerEnregistrement(textNom.text)
 			destroy
 		}
