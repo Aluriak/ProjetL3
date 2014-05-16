@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 # FENETRESAUVEGARDERAVANTQUITTER.RB
 # définition de la classe FenetreSauvegarderAvantQuitter, appellée par la GUI lorsque l'utilisateur veut quitter.
-# BOURDIN
+# BOURDIN/COUSIN
 #
 
 			
@@ -15,44 +15,35 @@ require "glib2"
 include Gtk
 
 
-
-
-
-
-
-
 class FenetreSauvegarderAvantQuitter
 
 
-	 # impossible de créer une instance de classe
-  private_class_method :new
+	# impossible de créer une instance de classe
+	private_class_method :new
 
 
   
   def FenetreSauvegarderAvantQuitter.show(picross, timer, parent)
     operation_choisie = Dialog::RESPONSE_OK
 
+	texteInformatif = "<i>Attention vos modifications sur la grille
+	courante seront perdues si vous ne la sauvegardez pas.</i>"
+	
     # vérification de création de profil
     dialog = Dialog.new(
       "Sauvegarder la grille courante avant de quitter? ", 
       parent, 
       Dialog::DESTROY_WITH_PARENT | Dialog::MODAL)
-    dialog.vbox.pack_start(Label.new("\tAttention vos modifications sur la grille\n\tcourante seront perdues si vous ne la sauvegardez pas."))
+    dialog.vbox.pack_start(labelInfo = Label.new.set_markup(texteInformatif))
+	labelInfo.set_justify(JUSTIFY_CENTER)
     dialog.vbox.pack_start(hbox = HBox.new)
 
     hbox.pack_start(btnQuit = Button.new("Quitter sans sauvegarder"))
     hbox.pack_start(btnAnnuler = Button.new("Annuler"))
     hbox.pack_start(btnSauvegarder = Button.new("Sauvegarder"))
-   	
     
-    btnQuit.signal_connect("clicked"){
-    	parent.destroy
-
-    }
-
-    btnAnnuler.signal_connect("clicked"){
-    	dialog.destroy
-    }
+    btnQuit.signal_connect("clicked"){ parent.destroy }
+    btnAnnuler.signal_connect("clicked"){ dialog.destroy }
 
     btnSauvegarder.signal_connect("clicked"){
     	fenetreSauvegarde = FenetreSauvegarde.new(picross, timer)
@@ -64,15 +55,8 @@ class FenetreSauvegarderAvantQuitter
     dialog.set_resizable(false)
     dialog.show_all
     dialog.run
-   
-
-    
   end
-
-
-
-
-end	
+end #fin de classe
 
 
 
