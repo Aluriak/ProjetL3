@@ -35,10 +35,10 @@ class Planche
 	# sinon, en mode normal(ou jeu), les états sont drapeau, blanc, ou noir
 	attr_reader :modeEdition
 
-        # Si vrai, le mode drag and assign est activé. Dans le ce mode, toute case 
-        # rencontrée par la souris de l'utilisateur est basculée à l'état suivant.
-        attr_accessor :modeDragAndAssign
-	
+	# Si vrai, le mode drag and assign est activé. Dans le ce mode, toute case 
+	# rencontrée par la souris de l'utilisateur est basculée à l'état suivant.
+	attr_accessor :modeDragAndAssign
+
 
 	#creation de planche
 	def Planche.creer(tableEtat, modeEdition = false, texture = "coeurrouge")
@@ -46,7 +46,8 @@ class Planche
 	end
 	
 	def initialize(tableEtat, modeEdition, texture)
-                @modeDragAndAssign = false
+
+		@modeDragAndAssign = false
 		dossier = CONSTANT_FICHIER_GUI_TEXTURE #dossier contenant les images
 		if tableEtat.size >= 20
 			@tabImg = ["blanc25.jpg", "noir25.jpg", "croix25.jpg"]
@@ -57,18 +58,18 @@ class Planche
 		@tabImg.map!{|img| dossier + texture + "/" + img}
 		@tableEtat = tableEtat
 		@table = Table.new(tableEtat.size,tableEtat.size)
-                @table.add_events(Gdk::Event::BUTTON_PRESS_MASK)
+		@table.add_events(Gdk::Event::BUTTON_PRESS_MASK)
 		@modeEdition = modeEdition
-                @image = Array.new(tableEtat.size) { Array.new(tableEtat.size) }
+		@image = Array.new(tableEtat.size) { Array.new(tableEtat.size) }
 		@event_box = Array.new(tableEtat.size) { Array.new(tableEtat.size) }
 		
 		0.upto(@tableEtat.size-1) { |y| 
 			0.upto(@tableEtat.size-1) { |x|                         
+		
 				@image[x][y] = self.image(@tableEtat[x][y])
 				@event_box[x][y] = EventBox.new.add(@image[x][y])  
 				
 				@table.attach(@event_box[x][y], y, y+1, x, x+1) 
-
               
 				#crée les évenements de click sur chaque cases
 				@event_box[x][y].signal_connect("button_press_event") { |widget, event|
@@ -80,36 +81,37 @@ class Planche
 						end
 					# sinon mode normal -> noir/blanc/drapeau
 					else
-                                                clic_gauche = (event.button == 1)
-						#@tableEtat.basculer(x,y)												
-                                                if @tableEtat[x][y] == Etat.Noir then
-                                                  basculer(x,y, Etat.Blanc)   if clic_gauche
-                                                  basculer(x,y, Etat.Drapeau) if not clic_gauche
-                                                elsif @tableEtat[x][y] == Etat.Blanc then
-                                                  basculer(x,y, Etat.Noir)    if clic_gauche
-                                                  basculer(x,y, Etat.Drapeau) if not clic_gauche
-                                                else
-                                                  basculer(x,y, Etat.Noir)  if clic_gauche
-                                                  basculer(x,y, Etat.Blanc) if not clic_gauche
-                                                end
+						clic_gauche = (event.button == 1)
+						
+						if @tableEtat[x][y] == Etat.Noir then
+							basculer(x,y, Etat.Blanc)   if clic_gauche
+							basculer(x,y, Etat.Drapeau) if not clic_gauche
+						elsif @tableEtat[x][y] == Etat.Blanc then
+							basculer(x,y, Etat.Noir)    if clic_gauche
+							basculer(x,y, Etat.Drapeau) if not clic_gauche
+						else
+							basculer(x,y, Etat.Noir)  if clic_gauche
+							basculer(x,y, Etat.Blanc) if not clic_gauche
+						end
 					end
-                                        @modeDragAndAssign = true
-                                        @etatModeDragAndAssign = @tableEtat[x][y]
+					
+					@modeDragAndAssign = true
+					@etatModeDragAndAssign = @tableEtat[x][y]
 					actualiser(x,y)
-                                        # lors de l'appuis du bouton et jusqu'au relâchement de bouton, 
-                                        # Gdk "grab" ce widget : les évènements ne parviennent plus qu'à cet unique bouton.
-                                        # Avec la commande suivante, le bouton est "ungrabé", permettant aux autres boutons de
-                                        # recevoir l'évènement "enter_notify_event".
-                                        Gdk.pointer_ungrab(Gdk::Event::CURRENT_TIME)
+					# lors de l'appuis du bouton et jusqu'au relâchement de bouton, 
+					# Gdk "grab" ce widget : les évènements ne parviennent plus qu'à cet unique bouton.
+					# Avec la commande suivante, le bouton est "ungrabé", permettant aux autres boutons de
+					# recevoir l'évènement "enter_notify_event".
+					Gdk.pointer_ungrab(Gdk::Event::CURRENT_TIME)
 				}
-                                @event_box[x][y].signal_connect("button_release_event") {
-                                  @modeDragAndAssign = false
-                                }
-                                @event_box[x][y].signal_connect("enter_notify_event") {
-                                  if @modeDragAndAssign then
-                                    self.basculer(x, y, @etatModeDragAndAssign)
-                                  end
-                                }
+				@event_box[x][y].signal_connect("button_release_event") {
+					@modeDragAndAssign = false
+				}
+				@event_box[x][y].signal_connect("enter_notify_event") {
+					if @modeDragAndAssign then
+					self.basculer(x, y, @etatModeDragAndAssign)
+					end
+				}
 			}
 		}
 
