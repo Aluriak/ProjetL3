@@ -24,7 +24,7 @@ cdc_:
 stn: stn_ posttreat
 stn_:
 	- pdflatex soutenance.tex && pdflatex soutenance.tex
-	- evince pdf/soutenance.pdf
+	#- evince pdf/soutenance.pdf
 
 
 # manuel d'utilisateur
