@@ -26,20 +26,27 @@ class FenetrePreference < Window
 		Dir.chdir(here)
 		super("Preferences")
 		signal_connect("destroy") { destroy }
-		set_default_size(100,300)
-		set_resizable(false)
+		set_default_size(200,40)
+		#set_resizable(false)
 		set_modal(true)
 		
-		box_window = VBox.new
+		vbox_principale = VBox.new
 
-                # 
+		#vbox_principale.pack_start(Label.new("Texture"))
+		#vbox_principale.pack_start(@combo_textures = ComboBox.new(true))
+		
+		#listesTextures.each { |texture|
+		 #                   @combo_textures.insert_text(index, texture)
+		#}
+		
+		
 		@bouton_quitter = Button.new(Stock::OK)
 		@bouton_supprimer_data = Button.new("Supprimer les données")
-		box_window.pack_start(@bouton_supprimer_data, true, true)
-		box_window.pack_start(@bouton_quitter, true, true)
+		vbox_principale.pack_start(@bouton_supprimer_data, true, true)
+		vbox_principale.pack_start(@bouton_quitter, true, true)
 		
                 # WINDOW
-		self.add(box_window)
+		self.add(vbox_principale)
 		self.set_window_position(:center)
 		self.show_all
 		
@@ -54,10 +61,6 @@ class FenetrePreference < Window
 
 		
 	end
-	
-	
-	
-	
 	
 	##
 	# Confirme à l'utilisateur que la suppression à été effectuée
