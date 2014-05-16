@@ -53,10 +53,10 @@ class FenetrePreference < Window
 		# CONNECTS
 		@bouton_quitter.signal_connect("clicked") { self.destroy }
 		@bouton_supprimer_data.signal_connect("clicked") {
-                  if self.utilisateurCertainDe("Supprimer toutes les données du jeu") then
-                    picross.restaurerDonneesInitiales
-                    self.confirmerSuppression()
-                  end
+			if self.utilisateurCertainDe("Supprimer toutes les données du jeu") then
+				picross.restaurerDonneesInitiales
+				self.confirmerSuppression
+			end
 		}
 
 		
@@ -64,7 +64,7 @@ class FenetrePreference < Window
 	
 	##
 	# Confirme à l'utilisateur que la suppression à été effectuée
-	def confirmerSuppression()
+	def confirmerSuppression
 		dialog = MessageDialog.new(
 			nil, 
 			Dialog::DESTROY_WITH_PARENT | Dialog::MODAL,
