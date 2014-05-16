@@ -186,7 +186,7 @@ class Gui < Window
 			end
                         if nombres.size == 0 then
                           # aucun label n'a été affiché. Il faut combler le vide.
-                          labelsNombreColonne.attach(Label.new(""), 0, 1, row, row+1) 
+                          labelsNombreColonne.attach(Label.new(""), 0, 1, col, col+1) 
                         end
 		end
 		
