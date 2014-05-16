@@ -82,7 +82,7 @@ class Gui < Window
 
 			if not @picross.grille.empty?
 				#FenetreSauvegarderAvantQuitter.new(@picross, timer)
-				FenetreSauvegarderAvantQuitter.show(@picross, timer.sec, self)œ
+				FenetreSauvegarderAvantQuitter.show(@picross, timer.sec, self)
 			end	
 			
 		}
