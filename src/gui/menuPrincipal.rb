@@ -19,9 +19,9 @@ class MenuPrincipal
 	def initialize(box)
 
 		#Chargement de l'icone pour le boutton score
-		iconeScore = Gtk::Image.new CONSTANT_FICHIER_GUI_IMAGE+"score.png"
-		iconePreference = Gtk::Image.new CONSTANT_FICHIER_GUI_IMAGE+"preference.png"
-		iconeLivre = Gtk::Image.new CONSTANT_FICHIER_GUI_IMAGE+"livre.png"
+		iconeScore = Image.new(CONSTANT_FICHIER_GUI_IMAGE+"score.png")
+		iconePreference = Image.new(CONSTANT_FICHIER_GUI_IMAGE+"preference.png")
+		iconeLivre = Image.new(CONSTANT_FICHIER_GUI_IMAGE+"livre.png")
 
 		toolbar = Toolbar.new
 		toolbar.set_toolbar_style(Toolbar::Style::ICONS)
@@ -29,7 +29,7 @@ class MenuPrincipal
 		tooltip = Tooltips.new
 
 		newtb = ToolButton.new(Stock::NEW)
-	  	edittb = ToolButton.new(Stock::EDIT)
+  	edittb = ToolButton.new(Stock::EDIT)
 		opentb = ToolButton.new(Stock::OPEN)
 		savetb = ToolButton.new(Stock::SAVE)
 		scoretb = ToolButton.new(iconeScore, "Score")

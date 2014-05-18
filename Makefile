@@ -1,12 +1,9 @@
-run: default
-	ruby1.9.1 src/main.rb
+run:
+	ruby src/main.rb
 
-doc: doc_
-doc_: 
-	# delete already existing documentation
+doc: 
+	# supprime la doc
 	rm -rf doc/
-	#genere la doc pour tout les repertoires de src sauf de samples
+	
+	#génère la doc pour tout les repertoires de src et omet les samples
 	rdoc src/ -x src/samples/ -o doc 
-
-default:
-	#ruby1.9.1 src/addDefaultContent.rb

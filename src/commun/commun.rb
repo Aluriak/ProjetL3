@@ -57,6 +57,11 @@ class Array
   def choice
     return shuffle.first
   end
+	
+	def orientationHorizontale?
+		# c"est effectivement l"inverse pour une orientation Verticale
+		return self.size > self[0].size 
+	end
 end
 
 

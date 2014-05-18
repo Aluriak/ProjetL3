@@ -18,12 +18,10 @@ include Gtk
 
 class FenetrePreference < Window
 	
-	def initialize(picross)
+	@listesTextures
+	
+	def initialize(picross, gui)		
 		
-		here = Dir.pwd
-		Dir.chdir(CONSTANT_FICHIER_GUI_TEXTURE)
-		p listesTextures = Dir.glob("*")
-		Dir.chdir(here)
 		super("Preferences")
 		signal_connect("destroy") { destroy }
 		set_default_size(200,40)
@@ -32,37 +30,58 @@ class FenetrePreference < Window
 		
 		vbox_principale = VBox.new
 
-		#vbox_principale.pack_start(Label.new("Texture"))
-		#vbox_principale.pack_start(@combo_textures = ComboBox.new(true))
+		vbox_principale.pack_start(Label.new("Texture"))
+		vbox_principale.pack_start(@combo_textures = ComboBox.new(true))
 		
-		#listesTextures.each { |texture|
-		 #                   @combo_textures.insert_text(index, texture)
-		#}
+		@listesTextures = recupererLesTextures
 		
+		@listesTextures.each { |texture|
+			@combo_textures.insert_text(@listesTextures.index(texture), texture)
+		}
 		
-		@bouton_quitter = Button.new(Stock::OK)
+		@bouton_valider = Button.new(Stock::OK)
 		@bouton_supprimer_data = Button.new("Supprimer les données")
 		vbox_principale.pack_start(@bouton_supprimer_data, true, true)
-		vbox_principale.pack_start(@bouton_quitter, true, true)
+		vbox_principale.pack_start(@bouton_valider, true, true)
 		
-                # WINDOW
+		# WINDOW
 		self.add(vbox_principale)
 		self.set_window_position(:center)
 		self.show_all
 		
 		# CONNECTS
-		@bouton_quitter.signal_connect("clicked") { self.destroy }
+		@bouton_valider.signal_connect("clicked") {  
+			nouvelleTexture = @listesTextures[@combo_textures.active]
+			gui.retexturer(nouvelleTexture)
+			
+			self.destroy 
+		}
 		@bouton_supprimer_data.signal_connect("clicked") {
 			if self.utilisateurCertainDe("Supprimer toutes les données du jeu") then
 				picross.restaurerDonneesInitiales
 				self.confirmerSuppression
 			end
 		}
-
+	
+	end #fin initialize
+	
+	# envoie la liste des textures
+	def recupererLesTextures
+		# on enregistre notre chemin local absolu
+		ici = Dir.pwd
 		
+		# on se déplace
+		Dir.chdir(CONSTANT_FICHIER_GUI_TEXTURE)
+		
+		# on récupère ce dont on a besoin
+		listesTextures = Dir.glob("*")
+		
+		#on revient ici
+		Dir.chdir(ici)
+		
+		return listesTextures
 	end
 	
-	##
 	# Confirme à l'utilisateur que la suppression à été effectuée
 	def confirmerSuppression
 		dialog = MessageDialog.new(
@@ -77,11 +96,7 @@ class FenetrePreference < Window
 		dialog.destroy
 	end
 	
-	
-	
-	
-	##
-        # Demande à l'utilisateur s'il sohait vraiment réaliser la tâche décrite dans l'argument
+	# Demande à l'utilisateur s'il sohait vraiment réaliser la tâche décrite dans l'argument
 	# La méthode renvois vrai si l'utilisateur veux continuer, faux sinon.
 	def utilisateurCertainDe(tache)
 		dialog = Dialog.new(

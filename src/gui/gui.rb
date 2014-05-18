@@ -30,20 +30,14 @@ load "src/gui/fenetres/fenetreFinJeu.rb"
 load "src/gui/fenetres/fenetreSauvegarderAvantQuitter.rb"
 load "src/gui/fenetres/fenetreManuelUtilisateur.rb"
 
-
-class Array
-	def orientationHorizontale?
-		# c"est effectivement l"inverse pour une orientation Verticale
-		return self.size > self[0].size 
-	end
-end
-
 class Gui < Window
-	
-	#@window
+
 	@picross
 	@derniereTailleGrille
 	@nbAppelAide = 0
+	@planche
+
+	attr_accessor :planche
 	
 	# la gui crée un picross à son lancement
 	attr_reader :picross
@@ -109,7 +103,7 @@ class Gui < Window
 		menuHaut.clickerSur("Sauvegarder"){ fenetreSauvegarder = FenetreSauvegarde.new(@picross, timer.sec, @nbAppelAide) }
 		menuHaut.clickerSur("Manuel d'aide")	{ fenetreManuel = FenetreManuel.new }
 		menuHaut.clickerSur("Manuel utilisateur")	{ fenetreManuelUtilisation = FenetreManuelUtilisateur.new }
-		menuHaut.clickerSur("Preference"){ fenetreManuel = FenetrePreference.new(@picross) } 
+		menuHaut.clickerSur("Preference"){ fenetreManuel = FenetrePreference.new(@picross, self) } 
 		menuHaut.clickerSur("A Propos")	{ fenetreAPropos = FenetreAPropos.new}
 		menuHaut.clickerSur("Score")	{ 
 			fenetreScore = FenetreScore.new(self, @picross.scoresDeGrille(@picross.grille.nom), @picross.grille.nom) 
@@ -128,8 +122,8 @@ class Gui < Window
 		table.attach(boxTimer, 0, 1, 0, 1)
 
 
-                # VERIFICATION DE FIN DU JEU
-		bouton_verifier.signal_connect("clicked") { 
+    # VERIFICATION DE FIN DU JEU
+		bouton_verifier.signal_connect("clicked") {
 			if @picross.grille.terminee? then
 				fenetre_fin_jeu = FenetreFinJeu.new(@picross, timer.sec, @nbAppelAide)
 				fenetre_fin_jeu.show_all
@@ -162,14 +156,35 @@ class Gui < Window
 				nombre = nombres[col].to_s + " "
 				labelsNombreLigne.attach(Label.new(nombre), col, col+1, row, row+1) 
 			}
+			
 			if nombres.size == 0 then
 				# aucun label n'a été affiché. Il faut combler le vide.
 				labelsNombreLigne.attach(Label.new(" "), 0, 1, row, row+1) 
 			end
 		}
 		
-		table.attach(labelsNombreLigne, 0, 1, 1, 2)
 		
+		vboxIndexLigne = VBox.new
+		labelsLigne = Array.new(@picross.grille.matriceDeJeu.size+1)
+		vert = "#00FF00"
+		rouge= "#A52A2A"
+
+		1.upto(@picross.grille.matriceDeJeu.size) {|i|
+			labelsLigne[i] = Label.new.set_markup("<i><tt><span foreground='#A52A2A'>"+i.to_s+"</span></tt></i>")
+			vboxIndexLigne.pack_start(labelsLigne[i])
+
+			labelsLigne[i].signal_connect("enter_notify_event"){
+				labelsLigne[i].set_markup("<i><tt><span foreground='#00FF00'>"+i.to_s+"</span></tt></i>")
+			}
+			labelsLigne[i].signal_connect("leave_notify_event"){
+				labelsLigne[i].set_markup("<i><tt><span foreground='#A52A2A'>"+i.to_s+"</span></tt></i>")
+			}
+		}
+		
+		hboxLigne = HBox.new
+		hboxLigne.pack_start(labelsNombreLigne, true)
+		hboxLigne.pack_start(vboxIndexLigne, true)
+		table.attach(hboxLigne,0,1,1,2)
 		
 		# TABLE DE COLONNE
 		labelsNombreColonne = Table.new(grille_jouable.tableColonne.largeur, grille_jouable.tableColonne.hauteur)
@@ -186,12 +201,34 @@ class Gui < Window
 					labelsNombreColonne.attach(Label.new(" "), col, col+1, 0, 1) 
 				end
 		end
-		
-		table.attach(labelsNombreColonne, 1, 2, 0, 1)
+
+    hboxIndexColonne = HBox.new #dans laquel on met 1 3 (5 6) 5 (1 2), etc..
+    labelsColonne = Array.new(@picross.grille.matriceDeJeu.size+1)
+
+    1.upto(@picross.grille.matriceDeJeu.size) {|i|
+      labelsColonne[i] = Label.new.set_markup("<i><tt><span foreground='#A52A2A'>"+i.to_s+"</span></tt></i>")
+			hboxIndexColonne.pack_start(labelsColonne[i])
+
+      labelsColonne[i].signal_connect("enter_notify_event"){
+				print "on est sur le labelColonne[#{i}\n"
+				labelsColonne[i].set_markup("<i><tt><span foreground='#00FF00'>"+i.to_s+"</span></tt></i>")
+      }
+      labelsColonne[i].signal_connect("leave_notify_event"){
+				print "on est sur le labelColonne[#{i}\n"
+        labelsColonne[i].set_markup("<i><tt><span foreground='#A52A2A'>"+i.to_s+"</span></tt></i>")
+      }
+    }
+    
+    vboxColonne = VBox.new
+    vboxColonne.pack_start(labelsNombreColonne, true)
+    vboxColonne.pack_start(hboxIndexColonne, true)
+    table.attach(vboxColonne, 1, 2, 0, 1)
+
 
 		# AFFICHAGE DE LA PLANCHE
-		planche = Planche.creer(grille_jouable.matriceDeJeu)
-		table.attach(planche.table, 1, 2, 1, 2)
+		@planche = Planche.creer(grille_jouable.matriceDeJeu)
+		
+		table.attach(@planche.table, 1, 2, 1, 2)
 
 		#Partie basse droite de l"application
 		vBoxBas.add(Frame.new("Aide").add(vBoxBasGauche = VBox.new(2)))
@@ -214,9 +251,9 @@ class Gui < Window
 		}
 
 
-		# Lorsque le bouton est relâché, le mode drag and assign de la planche de jeu est terminé.
+		# Lorsque le bouton est relâché, le mode drag and assign de la @planche de jeu est terminé.
 		self.signal_connect("button_release_event") {
-			planche.modeDragAndAssign = false
+			@planche.modeDragAndAssign = false
 		}
 			
 		add(vbox)
@@ -225,6 +262,13 @@ class Gui < Window
 
 		Gtk.main
 	end
+	
+	
+	def retexturer(texture)
+	 @planche.set_texture(texture)
+	 @planche.toutActualiser
+	end
+	
 end
  
 
