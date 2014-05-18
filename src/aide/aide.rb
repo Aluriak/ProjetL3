@@ -19,31 +19,24 @@ load "src/commun/commun.rb"
 
 class Aide
 
-  
-  @Largeur #Largeur de la grille (x)
-  @longueur #Hauteur de la grille (y)
-  @GrillePicross #Grille de Picross
-  @TabLignes #Matrice pour les lignes
-  @TabColonnes #Matrice pour les colonnes
-  @LargeurTabL
-  @LongueurTabC
-  
-  @TabAideDispo
-  
+  #Largeur de la grille(x)
   attr :Largeur, true 
-  attr :Longueur, true 
+  #Hauteur de la grille(y)
+  attr :Hauteur, true 
+  #Grille de Picross
   attr :GrillePicross, true 
+  #Matrice pour les lignes
   attr :TabLignes, true 
+  #Matrice pour les colonnes
   attr :TabColonnes, true
+  
   attr :LargeurTabL, true
   attr :LongueurTabC, true
   attr :TabAideDispo, true
     
   private_class_method :new
   
-  
-  
-  def Aide.creer(uneGrille)
+  def Aide.scanner(uneGrille)
     new(uneGrille)
   end
   
@@ -51,150 +44,132 @@ class Aide
     @GrillePicross = uneGrille
     @Largeur = @GrillePicross.taille
     @Hauteur = @GrillePicross.taille
- 
-    #@LargeurTabL = (@Largeur / 2) + (@Largeur % 2)
-    #@LongueurTabC = (@Longueur / 2) + (@Longueur % 2)
     
-    @TabLigne = uneGrille.tableLigne
+    @TabLigne 	= uneGrille.tableLigne
     @TabColonne = uneGrille.tableColonne
-    @TabAideDispo = Array.new()
     
-
-  end
-
-  def VoirMatrices
-
-     #Affiche le Picross
-
-    print "\n"
-    print "Matrices des colonnes : \n"
-    0.upto(@Longueur-1){|o|
-      0.upto(@Largeur-1){|p|
-         print @TabColonne[o][p]
-      }
-       print "\n"
-    }
+    @@TabAideDispo1 = Array.new
+    @@TabAideDispo2 = Array.new
     
-    print "\n"
-    print "Matrices des Lignes : \n"
-    0.upto(@Longueur -1){|o|
-      0.upto(@Largeur -1){|p|
-         print @TabLigne.nombresDeLaLigne(o)[p]
-      }
-      print "\n"
-    }
-    
-        print "\n"
-    print "Grille picross : \n"
-    0.upto(@Longueur -1){|o|
-      0.upto(@Largeur -1){|p|
-         print @GrillePicross[o][p]
-      }
-      print "\n"
-    }
-  
-
+    # scan une bonne fois pour toutes la grille
+    # et ensuite, on se sert des aides contenues dans les deux tableaux uniquement
+    aideDeNiveau1
+    aideDeNiveau2
   end
   
-  def getTabLignes
-    return @TabLigne
-  end
   
-  def getTabColonnes
-    return @TabColonne
+	BATON_DE_FEU 	= "'Le baton de feu'"
+	ILOT_BLEU			= "'L'Ilôt Bleu'"
+	CAVE_A_VIN		= "'La cave à vin'"
+  
+  # appelé par @@TabAideDispo2
+  # ligne est soit vrai, soit faux(si c'est sur une colonne)
+	def phrasePrecise(technique, ligne, index)
+		return "Vous pouvez appliquer la technique #{technique}\nsur la #{ligne ? "ligne" : "colonne"} #{index}."
+	end
+
+  
+  def choisirAuHasard(niveau)
+		
+		aideTrouvee = "Pas(ou plus) d'aide de niveau(#{niveau}) disponible."
+		
+		if niveau == 1
+			aideTrouvee = @@TabAideDispo1.shuffle!.pop unless @@TabAideDispo1.empty?
+		elsif niveau == 2
+			aideTrouvee = @@TabAideDispo2.shuffle!.pop unless @@TabAideDispo2.empty?
+		else 
+			aideTrouvee = "Ce niveau(#{niveau}) n'existe pas encore."
+		end
+		
+		return aideTrouvee
   end
   
   #Définition des aides possible à partir de la matrice TabLignes
-
   def aideDeNiveau1
     # TABLE LIGNE
-    0.upto(@TabLigne.hauteur-1){ |o|
-      num_ligne = o + 1
-      nombres = @TabLigne.nombresDeLaLigne(o)
+    0.upto(@TabLigne.hauteur-1){ |x|
+      num_ligne = x + 1
+      nombres = @TabLigne.nombresDeLaLigne(x)
       somme = nombres.inject { |val, sum| sum += val }
-      val_max = @TabLigne.nombresDeLaLigne(o).max
+      val_max = @TabLigne.nombresDeLaLigne(x).max
       val_max = 0 if val_max == nil # cas où la ligne est vide
       if(somme == @Largeur)
-        @TabAideDispo.push("Regardez à la ligne " + num_ligne.to_s() + ",\nVous pouvez colorier toutes les cases !!")
+        @@TabAideDispo1.push("Regardez à la ligne " + num_ligne.to_s + ",\nVous pouvez colorier toutes les cases !!")
       elsif(somme == @Largeur - 1)
-        @TabAideDispo.push("Regardez à la ligne " + num_ligne.to_s() + "\nFACILE non ?")
+        @@TabAideDispo1.push("Regardez à la ligne " + num_ligne.to_s + "\nFACILE non ?")
       elsif(val_max > @Largeur / 2)
-        @TabAideDispo.push("Regardez à la ligne " + num_ligne.to_s() + ",\nLa case du milieu est forcement coloriée !!")
+        @@TabAideDispo1.push("Regardez à la ligne " + num_ligne.to_s + ",\nLa case du milieu est forcement coloriée !!")
       elsif(nombres.size > @Largeur / 2)
-        @TabAideDispo.push("Regardez à la ligne" + num_ligne.to_s()+",\nVous pouvez colorier la premiere case !!")
+        @@TabAideDispo1.push("Regardez à la ligne" + num_ligne.to_s+",\nVous pouvez colorier la premiere case !!")
       end
     }
 
 
     # TABLE COLONNE
-    0.upto(@TabColonne.hauteur-1){ |o|
-      num_colonne = o + 1
-      nombres = @TabColonne.nombresDeLaColonne(o)
+    0.upto(@TabColonne.hauteur-1){ |x|
+      num_colonne = x + 1
+      nombres = @TabColonne.nombresDeLaColonne(x)
       somme = nombres.inject { |val, sum| sum += val }
-      val_max = @TabColonne.nombresDeLaColonne(o).max
+      val_max = @TabColonne.nombresDeLaColonne(x).max
       val_max = 0 if val_max == nil # cas où la colonne est vide
       if(somme == @Hauteur)
-        @TabAideDispo.push("Regardez à la colonne " + num_colonne.to_s() + ",\nVous pouvez colorier toutes les cases !!")
+        @@TabAideDispo1.push("Regardez à la colonne " + num_colonne.to_s + ",\nVous pouvez colorier toutes les cases !!")
       elsif(somme == @Hauteur-1)
-        @TabAideDispo.push("Regardez à la colonne " + num_colonne.to_s() + "\nFACILE non ?")
+        @@TabAideDispo1.push("Regardez à la colonne " + num_colonne.to_s + "\nFACILE non ?")
       elsif(val_max > @Hauteur / 2)
-        @TabAideDispo.push("Regardez à la colonne " + num_colonne.to_s() + ",\nLa case du milieu est forcement coloriée !!")
+        @@TabAideDispo1.push("Regardez à la colonne " + num_colonne.to_s + ",\nLa case du milieu est forcement coloriée !!")
       elsif(nombres.size > @Hauteur / 2)
-        @TabAideDispo.push("Regardez à la ligne" + num_colonne.to_s()+",\nVous pouvez colorier la premiere case !!")
+        @@TabAideDispo1.push("Regardez à la ligne" + num_colonne.to_s+",\nVous pouvez colorier la premiere case !!")
       end
     }
 
-    @TabAideDispo.push("Il n'y a aucune aide dispo") if @TabAideDispo.size == 0
-    Logs.add(@TabAideDispo)
-    return @TabAideDispo
+    #@@TabAideDispo1.push("Il n'y a aucune aide dispo") if @@TabAideDispo1.size == 0
+    Logs.add(@@TabAideDispo1)
+    #return @@TabAideDispo1
   end
   
-
-
-
-
-
-
+	
   def aideDeNiveau2
     # TABLE LIGNE
-    0.upto(@TabLigne.hauteur-1){ |o|
-      num_ligne = o + 1
-      nombres = @TabLigne.nombresDeLaLigne(o)
+    0.upto(@TabLigne.hauteur-1){ |x|
+      num_ligne = x + 1
+      nombres = @TabLigne.nombresDeLaLigne(x)
       somme = nombres.inject { |val, sum| sum += val }
-      val_max = @TabLigne.nombresDeLaLigne(o).max
+      val_max = @TabLigne.nombresDeLaLigne(x).max
       val_max = 0 if val_max == nil # cas où la ligne est vide
       if(somme == @Largeur)
-        @TabAideDispo.push("Vous pouvez appliquer la technique \n'Le baton de feu' sur la ligne " + num_ligne.to_s())
+        @@TabAideDispo2.push(phrasePrecise(BATON_DE_FEU, true, num_ligne))
       elsif(somme == @Largeur - 1)
-        @TabAideDispo.push("Vous pouvez appliquer la technique \n'La cave à vin' sur la ligne " + num_ligne.to_s())
+        @@TabAideDispo2.push(phrasePrecise(CAVE_A_VIN, true, num_ligne))
       elsif(val_max > @Largeur / 2)
-        @TabAideDispo.push("Vous pouvez appliquer la technique \n'L'ilot bleu' sur la ligne " + num_ligne.to_s())
+				@@TabAideDispo2.push(phrasePrecise(ILOT_BLEU, true, num_ligne))
       elsif(nombres.size > @Largeur / 2)
-        @TabAideDispo.push("Regardez à la ligne" + num_ligne.to_s()+",\nVous pouvez colorier la premiere case !!")
+        @@TabAideDispo2.push("Regardez à la ligne" + num_ligne.to_s+",\nVous pouvez colorier la premiere case !!")
       end
     }
  
 	# TABLE COLONNE
-    0.upto(@TabColonne.hauteur-1){ |o|
-      num_colonne = o + 1
-      nombres = @TabColonne.nombresDeLaColonne(o)
+    0.upto(@TabColonne.hauteur-1){ |x|
+    
+      num_colonne = x + 1
+      nombres = @TabColonne.nombresDeLaColonne(x)
       somme = nombres.inject { |val, sum| sum += val }
-      val_max = @TabColonne.nombresDeLaColonne(o).max
+      val_max = @TabColonne.nombresDeLaColonne(x).max
       val_max = 0 if val_max == nil # cas où la colonne est vide
       if(somme == @Hauteur)
-        @TabAideDispo.push("Vous pouvez appliquer la technique \n'Le baton de feu' sur la colonne " + num_colonne.to_s())
+        @@TabAideDispo2.push(phrasePrecise(BATON_DE_FEU, false, num_colonne))
       elsif(somme == @Hauteur-1)
-        @TabAideDispo.push("Vous pouvez appliquer la technique \n'La cave à vin' sur la colonne " + num_colonne.to_s())
+        @@TabAideDispo2.push(phrasePrecise(CAVE_A_VIN, false, num_colonne))
       elsif(val_max > @Hauteur / 2)
-        @TabAideDispo.push("Vous pouvez appliquer la technique \n'L'ilot bleu' sur la colonne " + num_colonne.to_s())
+        @@TabAideDispo2.push(phrasePrecise(ILOT_BLEU, false, num_colonne))
       elsif(nombres.size > @Hauteur / 2)
-        @TabAideDispo.push("Regardez à la ligne" + num_colonne.to_s()+",\nVous pouvez colorier la premiere case !!")
+        @@TabAideDispo2.push("Regardez à la colonne" + num_colonne.to_s+",\nVous pouvez colorier la premiere case !!")
       end
     }
 
-    @TabAideDispo.push("Il n'y a aucune aide dispo") if @TabAideDispo.size == 0
-    Logs.add(@TabAideDispo)
-    return @TabAideDispo
+    #@@TabAideDispo2.push("Il n'y a aucune aide disponible") if @@TabAideDispo2.size == 0
+    #Logs.add(@@TabAideDispo2)
+    #return @@TabAideDispo2
 	
   end
 end

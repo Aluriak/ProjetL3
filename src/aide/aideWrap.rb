@@ -26,16 +26,17 @@ load "src/aide/aide.rb"
 #  corresponde au attentes du dossier de conception.
 class AideWrap
 
-  # Pas d'instanciation possible de la classe
-  private_class_method :new
+	# Pas d'instanciation possible de la classe
+	private_class_method :new
 
-
+	attr_accessor :aides_1_dispo
+	attr_accessor :aides_2_dispo	
 
   ##
   # [STATIC] Aide de niveau 1, consistant en un conseil vague sur une ligne ou une colonne
   def AideWrap.deNiveau1Sur(grille) 
-    aides_dispo = Aide.creer(grille).aideDeNiveau1 # obtention des chaines d'aide possible
-    return aides_dispo.choice # on en retourne une au hasard
+    @aides_1_dispo = Aide.creer(grille).aideDeNiveau1 # obtention des chaines d'aide possible
+		return @aides_1_dispo.choice # on en retourne une au hasard
   end
 
 
@@ -44,8 +45,8 @@ class AideWrap
   ##
   # [STATIC] Aide de niveau 2, consistant en un conseil précis et clair sur un point précis de la grille.
   def AideWrap.deNiveau2Sur(grille) 
-    aides_dispo = Aide.creer(grille).aideDeNiveau2 # obtention des chaines d'aide possible
-    return aides_dispo.choice # on en retourne une au hasard
+    @aides_2_dispo = Aide.creer(grille).aideDeNiveau2 # obtention des chaines d'aide possible
+		return @aides_2_dispo.choice # on en retourne une au hasard
   end
 
 

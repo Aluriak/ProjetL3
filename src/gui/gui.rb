@@ -9,7 +9,8 @@ include Gtk
 
 # objets hors gui
 load "src/picross/picross.rb"
-load "src/aide/aideWrap.rb"
+#load "src/aide/aideWrap.rb"
+load "src/aide/aide.rb"
 
 # objets dans la fenetre principale
 load "src/gui/planche.rb"
@@ -62,25 +63,23 @@ class Gui < Window
 			@picross.nouvelleGrilleJouableDeTaille(tailleGrille)
 		end
 		@nbAppelAide = @picross.grille.nbAppelAide
-		super("Picross")
-		self.signal_connect("destroy") { Gtk.main_quit }
-
-		# GESTION DU CHRONOMÈTRE
-		timer_label = Label.new("")
-		timer = Chronometre.new(timer_label, @picross.grille.temps_ecoule)
 		
+		super("Picross")
+		set_resizable(false)
 		signal_connect("destroy") { Gtk.main_quit }
 
+		#chronomètre(à mettre avant l'évènement 'delete_event')
+		timer_label = Label.new
+		timer = Chronometre.new(timer_label, @picross.grille.temps_ecoule)
+		
+		# si la grille est vide, on quitte directement
 		signal_connect("delete_event"){
-			
-			if not @picross.grille.empty?
-				#FenetreSauvegarderAvantQuitter.new(@picross, timer)
+			unless @picross.grille.empty?
 				FenetreSauvegarderAvantQuitter.show(@picross, timer.sec, self, @nbAppelAide)
 			end	
 		}
 
-
-		set_resizable(false)
+		
 		vbox = VBox.new(false, 2)
 		add_events(Gdk::Event::BUTTON_PRESS_MASK)
 		
@@ -229,27 +228,27 @@ class Gui < Window
 		@planche = Planche.creer(grille_jouable.matriceDeJeu)
 		
 		table.attach(@planche.table, 1, 2, 1, 2)
+		
+		# contient toutes les aide nécessaires
+		aide = Aide.scanner(grille_jouable)
 
 		#Partie basse droite de l"application
 		vBoxBas.add(Frame.new("Aide").add(vBoxBasGauche = VBox.new(2)))
-		bouton_aide1_txt = Button.new("Aiguillez-moi !")
+		bouton_aide1_txt = Button.new("Un indice!")
 		bouton_aide2_txt = Button.new("Que dois-je faire?")
 
 		vBoxBasGauche.pack_start(bouton_aide1_txt)
 		vBoxBasGauche.pack_start(bouton_aide2_txt)
 
 		bouton_aide1_txt.signal_connect("clicked"){
-			aide = AideWrap.deNiveau1Sur(@picross.grille)
+			labelAide.set_text(aide.choisirAuHasard(1)) 
 			@nbAppelAide += 1  
-			labelAide.set_text(aide) 
 		}
 			
 		bouton_aide2_txt.signal_connect("clicked"){
-			aide = AideWrap.deNiveau2Sur(@picross.grille)
+			labelAide.set_text(aide.choisirAuHasard(2)) 
 			@nbAppelAide += 2  
-			labelAide.set_text(aide) 
 		}
-
 
 		# Lorsque le bouton est relâché, le mode drag and assign de la @planche de jeu est terminé.
 		self.signal_connect("button_release_event") {

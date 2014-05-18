@@ -55,7 +55,7 @@ class Array
   ##
   # Obtention d'un élément au hasard du table.
   def choice
-    return shuffle.first
+    return self.shuffle.pop
   end
 	
 	def orientationHorizontale?
@@ -120,11 +120,14 @@ class Logs
 
   # impossible d'instancier cette classe
   private_class_method :new
+	
+	@fileLog = File.new("log.txt", "w")
 
   ##
   # Ajoute le texte reçu dans les logs
   def Logs.add(txt)
     #puts txt
+		@fileLog.write(txt)
   end
 
 end
